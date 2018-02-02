@@ -7,6 +7,8 @@ const about = require('./config/version');
 const os = require('os');
 const packageFile = require('./package.json')
 
+appInsights.setup();
+
 log.init({
     name: packageFile.name,
     app: packageFile.name,
