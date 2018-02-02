@@ -1,2 +1,2 @@
 # Tamarack
-Default paths and error pages for uri:s not matching in Docker Flow Proxy.
+Index and 404 pages for Docker Clusters.
