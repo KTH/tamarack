@@ -1,0 +1,24 @@
+version: '3'
+
+# Tamarack, default error pages in se.kth.cluster based on NGINX.
+#
+services:
+  web:
+    #image: kthse/tamarack:2.0.2_06b8d0c
+    build: .
+    environment:
+      PORTILLO_CLUSTER: "development"
+    ports:
+      - 80
+    labels:
+      - se.kth.cluster=development
+      - se.kth.slackChannels="#team-pipeline-build"
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+    deploy:
+      replicas: 1
