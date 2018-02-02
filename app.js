@@ -36,7 +36,7 @@ app.use(function (req, res) {
 /**
  * Start server on package.json port or default to 3000.
  */
-const port = (packageFile.port ? packageFile.port : 3000)
+const port = (packageFile.port ? packageFile.port : 80)
 app.listen(port, function () {
     console.log(`${packageFile.name} running on port ${port} on ${os.hostname()}`);
 });

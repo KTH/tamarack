@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "Default paths and error pages for uri:s not matching in Docker Flow Proxy.",
     "main": "app.js",
-    "port": 3000,
+    "port": 80,
     "private": true,
     "dependencies": {
         "body-parser": "^1.18.2",
