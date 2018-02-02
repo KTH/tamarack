@@ -8,6 +8,6 @@ COPY ["package.json", "package.json"]
 RUN npm install --production --loglevel warn && \
     npm prune    
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["node", "app.js"]
