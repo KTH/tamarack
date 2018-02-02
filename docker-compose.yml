@@ -1,27 +1,13 @@
 version: '3'
 
-# Tamarack, default error pages in se.kth.cluster based on NGINX.
-#
 services:
   web:
-    #image: kthse/tamarack:2.0.2_06b8d0c
     build: .
     env_file: 
       - .env
     environment:
-      PORTILLO_CLUSTER: "development"
-      #APPINSIGHTS_INSTRUMENTATIONKEY: "aaaaaa-bbbbbb-cccccc-dddddd-eeeeee"
+      PORT: 3000 # Starts Node on this port, if not set defaults to 80.
+      PORTILLO_CLUSTER: "development" # Will show under /_monitor
+      # APPINSIGHTS_INSTRUMENTATIONKEY: "aaaaaa-bbbbbb-cccccc-dddddd-eeeeee" # Add key to start collecting data in Application Insights.
     ports:
-      - 80
-    labels:
-      - se.kth.cluster=development
-      - se.kth.slackChannels="#team-pipeline-build"
-
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "5"
-
-    deploy:
-      replicas: 1
+      - 3000:3000
