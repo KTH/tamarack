@@ -1,3 +1,4 @@
+var appInsights = require('applicationinsights');
 const express = require('express');
 const app = express();
 const log = require('kth-node-log')
@@ -36,7 +37,11 @@ app.use(function (req, res) {
 /**
  * Start server on package.json port or default to 3000.
  */
-const port = (packageFile.port ? packageFile.port : 80)
-app.listen(port, function () {
-    console.log(`${packageFile.name} running on port ${port} on ${os.hostname()}`);
+app.getListenPort = function () {
+    return process.env.PORT ? process.env.PORT : 80;
+};
+
+app.listen(app.getListenPort(), function () {
+    console.log(`${packageFile.name} running on port ${app.getListenPort()} on ${os.hostname()}`);
+    log.info(`Using Application Ingsights: ${process.env.APPINSIGHTS_INSTRUMENTATIONKEY ? "yes" : "no"}.`)
 });

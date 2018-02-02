@@ -3,9 +3,9 @@
     "version": "0.1.0",
     "description": "Default paths and error pages for uri:s not matching in Docker Flow Proxy.",
     "main": "app.js",
-    "port": 80,
     "private": true,
     "dependencies": {
+        "applicationinsights": "^1.0.1",
         "body-parser": "^1.18.2",
         "express": "^4.16.2",
         "express-session": "^1.15.6",
@@ -15,7 +15,7 @@
         "nodemon": "^1.14.12"
     },
     "scripts": {
-        "dev": "nodemon app.js"
+        "dev": "PORTILLO_CLUSTER=MyClusterName PORT=3000 nodemon app.js"
     },
     "engines": {
         "node": "^8.9.0"

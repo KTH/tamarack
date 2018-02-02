@@ -6,8 +6,11 @@ services:
   web:
     #image: kthse/tamarack:2.0.2_06b8d0c
     build: .
+    env_file: 
+      - .env
     environment:
       PORTILLO_CLUSTER: "development"
+      #APPINSIGHTS_INSTRUMENTATIONKEY: "aaaaaa-bbbbbb-cccccc-dddddd-eeeeee"
     ports:
       - 80
     labels:
