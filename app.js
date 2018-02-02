@@ -7,7 +7,15 @@ const about = require('./config/version');
 const os = require('os');
 const packageFile = require('./package.json')
 
-appInsights.setup();
+appInsights.setup().setAutoDependencyCorrelation(true)
+.setAutoCollectRequests(true)
+.setAutoCollectPerformance(true)
+.setAutoCollectExceptions(true)
+.setAutoCollectDependencies(true)
+.setAutoCollectConsole(true)
+.setUseDiskRetryCaching(true)
+.start();
+
 
 log.init({
     name: packageFile.name,
