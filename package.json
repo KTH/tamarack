@@ -1,0 +1,23 @@
+{
+    "name": "tamrack",
+    "version": "0.1.0",
+    "description": "Default paths and error pages for uri:s not matching in Docker Flow Proxy.",
+    "main": "app.js",
+    "port": 3000,
+    "private": true,
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "express": "^4.16.2",
+        "express-session": "^1.15.6",
+        "kth-node-log": "^3.0.1"
+    },
+    "devDependencies": {
+        "nodemon": "^1.14.12"
+    },
+    "scripts": {
+        "dev": "nodemon app.js"
+    },
+    "engines": {
+        "node": "^8.9.0"
+    }
+}
