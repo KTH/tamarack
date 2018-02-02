@@ -99,7 +99,7 @@ let _about = function _about() {
             <p><strong>Jenkins build date:</strong> ${about.jenkinsBuildDate}</p>
             <p><strong>Git branch:</strong> ${about.gitBranch}</p>
             <p><strong>Git commit:</strong> ${about.gitCommit}</p>
-            <p><strong>hostname:</strong> ${os.hostname()}
+            <p><strong>hostname:</strong> ${os.hostname()}</p>
         </div>
     </body>
     </html>
