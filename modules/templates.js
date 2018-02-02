@@ -54,9 +54,8 @@ let error404 = function error404() {
     return `
     ${header("404 - Page not found")}
     <h1 style="font-size: 1.8rem; font-family: Georgia Regular,Georgia,garamond pro,garamond,times new roman,times,serif; font-weight: 400;">No service matchted your requested page</h1>
-    <p style="line-height: 1.5rem;">The service may have been moved or deleted.</p>
-	<p>Please also check the web address for proper spelling and capitalization.</p>
-	${footer("404")}
+    <p>The service may have been moved or deleted. Please also check the web address for proper spelling and capitalization.</p>
+    ${footer("404")}
     `;
 }
 
