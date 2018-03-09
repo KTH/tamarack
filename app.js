@@ -66,9 +66,7 @@ app.getListenPort = function() {
 
 app.listen(app.getListenPort(), function() {
   console.log(
-    `${
-      packageFile.name
-    } running on port ${app.getListenPort()} on ${os.hostname()}`
+    `Started ${packageFile.name} on ${os.hostname()}:${app.getListenPort()}`
   );
   log.info(
     `Using Application Ingsights: ${
