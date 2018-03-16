@@ -51,7 +51,7 @@ app.use(function(req, res) {
 
 app.logRequest = function(req, statusCode = 200) {
   log.info(
-    `${req.headers["x-forwarded-for"]} ${statusCode} ${req.get("Host")}/${
+    `CLIENT IP: ${req.headers["x-forwarded-for"]} RESPONSE CODE: ${statusCode} REQUESTED URL: ${req.get("Host")}${
       req.url
     }`
   );
