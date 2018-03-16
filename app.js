@@ -50,10 +50,21 @@ app.use(function(req, res) {
 });
 
 app.logRequest = function(req, statusCode = 200) {
+  
+  requestor = req.headers["x-forwarded-for"];
+  
+  if (requestor === null) {
+    if (request.connection && request.connection.remoteAddress) {
+      requestor = request.connection.remoteAddress;
+    }
+  }
+  
+  if (requestor === null) {
+    requestor = "missing remote ip"
+  }
+
   log.info(
-    `CLIENT IP: ${req.headers["x-forwarded-for"]} RESPONSE CODE: ${statusCode} REQUESTED URL: ${req.get("Host")}${
-      req.url
-    }`
+    `${req.protocol}://${req.get("Host")}${req.url} - Response Code: ${statusCode}, Client IP: ${requestor}`
   );
 };
 
