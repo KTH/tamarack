@@ -7,17 +7,6 @@ const about = require("./config/version");
 const os = require("os");
 const packageFile = require("./package.json");
 
-appInsights
-  .setup()
-  .setAutoDependencyCorrelation(true)
-  .setAutoCollectRequests(true)
-  .setAutoCollectPerformance(true)
-  .setAutoCollectExceptions(true)
-  .setAutoCollectDependencies(true)
-  .setAutoCollectConsole(true)
-  .setUseDiskRetryCaching(true)
-  .start();
-
 log.init({
   name: packageFile.name,
   app: packageFile.name,
@@ -50,15 +39,14 @@ app.use(function(req, res) {
 });
 
 app.logRequest = function(req, statusCode = 200) {
-  
   let requestor = req.headers["x-forwarded-for"];
-  
+
   if (requestor == null) {
     if (req.connection && req.connection.remoteAddress) {
       requestor = req.connection.remoteAddress;
     }
   }
-  
+
   if (requestor == null) {
     requestor = req.ip;
   }
@@ -67,7 +55,9 @@ app.logRequest = function(req, statusCode = 200) {
   }
 
   log.info(
-    `${req.protocol}://${req.get("Host")}${req.url} - Response Code: ${statusCode}, Client IP: ${requestor}`
+    `${req.protocol}://${req.get("Host")}${
+      req.url
+    } - Response Code: ${statusCode}, Client IP: ${requestor}`
   );
 };
 
@@ -78,13 +68,31 @@ app.getListenPort = function() {
   return process.env.PORT ? process.env.PORT : 80;
 };
 
+app.initApplicationInsights = function() {
+  if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
+    appInsights
+      .setup()
+      .setAutoDependencyCorrelation(true)
+      .setAutoCollectRequests(true)
+      .setAutoCollectPerformance(true)
+      .setAutoCollectExceptions(true)
+      .setAutoCollectDependencies(true)
+      .setAutoCollectConsole(true)
+      .setUseDiskRetryCaching(true)
+      .start();
+    log.info(
+      `Using Application Ingsights: '${
+        process.env.APPINSIGHTS_INSTRUMENTATIONKEY
+      }'.`
+    );
+  } else {
+    log.info(`Application Ingsights not used.`);
+  }
+};
+
 app.listen(app.getListenPort(), function() {
   console.log(
     `Started ${packageFile.name} on ${os.hostname()}:${app.getListenPort()}`
   );
-  log.info(
-    `Using Application Ingsights: ${
-      process.env.APPINSIGHTS_INSTRUMENTATIONKEY ? "yes" : "no"
-    }.`
-  );
+  app.initApplicationInsights();
 });
