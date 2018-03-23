@@ -7,9 +7,8 @@ Tamarack is [deployed into clusters](https://gita.sys.kth.se/Infosys/cellus-regi
 
 ## Routes handled by Tamarack
 ```
-/_monitor
-/_cluster
-/_about
-/error-pages
+https://app.kth.se/_about
+https://app.kth.se/_monitor
+https://app.kth.se/missing
 ```
 
