@@ -1,4 +1,4 @@
-var appInsights = require("applicationinsights");
+const appInsights = require("applicationinsights");
 const express = require("express");
 const app = express();
 const log = require("kth-node-log");
