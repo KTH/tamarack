@@ -1,0 +1,27 @@
+<html>
+
+        <script>
+        var xmlhttp = new XMLHttpRequest();
+        
+        
+
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                render(response);
+            }
+        };
+        xmlhttp.open("GET", 'https://api-r.referens.sys.kth.se/api/pipeline/v1/latest/stage', true);
+        xmlhttp.setRequestHeader('api_key', '1234')
+        xmlhttp.send();
+        
+        function render(response) {
+            document.getElementById("dizin-error-message").innerHTML = response;
+        }
+        </script>
+
+    <body>
+        <div id="dizin-error-message"></div>
+        <div id="dizin-info-message"></div>
+    </body>
+</html>
