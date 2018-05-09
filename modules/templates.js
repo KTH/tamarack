@@ -87,6 +87,15 @@ let index = function index() {
 }
 
 /**
+ * robots.txt
+ */
+let _robotstxt = function robotstxt() {
+    return `
+    User-agent: *
+    Disallow: /`
+}
+
+/**
  * Monitor page
  */
 let _monitor = function _monitor() {
@@ -121,5 +130,6 @@ module.exports = {
     index: index,
     error404: error404,
     _monitor: _monitor,
-    _about: _about
-  }
+    _about: _about,
+    _robotstxt: _robotstxt
+}
