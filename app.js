@@ -6,6 +6,7 @@ const templates = require("./modules/templates");
 const about = require("./config/version");
 const os = require("os");
 const packageFile = require("./package.json");
+var path = require('path');
 
 log.init({
   name: packageFile.name,
@@ -17,28 +18,32 @@ log.init({
   src: true
 });
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   app.logRequest(req);
   res.status(200).send(templates.index());
 });
 
-app.get("/_about", function(req, res) {
+app.get("/_about", function (req, res) {
   app.logRequest(req);
   res.status(200).send(templates._about());
 });
 
-app.get("/_monitor", function(req, res) {
+app.get("/_monitor", function (req, res) {
   app.logRequest(req);
   res.set("Content-Type", "text/plain");
   res.status(200).send(templates._monitor());
 });
 
-app.use(function(req, res) {
+app.get('/_test', function (req, res) {
+  res.sendFile(path.resolve('index.html'));
+});
+
+app.use(function (req, res) {
   app.logRequest(req, 404);
   res.status(404).send(templates.error404());
 });
 
-app.logRequest = function(req, statusCode = 200) {
+app.logRequest = function (req, statusCode = 200) {
   let requestor = req.headers["x-forwarded-for"];
 
   if (requestor == null) {
@@ -64,11 +69,11 @@ app.logRequest = function(req, statusCode = 200) {
 /**
  * Start server on package.json port or default to 80.
  */
-app.getListenPort = function() {
+app.getListenPort = function () {
   return process.env.PORT ? process.env.PORT : 80;
 };
 
-app.initApplicationInsights = function() {
+app.initApplicationInsights = function () {
   if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     appInsights
       .setup()
@@ -90,7 +95,7 @@ app.initApplicationInsights = function() {
   }
 };
 
-app.listen(app.getListenPort(), function() {
+app.listen(app.getListenPort(), function () {
   console.log(
     `Started ${packageFile.name} on ${os.hostname()}:${app.getListenPort()}`
   );
