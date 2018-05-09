@@ -90,18 +90,14 @@ let index = function index() {
  * robots.txt
  */
 let _robotstxt = function robotstxt() {
-    return `
-    User-agent: *
-    Disallow: /`
+    return `User-agent: *\nDisallow: /`
 }
 
 /**
  * Monitor page
  */
 let _monitor = function _monitor() {
-    return `APPLICATION_STATUS: OK
-CLUSTER: ${(process.env.PORTILLO_CLUSTER ? process.env.PORTILLO_CLUSTER : "")} 
-            `
+    return `APPLICATION_STATUS: OK\nCLUSTER: ${(process.env.PORTILLO_CLUSTER ? process.env.PORTILLO_CLUSTER : "")}`
 }
 
 /**
@@ -110,13 +106,12 @@ CLUSTER: ${(process.env.PORTILLO_CLUSTER ? process.env.PORTILLO_CLUSTER : "")}
 let _about = function _about() {
     return `
     ${header("KTH Applications")}
-            <p><strong>Docker version:</strong> ${about.dockerVersion}</p></
-            <p><strong>Docker name:</strong> ${about.dockerName}</p>
-            <p><strong>Jenkins build:</strong> ${about.jenkinsBuild}</p>
-            <p><strong>Jenkins build date:</strong> ${about.jenkinsBuildDate}</p>
-            <p><strong>Git branch:</strong> ${about.gitBranch}</p>
-            <p><strong>Git commit:</strong> ${about.gitCommit}</p>
-            <p><strong>hostname:</strong> ${os.hostname()}</p>
+            <p><strong>Docker image:</strong> ${about.dockerName}:${about.dockerVersion}</p>
+            <p><strong>hostname:</strong>${os.hostname()}</p>
+            <!--Jenkins build: ${about.jenkinsBuild} -->
+            <!--Jenkins build date: ${about.jenkinsBuildDate} -->
+            <!--Git branch: ${about.gitBranch} -->
+            <!--Git commit: ${about.gitCommit} -->
         </div>
     </body>
     </html>
@@ -131,5 +126,5 @@ module.exports = {
     error404: error404,
     _monitor: _monitor,
     _about: _about,
-    _robotstxt: _robotstxt
+    robotstxt: _robotstxt
 }
