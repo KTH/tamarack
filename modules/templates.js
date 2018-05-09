@@ -107,7 +107,7 @@ let _about = function _about() {
     return `
     ${header("KTH Applications")}
             <p><strong>Docker image:</strong> ${about.dockerName}:${about.dockerVersion}</p>
-            <p><strong>hostname:</strong>${os.hostname()}</p>
+            <p><strong>Hostname:</strong> ${os.hostname()}</p>
             <!--Jenkins build: ${about.jenkinsBuild} -->
             <!--Jenkins build date: ${about.jenkinsBuildDate} -->
             <!--Git branch: ${about.gitBranch} -->
