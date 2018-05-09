@@ -37,11 +37,11 @@ app.get("/_monitor", function (req, res) {
 app.get("/robots.txt", function (req, res) {
   app.logRequest(req);
   res.set("Content-Type", "text/plain");
-  res.status(200).send(templates._monitor());
+  res.status(200).send(templates.robotstxt());
 });
 
 
-app.get('/_test', function (req, res) {
+app.get('/api/_test', function (req, res) {
   res.sendFile(path.resolve('index.html'));
 });
 
