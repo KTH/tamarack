@@ -15,7 +15,7 @@
         "nodemon": "^1.14.12"
     },
     "scripts": {
-        "dev": "PORTILLO_CLUSTER=MyClusterName PORT=3000 nodemon app.js"
+        "start-dev": "PORTILLO_CLUSTER=MyClusterName PORT=3000 nodemon app.js"
     },
     "engines": {
         "node": "^8.9.0"
