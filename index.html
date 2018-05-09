@@ -14,9 +14,10 @@
         xmlhttp.setRequestHeader('api_key', '1234')
         xmlhttp.send();
         
-        function render(response) {
-            document.getElementById("dizin-error-message").innerHTML = response;
+        function render(deployment) {
+            document.getElementById("dizin-info-message").innerHTML = deployment.descriptionSwedish;
         }
+        
         </script>
     </head>
     <body>
