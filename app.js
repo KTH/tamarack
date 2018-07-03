@@ -40,11 +40,6 @@ app.get("/robots.txt", function (req, res) {
   res.status(200).send(templates.robotstxt());
 });
 
-
-app.get('/api/_test', function (req, res) {
-  res.sendFile(path.resolve('index.html'));
-});
-
 app.use(function (req, res) {
   app.logRequest(req, 404);
   res.status(404).send(templates.error404());

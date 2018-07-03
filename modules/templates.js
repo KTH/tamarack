@@ -35,8 +35,8 @@ let header = function header(title) {
     <div style="padding: 40px; font-family: arial, helvetica; box-shadow: 0 0 5px 5px #aeb4ae;background-color: #fff; transform: rotate(-5deg); -moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); padding: 30px 40px 40px; max-width: 550px; margin: 30px auto;">
         <a href="https://www.kth.se/"><img src="https://www.kth.se/polopoly_fs/1.77257!/KTH_Logotyp_RGB_2013-2.svg" border="0"></a>
 
-        <div id="dizin-error-message"></div>
-        <div id="dizin-info-message"></div>
+        <div id="flottsbro-error-message"></div>
+        <div id="flottsbro-info-message"></div>
 `
 }
 
