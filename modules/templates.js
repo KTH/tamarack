@@ -10,10 +10,9 @@ let header = function header(title) {
     return `
     
     <!DOCTYPE html>
-    <html>
-    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <html lang="en">
     <title>${title}</title>
-    <script type="text/javascript">
+    <script>
     var appInsights=window.appInsights||function(a){
         function b(a){c[a]=function(){var b=arguments;c.queue.push(function(){c[a].apply(c,b)})}}var c={config:a},d=document,e=window;setTimeout(function(){var b=d.createElement("script");b.src=a.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js",d.getElementsByTagName("script")[0].parentNode.appendChild(b)});try{c.cookie=d.cookie}catch(a){}c.queue=[];for(var f=["Event","Exception","Metric","PageView","Trace","Dependency"];f.length;)b("track"+f.pop());if(b("setAuthenticatedUserContext"),b("clearAuthenticatedUserContext"),b("startTrackEvent"),b("stopTrackEvent"),b("startTrackPage"),b("stopTrackPage"),b("flush"),!a.disableExceptionTracking){f="onerror",b("_"+f);var g=e[f];e[f]=function(a,b,d,e,h){var i=g&&g(a,b,d,e,h);return!0!==i&&c["_"+f](a,b,d,e,h),i}}return c
     }({
@@ -22,18 +21,18 @@ let header = function header(title) {
     
     window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();
     </script>
-    <script type="text/javascript" src="https://www.kth.se/script/core.js?v=9.4.2"></script>
+    <script src="https://www.kth.se/script/core.js?v=9.4.2"></script>
 
-    <script type="text/javascript">
+    <script>
         $(function() {
             var KthToolbarConfig = { locale : "sv_SE" }; (function() { var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true; se.src = 'https://www.kth.se/social/toolbar/widget.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s); })();    
         });
-    </script>   
+    </script>
     </head>
     <body style="background-color: #e3e5e3; margin: 0;">
 
     <div style="padding: 40px; font-family: arial, helvetica; box-shadow: 0 0 5px 5px #aeb4ae;background-color: #fff; transform: rotate(-5deg); -moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); padding: 30px 40px 40px; max-width: 550px; margin: 30px auto;">
-        <a href="https://www.kth.se/"><img src="https://www.kth.se/polopoly_fs/1.77257!/KTH_Logotyp_RGB_2013-2.svg" border="0"></a>
+        <a href="https://www.kth.se/"><img src="https://www.kth.se/polopoly_fs/1.77257!/KTH_Logotyp_RGB_2013-2.svg" alt="KTH Logotype"></a>
 
         <div id="flottsbro-error-message"></div>
         <div id="flottsbro-info-message"></div>
