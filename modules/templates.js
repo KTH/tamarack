@@ -96,7 +96,8 @@ let _robotstxt = function robotstxt() {
  * Monitor page
  */
 let _monitor = function _monitor() {
-    return `APPLICATION_STATUS: OK\nCLUSTER: ${(process.env.PORTILLO_CLUSTER ? process.env.PORTILLO_CLUSTER : "")}`
+    return `APPLICATION_STATUS: OK
+       CLUSTER: ${(process.env.PORTILLO_CLUSTER ? process.env.PORTILLO_CLUSTER : "")}`
 }
 
 /**
