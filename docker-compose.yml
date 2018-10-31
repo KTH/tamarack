@@ -9,5 +9,6 @@ services:
       PORT: 3000 # Starts Node on this port, if not set defaults to 80.
       PORTILLO_CLUSTER: "development" # Will show under /_monitor
       APPINSIGHTS_INSTRUMENTATIONKEY: ""
+      LOG_LEVEL: "info"
     ports:
       - 3000:3000

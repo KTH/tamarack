@@ -1,4 +1,4 @@
-FROM kthse/kth-nodejs-web:2.4
+FROM kthse/kth-nodejs:9.11.0
 
 COPY ["config", "config"]
 COPY ["modules", "modules"]
