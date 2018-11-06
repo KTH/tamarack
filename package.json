@@ -12,7 +12,7 @@
         "kth-node-log": "^3.0.2"
     },
     "devDependencies": {
-        "nodemon": "^1.18.4"
+        "nodemon": "^1.18.6"
     },
     "scripts": {
         "start-dev": "PORTILLO_CLUSTER=MyClusterName PORT=3000 nodemon app.js"
