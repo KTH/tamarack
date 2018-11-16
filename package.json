@@ -1,5 +1,5 @@
 {
-    "name": "tamrack",
+    "name": "tamarack",
     "version": "0.1.0",
     "description": "Default paths and error pages for uri:s not matching in Docker Flow Proxy.",
     "main": "app.js",
