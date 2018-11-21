@@ -13,7 +13,7 @@ RESPONSE=`curl -s -S --max-time 30 $MONITOR_URL`
 
 echo $RESPONSE
 
-if [[ "$RESPONSE" == *"$PATTERN"* ]]; then
+if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
     error "URL '$MONITOR_URL' does not contain '$PATTERN'."
     exit -1
 fi
