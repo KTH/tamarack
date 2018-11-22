@@ -99,7 +99,7 @@ let error502 = function error502() {
     return `
     ${header("502 - Service did not respond")}
     <h1>The service you requested did not respond!</h1>
-    <h2>Big fail. Such sorry. Much sad.</a>
+    <h2>Big fail. Such sorry. Much sad.</h2>
     <p>Tthe service you requested does not work at the moment. </p>
     <p>Please try again later.</p>
     ${footer("502 Bad Gateway")}
