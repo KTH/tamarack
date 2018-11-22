@@ -31,6 +31,9 @@ let header = function header(title) {
         body {
             background-color: #e3e5e3;
             margin: 0;
+            font-family: Arial,Helvetica Neue,helvetica,sans-serif;
+            font-weight: 400;
+            line-height: 1.4375;
         }
         .wrapper {
             padding: 40px;
@@ -45,14 +48,19 @@ let header = function header(title) {
             margin: 30px auto;
         }
         h1 {
-            font-size: 1.8rem;
-            font-family: Georgia Regular, Georgia, garamond pro, garamond, times new roman, times,serif;
+            font-size: 2.75rem;
             font-weight: 400;
         }
-        p {} 
+        p {
+            font-size: 1.125rem;
+        } 
         p.small {
-            font-size: 0.6rem;
+            font-size: 0.9rem;
             color: #666;
+        }
+        a {
+            color: #006cb7;
+            text-decoration: none;
         }
     </style>
     </head>
@@ -85,8 +93,10 @@ let footer = function footer(code) {
 let error404 = function error404() {
     return `
     ${header("404 - Page not found")}
-    <h1>No service matched your requested page</h1>
-    <p>The service may have been moved or deleted. Please also check the web address for proper spelling and capitalization.</p>
+    <h1>Sorry, we have nothing to show for the web address you entered.</h1>
+    <h2>The service may have been moved or deleted.</h2>
+    <p>Please also check the web address for proper spelling and capitalization, or try
+    <a href="https://www.kth.se/search/">searching for it</a>.</p>
     ${footer("404")}
     `;
 };
@@ -111,7 +121,8 @@ let error502 = function error502() {
 let index = function index() {
     return `
     ${header("KTH Applications")}
-    <h1>KTH Applications</h1>
+    <h1>Applications</h1>
+    There is really nothing to see here, got to <a href="https://www.kth.se/">the KTH main site</a> instead. Much more interesting, hopefully ...</p>
     ${footer("404 Not Found")}
     `;
 };
