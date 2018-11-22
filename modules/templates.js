@@ -102,7 +102,7 @@ let error502 = function error502() {
     <h2>Big fail. Such sorry. Much sad.</a>
     <p>Tthe service you requested does not work at the moment. </p>
     <p>Please try again later.</p>
-    ${footer("502")}
+    ${footer("502 Bad Gateway")}
     `;
 };
 
@@ -113,7 +113,7 @@ let index = function index() {
     return `
     ${header("KTH Applications")}
     <h1>KTH Applications</h1>
-    ${footer("404")}
+    ${footer("404 Not Found")}
     `;
 };
 
