@@ -99,8 +99,7 @@ let error502 = function error502() {
     ${header("502 - Service did not respond")}
     <h1>The service you requested does not work at the moment!</h1>
     <h2>Big fail. Such sorry. Much sad.</h2>
-    <p>The team responsible for the service have been alerted. Depending on the service <a href="https://app.kth.se/pipeline/>response times
-    are expected</a>.</p>
+    <p>The team responsible for the service have been alerted. Depending on the service different <a href="https://app.kth.se/pipeline/">incident response times</a> are expected<.</p>
     <p>For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.</p>
     ${footer("502 Bad Gateway")}
     `;
