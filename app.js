@@ -43,6 +43,14 @@ app.get("/robots.txt", function (req, res) {
 });
 
 /**
+ * Error page for 502 Bad Gateway
+ */
+app.get("/error502.html", function (req, res) {
+  app.logRequest(req, 502);
+  res.status(502).send(templates.error502());
+});
+
+/**
  * Default route, if no other route is matched.
  */
 app.use(function (req, res) {

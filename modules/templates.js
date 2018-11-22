@@ -43,7 +43,6 @@ let header = function header(title) {
  */
 let footer = function footer(code) {
     return `
-            <p>You probably want to go to <a href="https://www.kth.se">www.kth.se</a>.</p>
             <p>For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.</p>
             <p style="font-size: 0.6rem; color: #666">Page served by: Tamarack</p>
             <p style="font-size: 0.6rem; color: #666">For all you techies, yes that means response code ${code}</p>
@@ -67,19 +66,25 @@ let error404 = function error404() {
 };
 
 /**
+ * 502 error page Bad Gateway
+ */
+let error502 = function error502() {
+    return `
+    ${header("Service did not respond")}
+    <h1>The service you requested did not respond</h1>
+    <p>We are sorry, the service you requested does not work at the moment. </p>
+    <p>Please try again later.</p>
+    ${footer("502")}
+    `;
+};
+
+/**
  * Index page.
  */
 let index = function index() {
     return `
     ${header("KTH Applications")}
-            <h1 style="font-size: 1.8rem; font-family: Georgia Regular,Georgia,garamond pro,garamond,times new roman,times,serif; font-weight: 400;">KTH Applications </h1>
-            <p>You probably want to go to <a href="https://www.kth.se">www.kth.se</a>.</p>
-            <p>For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.</p>
-            <p style="font-size: 0.6rem; color: #666">Page served by: Tamarack</p>
-        </div>
-
-    </body>
-    </html>
+    ${footer("404")}
     `;
 };
 
@@ -122,6 +127,7 @@ let _about = function _about() {
 module.exports = {
     index: index,
     error404: error404,
+    error502: error502,
     _monitor: _monitor,
     _about: _about,
     robotstxt: _robotstxt
