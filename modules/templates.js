@@ -27,12 +27,39 @@ let header = function header(title) {
             var KthToolbarConfig = { locale : "sv_SE" }; (function() { var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true; se.src = 'https://www.kth.se/social/toolbar/widget.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s); })();    
         });
     </script>
+    <style>
+        body {
+            background-color: #e3e5e3;
+            margin: 0;
+        }
+        .wrapper {
+            padding: 40px;
+            font-family: arial, helvetica;
+            box-shadow: 0 0 5px 5px #aeb4ae;
+            background-color: #fff;
+            transform: rotate(-5deg);
+            -moz-transform: rotate(-5deg);
+            -webkit-transform: rotate(-5deg);
+            padding: 30px 40px 40px;
+            max-width: 550px;
+            margin: 30px auto;
+        }
+        h1 {
+            font-size: 1.8rem;
+            font-family: Georgia Regular, Georgia, garamond pro, garamond, times new roman, times,serif;
+            font-weight: 400;
+        }
+        p {} 
+        p.small {
+            font-size: 0.6rem;
+            color: #666;
+        }
+    </style>
     </head>
-    <body style="background-color: #e3e5e3; margin: 0;">
+    <body>
 
-    <div style="padding: 40px; font-family: arial, helvetica; box-shadow: 0 0 5px 5px #aeb4ae;background-color: #fff; transform: rotate(-5deg); -moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); padding: 30px 40px 40px; max-width: 550px; margin: 30px auto;">
+    <div class="wrapper">
         <a href="https://www.kth.se/"><img src="https://www.kth.se/polopoly_fs/1.77257!/KTH_Logotyp_RGB_2013-2.svg" alt="KTH Logotype"></a>
-
         <div id="flottsbro-error-message"></div>
         <div id="flottsbro-info-message"></div>
 `;
@@ -44,8 +71,8 @@ let header = function header(title) {
 let footer = function footer(code) {
     return `
             <p>For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.</p>
-            <p style="font-size: 0.6rem; color: #666">Page served by: Tamarack</p>
-            <p style="font-size: 0.6rem; color: #666">For all you techies, yes that means response code ${code}</p>
+            <p class="small">Page served by: Tamarack</p>
+            <p class="small">For all you techies, yes that means response code ${code}</p>
         </div>
 
     </body>
@@ -59,7 +86,7 @@ let footer = function footer(code) {
 let error404 = function error404() {
     return `
     ${header("404 - Page not found")}
-    <h1 style="font-size: 1.8rem; font-family: Georgia Regular,Georgia,garamond pro,garamond,times new roman,times,serif; font-weight: 400;">No service matched your requested page</h1>
+    <h1>No service matched your requested page</h1>
     <p>The service may have been moved or deleted. Please also check the web address for proper spelling and capitalization.</p>
     ${footer("404")}
     `;
@@ -70,9 +97,10 @@ let error404 = function error404() {
  */
 let error502 = function error502() {
     return `
-    ${header("Service did not respond")}
-    <h1>The service you requested did not respond</h1>
-    <p>We are sorry, the service you requested does not work at the moment. </p>
+    ${header("502 - Service did not respond")}
+    <h1>The service you requested did not respond!</h1>
+    <h2>Big fail. Such sorry. Much sad.</a>
+    <p>Tthe service you requested does not work at the moment. </p>
     <p>Please try again later.</p>
     ${footer("502")}
     `;
@@ -84,6 +112,7 @@ let error502 = function error502() {
 let index = function index() {
     return `
     ${header("KTH Applications")}
+    <h1>KTH Applications</h1>
     ${footer("404")}
     `;
 };
