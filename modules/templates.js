@@ -122,7 +122,6 @@ let index = function index() {
     return `
     ${header("KTH Applications")}
     <h1>Applications</h1>
-    Hej Marcus! 
     There is really nothing to see here, got to <a href="https://www.kth.se/">the KTH main site</a> instead. Much more interesting, hopefully ...</p>
     ${footer("404 Not Found")}
     `;
