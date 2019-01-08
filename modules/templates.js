@@ -20,7 +20,7 @@ let header = function header(title) {
     
     window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();
     </script>
-    <script src="https://www.kth.se/script/core.js?v=9.4.2"></script>
+    <script async src="https://www.kth.se/script/core.js?v=9.4.2"></script>
 
     <script>
         $(function() {
@@ -67,7 +67,7 @@ let header = function header(title) {
     <body>
 
     <div class="wrapper">
-        <a href="https://www.kth.se/"><img src="https://www.kth.se/polopoly_fs/1.77257!/KTH_Logotyp_RGB_2013-2.svg" alt="KTH Logotype"></a>
+        <a href="https://www.kth.se/"><img width=76 height=76 src="https://www.kth.se/polopoly_fs/1.77257!/KTH_Logotyp_RGB_2013-2.svg" alt="KTH Logotype"></a>
         <div id="flottsbro-error-message"></div>
         <div id="flottsbro-info-message"></div>
 `;
