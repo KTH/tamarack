@@ -8,12 +8,15 @@ const os = require("os");
 const packageFile = require("./package.json");
 var path = require('path');
 
+const CONTENT_TYPE_PLAIN_TEXT = "text/plain"
+const CONTENT_TYPE_HTML = "text/html"
+
 /**
  * Index page.
  */
 app.get("/", function (req, res) {
   app.logRequest(req);
-  res.status(200).send(templates.index());
+  app.ok(res, templates.index());
 });
 
 /**
@@ -21,7 +24,7 @@ app.get("/", function (req, res) {
  */
 app.get("/_about", function (req, res) {
   app.logRequest(req);
-  res.status(200).send(templates._about());
+  app.ok(res, templates._about());
 });
 
 /**
@@ -29,8 +32,7 @@ app.get("/_about", function (req, res) {
  */
 app.get("/_monitor", function (req, res) {
   app.logRequest(req);
-  res.set("Content-Type", "text/plain");
-  res.status(200).send(templates._monitor());
+  app.ok(res, templates._monitor(), CONTENT_TYPE_PLAIN_TEXT);
 });
 
 /**
@@ -38,8 +40,7 @@ app.get("/_monitor", function (req, res) {
  */
 app.get("/robots.txt", function (req, res) {
   app.logRequest(req);
-  res.set("Content-Type", "text/plain");
-  res.status(200).send(templates.robotstxt());
+  app.ok(res, templates.robotstxt(), CONTENT_TYPE_PLAIN_TEXT);
 });
 
 /**
@@ -47,7 +48,7 @@ app.get("/robots.txt", function (req, res) {
  */
 app.get("/error502.html", function (req, res) {
   app.logRequest(req, 502);
-  res.status(502).send(templates.error502());
+  app.badGateway(res, templates.error502());
 });
 
 /**
@@ -55,10 +56,46 @@ app.get("/error502.html", function (req, res) {
  */
 app.use(function (req, res) {
   app.logRequest(req, 404);
-  res.status(404).send(templates.error404());
+  app.notFound(res, templates.error404());
 });
 
 /************************************************* */
+
+/**
+ * Send status 200 with a body set to the content type.
+ * Default content type is text/html.
+ */
+app.ok = function (res, body, contentType) {
+  app.send(res, body, 200, contentType)
+};
+
+/**
+ * Send status 404 with a body set to the content type.
+ * Default content type is text/html.
+ */
+app.notFound = function (res, body, contentType) {
+  app.send(res, body, 404, contentType)
+};
+
+/**
+ * Send status 502 with a body set to the content type.
+ * Default content type is text/html.
+ */
+app.badGateway = function (res, body, contentType) {
+  app.send(res, body, 502, contentType)
+};
+
+/**
+ * Send the content type with the passed status code.
+ * Default content type is text/html.
+ * Default status code is 200.
+ */
+app.send = function (res, body, status = 200, contentType = CONTENT_TYPE_HTML) {
+  res.set("X-Frame-Options", "sameorigin");
+  res.set("Content-Type", contentType);
+  res.status(status).send(body);
+};
+
 
 /**
  * Gets the log level passed as env LOG_LEVEL
