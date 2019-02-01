@@ -44,6 +44,16 @@ app.get("/robots.txt", function (req, res) {
 });
 
 /**
+ * Unique path to verify ownership of domain.
+ */
+app.get(`/${process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE}`, function (req, res) {
+  log.info(`Domain verification request. Responding '${process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT}'.`);
+  app.logRequest(req);
+  app.ok(res, process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT, CONTENT_TYPE_PLAIN_TEXT);
+});
+
+
+/**
  * Error page for 502 Bad Gateway
  */
 app.get("/error502.html", function (req, res) {
