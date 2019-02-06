@@ -6,93 +6,39 @@ const templates = require("./modules/templates");
 const about = require("./config/version");
 const os = require("os");
 const packageFile = require("./package.json");
-var path = require('path');
+const path = require("path");
 
-const CONTENT_TYPE_PLAIN_TEXT = "text/plain"
-const CONTENT_TYPE_HTML = "text/html"
+// Content types
+const CONTENT_TYPE_PLAIN_TEXT = "text/plain";
+const CONTENT_TYPE_HTML = "text/html";
 
-/**
- * Index page.
- */
-app.get("/", function (req, res) {
-  app.logRequest(req);
-  app.ok(res, templates.index());
-});
-
-/**
- * About page. Versions and such.
- */
-app.get("/_about", function (req, res) {
-  app.logRequest(req);
-  app.ok(res, templates._about());
-});
-
-/**
- * Health check route.
- */
-app.get("/_monitor", function (req, res) {
-  app.logRequest(req);
-  app.ok(res, templates._monitor(), CONTENT_TYPE_PLAIN_TEXT);
-});
-
-/**
- * Crawler access definitions.
- */
-app.get("/robots.txt", function (req, res) {
-  app.logRequest(req);
-  app.ok(res, templates.robotstxt(), CONTENT_TYPE_PLAIN_TEXT);
-});
-
-/**
- * Unique path to verify ownership of domain.
- */
-app.get(`/${process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE}`, function (req, res) {
-  log.info(`Domain verification request. Responding '${process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT}'.`);
-  app.logRequest(req);
-  app.ok(res, process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT, CONTENT_TYPE_PLAIN_TEXT);
-});
-
-
-/**
- * Error page for 502 Bad Gateway
- */
-app.get("/error502.html", function (req, res) {
-  app.logRequest(req, 502);
-  app.badGateway(res, templates.error502());
-});
-
-/**
- * Default route, if no other route is matched.
- */
-app.use(function (req, res) {
-  app.logRequest(req, 404);
-  app.notFound(res, templates.error404());
-});
-
-/************************************************* */
+// Response codes
+const STATUS_CODE_OK = 200;
+const STATUS_CODE_NOT_FOUND = 404;
+const STATUS_CODE_BAD_GATEWAY = 502;
 
 /**
  * Send status 200 with a body set to the content type.
  * Default content type is text/html.
  */
-app.ok = function (res, body, contentType) {
-  app.send(res, body, 200, contentType)
+app.ok = function(request, response, body, contentType) {
+  app.send(request, response, body, STATUS_CODE_OK, contentType);
 };
 
 /**
  * Send status 404 with a body set to the content type.
  * Default content type is text/html.
  */
-app.notFound = function (res, body, contentType) {
-  app.send(res, body, 404, contentType)
+app.notFound = function(request, response, body, contentType) {
+  app.send(request, response, body, STATUS_CODE_NOT_FOUND, contentType);
 };
 
 /**
  * Send status 502 with a body set to the content type.
  * Default content type is text/html.
  */
-app.badGateway = function (res, body, contentType) {
-  app.send(res, body, 502, contentType)
+app.badGateway = function(request, response, body, contentType) {
+  app.send(request, response, body, STATUS_CODE_BAD_GATEWAY, contentType);
 };
 
 /**
@@ -100,26 +46,70 @@ app.badGateway = function (res, body, contentType) {
  * Default content type is text/html.
  * Default status code is 200.
  */
-app.send = function (res, body, status = 200, contentType = CONTENT_TYPE_HTML) {
-  res.set("X-Frame-Options", "sameorigin");
-  res.set("Content-Type", contentType);
-  res.status(status).send(body);
+app.send = function(
+  request,
+  response,
+  bodyContent,
+  statusCode = STATUS_CODE_OK,
+  contentType = CONTENT_TYPE_HTML
+) {
+  app.logRequest(request, statusCode);
+  response.set("X-Frame-Options", "sameorigin");
+  response.set("Content-Type", contentType);
+  response.status(statusCode).send(bodyContent);
 };
 
+/**
+ * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE
+ * to use as path for ownership verification.
+ *
+ * Example: /97823o4i723bus6dtg34.txt
+ */
+app.getOwnershipVerificationPath = function() {
+  let result = process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE;
+  if (result == null) {
+    result = "_DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined";
+  }
+  return result;
+};
 
+/**
+ * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
+ * to use as body for ownership verification.
+ * Defaults to empty string.
+ */
+app.getOwnershipVerificationPathBodyContent = function() {
+  let result = process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT;
+  if (result == null) {
+    result = "";
+  }
+  return result;
+};
+
+/**
+ * Select the content type for the DOMAIN_OWNERSHIP_VERIFICATION_FILE.
+ * Use plain text if its a text file, otherwise use html.
+ */
+app.getOwnershipVerificationPathMimeType = function() {
+  result = CONTENT_TYPE_HTML;
+  if (app.getOwnershipVerificationPath().endsWith(".txy")) {
+    result = CONTENT_TYPE_PLAIN_TEXT;
+  }
+  return result;
+};
 /**
  * Gets the log level passed as env LOG_LEVEL
  * or defaults to info.
- * 
+ *
  * Levels are:
  * log.info('hello from info, log level usually used in setup')
  * log.warn('error that code handled and can recover from')
  * log.error({err: err}, 'error that should be fixed in code')
  * log.fatal('a really bad error that will crash the application')
- * log.debug({req: req, res: res}, 'log a request and response, basic dev log')
+ * log.debug({req: request, res: res}, 'log a request and response, basic dev log')
  * log.trace('granular logging, rarely used')
  */
-app.getLogLevel = function () {
+app.getLogLevel = function() {
   result = "info";
   if (process.env.LOG_LEVEL != null) {
     result = process.env.LOG_LEVEL;
@@ -130,7 +120,7 @@ app.getLogLevel = function () {
 
 /**
  * Set logging to the level specified in env LOG_LEVEL
- * or use default. 
+ * or use default.
  */
 log.init({
   name: packageFile.name,
@@ -143,44 +133,42 @@ log.init({
  * The IP is found on differnt places depending on
  * if the service is accessed directly or via proxy.
  */
-app.getRequestor = function (req) {
-  let result = req.headers["x-forwarded-for"];
+app.getRequestor = function(request) {
+  let result = request.headers["x-forwarded-for"];
 
   if (result == null) {
-    if (req.connection && req.connection.remoteAddress) {
-      result = req.connection.remoteAddress;
+    if (request.connection && request.connection.remoteAddress) {
+      result = request.connection.remoteAddress;
     }
   }
 
   if (result == null) {
-    result = req.ip;
+    result = request.ip;
   }
 
   if (result == null) {
     result = "missing remote ip";
   }
 
-  return result
-
+  return result;
 };
 
 /**
  * Log incomming request.
  * E.g:  http://localhost:3000/_about - Response Code: 200, Client IP: 127.0.0.1
  */
-app.logRequest = function (req, statusCode = 200) {
-
+app.logRequest = function(request, statusCode = STATUS_CODE_OK) {
   log.info(
-    `${req.protocol}://${req.get("Host")}${
-      req.url
-    } - Response Code: ${statusCode}, Client IP: ${app.getRequestor(req)}`
+    `${request.protocol}://${request.get("Host")}${
+      request.url
+    } - Response Code: ${statusCode}, Client IP: ${app.getRequestor(request)}`
   );
 };
 
 /**
  * Init a Azure Application Insights if a key is passed as env APPINSIGHTS_INSTRUMENTATIONKEY
  */
-app.initApplicationInsights = function () {
+app.initApplicationInsights = function() {
   if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     appInsights
       .setup()
@@ -205,16 +193,75 @@ app.initApplicationInsights = function () {
 /**
  * Start server on port 80, or use port specifed in env PORT.
  */
-app.getListenPort = function () {
+app.getListenPort = function() {
   return process.env.PORT ? process.env.PORT : 80;
 };
 
 /**
  * Start the server on configured port.
  */
-app.listen(app.getListenPort(), function () {
+app.listen(app.getListenPort(), function() {
   console.log(
     `Started ${packageFile.name} on ${os.hostname()}:${app.getListenPort()}`
   );
   app.initApplicationInsights();
+});
+
+/********************* routes **************************/
+
+/**
+ * Index page.
+ */
+app.get("/", function(request, response) {
+  app.ok(request, response, templates.index());
+});
+
+/**
+ * About page. Versions and such.
+ */
+app.get("/_about", function(request, response) {
+  app.ok(request, response, templates._about());
+});
+
+/**
+ * Health check route.
+ */
+app.get("/_monitor", function(request, response) {
+  app.ok(request, response, templates._monitor(), CONTENT_TYPE_PLAIN_TEXT);
+});
+
+/**
+ * Crawler access definitions.
+ */
+app.get("/robots.txt", function(request, response) {
+  app.ok(request, response, templates.robotstxt(), CONTENT_TYPE_PLAIN_TEXT);
+});
+
+/**
+ * Unique path to verify ownership of domain.
+ */
+app.get(`/${app.getOwnershipVerificationPath()}`, function(request, response) {
+  log.info(
+    `Domain verification response '${app.getOwnershipVerificationPathBodyContent()}'.`
+  );
+  app.ok(
+    request,
+    response,
+    app.getOwnershipVerificationPathBodyContent(),
+    app.getOwnershipVerificationPathMimeType()
+  );
+});
+
+/**
+ * Error page for 502 Bad Gateway
+ */
+app.get("/error502.html", function(request, response) {
+  app.badGateway(request, response, templates.error502());
+});
+
+/**
+ * Default route, if no other route is matched.
+ */
+app.use(function(request, response) {
+  app.notFound(request, response, templates.error404());
 });
