@@ -21,7 +21,7 @@ const STATUS_CODE_BAD_GATEWAY = 502;
  * Send status 200 with a body set to the content type.
  * Default content type is text/html.
  */
-app.ok = function(request, response, body, contentType) {
+app.ok = function (request, response, body, contentType = CONTENT_TYPE_HTML) {
   app.send(request, response, body, STATUS_CODE_OK, contentType);
 };
 
@@ -29,7 +29,7 @@ app.ok = function(request, response, body, contentType) {
  * Send status 404 with a body set to the content type.
  * Default content type is text/html.
  */
-app.notFound = function(request, response, body, contentType) {
+app.notFound = function (request, response, body, contentType = CONTENT_TYPE_HTML) {
   app.send(request, response, body, STATUS_CODE_NOT_FOUND, contentType);
 };
 
@@ -37,7 +37,7 @@ app.notFound = function(request, response, body, contentType) {
  * Send status 502 with a body set to the content type.
  * Default content type is text/html.
  */
-app.badGateway = function(request, response, body, contentType) {
+app.badGateway = function (request, response, body, contentType = CONTENT_TYPE_HTML) {
   app.send(request, response, body, STATUS_CODE_BAD_GATEWAY, contentType);
 };
 
@@ -46,7 +46,7 @@ app.badGateway = function(request, response, body, contentType) {
  * Default content type is text/html.
  * Default status code is 200.
  */
-app.send = function(
+app.send = function (
   request,
   response,
   bodyContent,
@@ -65,7 +65,7 @@ app.send = function(
  *
  * Example: /97823o4i723bus6dtg34.txt
  */
-app.getOwnershipVerificationPath = function() {
+app.getOwnershipVerificationPath = function () {
   let result = process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE;
   if (result == null) {
     result = "_DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined";
@@ -78,7 +78,7 @@ app.getOwnershipVerificationPath = function() {
  * to use as body for ownership verification.
  * Defaults to empty string.
  */
-app.getOwnershipVerificationPathBodyContent = function() {
+app.getOwnershipVerificationPathBodyContent = function () {
   let result = process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT;
   if (result == null) {
     result = "";
@@ -90,9 +90,9 @@ app.getOwnershipVerificationPathBodyContent = function() {
  * Select the content type for the DOMAIN_OWNERSHIP_VERIFICATION_FILE.
  * Use plain text if its a text file, otherwise use html.
  */
-app.getOwnershipVerificationPathMimeType = function() {
+app.getOwnershipVerificationPathMimeType = function () {
   result = CONTENT_TYPE_HTML;
-  if (app.getOwnershipVerificationPath().endsWith(".txy")) {
+  if (app.getOwnershipVerificationPath().endsWith(".txt")) {
     result = CONTENT_TYPE_PLAIN_TEXT;
   }
   return result;
@@ -109,7 +109,7 @@ app.getOwnershipVerificationPathMimeType = function() {
  * log.debug({req: request, res: res}, 'log a request and response, basic dev log')
  * log.trace('granular logging, rarely used')
  */
-app.getLogLevel = function() {
+app.getLogLevel = function () {
   result = "info";
   if (process.env.LOG_LEVEL != null) {
     result = process.env.LOG_LEVEL;
@@ -133,7 +133,7 @@ log.init({
  * The IP is found on differnt places depending on
  * if the service is accessed directly or via proxy.
  */
-app.getRequestor = function(request) {
+app.getRequestor = function (request) {
   let result = request.headers["x-forwarded-for"];
 
   if (result == null) {
@@ -157,7 +157,7 @@ app.getRequestor = function(request) {
  * Log incomming request.
  * E.g:  http://localhost:3000/_about - Response Code: 200, Client IP: 127.0.0.1
  */
-app.logRequest = function(request, statusCode = STATUS_CODE_OK) {
+app.logRequest = function (request, statusCode = STATUS_CODE_OK) {
   log.info(
     `${request.protocol}://${request.get("Host")}${
       request.url
@@ -168,7 +168,7 @@ app.logRequest = function(request, statusCode = STATUS_CODE_OK) {
 /**
  * Init a Azure Application Insights if a key is passed as env APPINSIGHTS_INSTRUMENTATIONKEY
  */
-app.initApplicationInsights = function() {
+app.initApplicationInsights = function () {
   if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     appInsights
       .setup()
@@ -193,14 +193,14 @@ app.initApplicationInsights = function() {
 /**
  * Start server on port 80, or use port specifed in env PORT.
  */
-app.getListenPort = function() {
+app.getListenPort = function () {
   return process.env.PORT ? process.env.PORT : 80;
 };
 
 /**
  * Start the server on configured port.
  */
-app.listen(app.getListenPort(), function() {
+app.listen(app.getListenPort(), function () {
   console.log(
     `Started ${packageFile.name} on ${os.hostname()}:${app.getListenPort()}`
   );
@@ -212,35 +212,35 @@ app.listen(app.getListenPort(), function() {
 /**
  * Index page.
  */
-app.get("/", function(request, response) {
+app.get("/", function (request, response) {
   app.ok(request, response, templates.index());
 });
 
 /**
  * About page. Versions and such.
  */
-app.get("/_about", function(request, response) {
+app.get("/_about", function (request, response) {
   app.ok(request, response, templates._about());
 });
 
 /**
  * Health check route.
  */
-app.get("/_monitor", function(request, response) {
+app.get("/_monitor", function (request, response) {
   app.ok(request, response, templates._monitor(), CONTENT_TYPE_PLAIN_TEXT);
 });
 
 /**
  * Crawler access definitions.
  */
-app.get("/robots.txt", function(request, response) {
+app.get("/robots.txt", function (request, response) {
   app.ok(request, response, templates.robotstxt(), CONTENT_TYPE_PLAIN_TEXT);
 });
 
 /**
  * Unique path to verify ownership of domain.
  */
-app.get(`/${app.getOwnershipVerificationPath()}`, function(request, response) {
+app.get(`/${app.getOwnershipVerificationPath()}`, function (request, response) {
   log.info(
     `Domain verification response '${app.getOwnershipVerificationPathBodyContent()}'.`
   );
@@ -255,13 +255,13 @@ app.get(`/${app.getOwnershipVerificationPath()}`, function(request, response) {
 /**
  * Error page for 502 Bad Gateway
  */
-app.get("/error502.html", function(request, response) {
+app.get("/error502.html", function (request, response) {
   app.badGateway(request, response, templates.error502());
 });
 
 /**
  * Default route, if no other route is matched.
  */
-app.use(function(request, response) {
+app.use(function (request, response) {
   app.notFound(request, response, templates.error404());
 });

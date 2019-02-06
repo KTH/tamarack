@@ -16,7 +16,7 @@
         "nodemon": "^1.18.9"
     },
     "scripts": {
-        "start-dev": "PORTILLO_CLUSTER=MyClusterName DOMAIN_OWNERSHIP_VERIFICATION_FILE=verified DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT=verified PORT=3000 nodemon app.js"
+        "start-dev": "PORTILLO_CLUSTER=MyClusterName DOMAIN_OWNERSHIP_VERIFICATION_FILE=verified.txt DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT=verified PORT=3000 nodemon app.js"
     },
     "engines": {
         "node": "^10.14.0"
