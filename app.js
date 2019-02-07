@@ -62,15 +62,11 @@ app.send = function (
 /**
  * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE
  * to use as path for ownership verification.
- *
  * Example: /97823o4i723bus6dtg34.txt
+ * Defaults to _DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined
  */
 app.getOwnershipVerificationPath = function () {
-  let result = process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE;
-  if (result == null) {
-    result = "_DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined";
-  }
-  return result;
+  return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE ? process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE : "_DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined"
 };
 
 /**
@@ -79,16 +75,12 @@ app.getOwnershipVerificationPath = function () {
  * Defaults to empty string.
  */
 app.getOwnershipVerificationPathBodyContent = function () {
-  let result = process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT;
-  if (result == null) {
-    result = "";
-  }
-  return result;
+  return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT ? process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT : ""
 };
 
 /**
- * Select the content type for the DOMAIN_OWNERSHIP_VERIFICATION_FILE.
- * Use plain text if its a text file, otherwise use html.
+ * If env DOMAIN_OWNERSHIP_VERIFICATION_FILE ends with .txt mine type text/plain is used.
+ * Defaults to text/html.
  */
 app.getOwnershipVerificationPathMimeType = function () {
   return app.getOwnershipVerificationPath().endsWith(".txt") ? CONTENT_TYPE_PLAIN_TEXT : CONTENT_TYPE_HTML;
