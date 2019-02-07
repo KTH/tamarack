@@ -170,9 +170,7 @@ app.initApplicationInsights = function () {
       .setUseDiskRetryCaching(true)
       .start();
     log.info(
-      `Using Application Ingsights: '${
-        process.env.APPINSIGHTS_INSTRUMENTATIONKEY
-      }'.`
+      `Using Application Ingsights: '${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}'.`
     );
   } else {
     log.info(`Application Ingsights not used.`);
