@@ -91,12 +91,9 @@ app.getOwnershipVerificationPathBodyContent = function () {
  * Use plain text if its a text file, otherwise use html.
  */
 app.getOwnershipVerificationPathMimeType = function () {
-  result = CONTENT_TYPE_HTML;
-  if (app.getOwnershipVerificationPath().endsWith(".txt")) {
-    result = CONTENT_TYPE_PLAIN_TEXT;
-  }
-  return result;
+  return app.getOwnershipVerificationPath().endsWith(".txt") ? CONTENT_TYPE_PLAIN_TEXT : CONTENT_TYPE_HTML;
 };
+
 /**
  * Gets the log level passed as env LOG_LEVEL
  * or defaults to info.
