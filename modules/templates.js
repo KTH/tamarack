@@ -141,6 +141,7 @@ let error5xx = function error5xx(statusCode) {
             
             <script>
                 let url = "/_application?pathname=" + encodeURI(document.location.pathname);
+                console.log(url)
                 fetch(url).then(
                     function (response) {
                         if (response.status !== 200) {
