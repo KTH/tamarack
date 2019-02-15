@@ -49,7 +49,7 @@ let _getApplication = function getApplications(request, response, uriQuery) {
         hostname: _applicationsApiHost(),
         path: _getSearchPath(uriQuery),
         headers: {
-            api_key: '1234'
+            api_key: process.env.APPLICATIONS_API_KEY
         }
     }
 
