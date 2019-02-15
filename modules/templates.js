@@ -135,9 +135,9 @@ let error404 = function error404() {
 /**
  * 502 error page Bad Gateway
  */
-let error5xx = function error5xx(statusCode) {
+let error5xx = function error5xx(request) {
     return `
-    ${header(`${statusCode} - Service did not respond`)}
+    ${header(`${request.statusCode} - Service not working`)}
             
             <script>
                 let url = "/_application?pathname=" + encodeURI(document.location.pathname);
@@ -207,7 +207,7 @@ let error5xx = function error5xx(statusCode) {
                 For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.
             </div>
 
-        ${footer("")}
+        ${footer(`${request.statusCode}`)}
     `;
 };
 

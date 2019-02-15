@@ -133,7 +133,7 @@ app.get("/_application", function (request, response) {
  * Error page for 502 Bad Gateway
  */
 app.get("/error5xx.html", function (request, response) {
-  httpResponse.badGateway(request, response, templates.error5xx());
+  httpResponse.badGateway(request, response, templates.error5xx(request));
 });
 
 
