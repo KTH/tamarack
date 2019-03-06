@@ -121,8 +121,10 @@ app.get(`/${app.getOwnershipVerificationPath()}`, function (request, response) {
 });
 
 /**
- * Get information about an application that is supose to be
+ * Get information about an application that is suppose to be
  * proxied by not working for a pathname. The information is displayd to the end user.
+ * Normally this information contains the application name and a expected
+ * maximum downtime for the missing service.
  */
 app.get("/_application", function (request, response) {
   api.applications(request, response, request.query.pathname);
@@ -130,7 +132,8 @@ app.get("/_application", function (request, response) {
 
 
 /**
- * Error page for 502 Bad Gateway
+ * Generic error page for 5xx response codes.
+ * Includes application information route /_application.
  */
 app.get("/error5xx.html", function (request, response) {
   logger.log.info(`Got error on /error5xx.html for '${request.statusCode}'.`);
@@ -139,7 +142,7 @@ app.get("/error5xx.html", function (request, response) {
 
 
 /**
- * Default route, if no other route is matched.
+ * Default route, if no other route is matched (404 Not Found).
  */
 app.use(function (request, response) {
   httpResponse.notFound(request, response, templates.error404());
