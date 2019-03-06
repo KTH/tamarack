@@ -155,9 +155,6 @@ app.get("/_application", function (request, response) {
  * Includes application information route /_application.
  */
 app.get("/error5xx.html", function (request, response) {
-
-  logger.log.info(JSON.stringify(request.headers));
-
   httpResponse.badGateway(request, response, templates.error5xx(request));
 });
 

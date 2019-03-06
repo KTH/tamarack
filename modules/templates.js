@@ -137,7 +137,7 @@ let error404 = function error404() {
  */
 let error5xx = function error5xx(request) {
     return `
-    ${header(`${request.statusCode} - Service not working`)}
+    ${header(`5xx - Service not working`)}
             
             <script>
                 let url = "/_application?pathname=" + encodeURI(document.location.pathname);
@@ -207,7 +207,7 @@ let error5xx = function error5xx(request) {
                 For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.
             </div>
 
-        ${footer(`${request.statusCode}`)}
+        ${footer(`5xx`)}
     `;
 };
 
