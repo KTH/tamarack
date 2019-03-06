@@ -7,7 +7,7 @@ const about = require("./../config/version");
  * Header html
  */
 let header = function header(title) {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
     <!-- Served by Tamarack -->
     <html lang="en">
     <head>
@@ -95,6 +95,33 @@ let header = function header(title) {
                 padding-top: 1rem;
                 font-size: 1.2rem;
             }
+
+            .importance {
+                width: 1rem;
+                height: 1rem;
+                display: inline-block;
+                font-weight: normal;
+                border-radius: 10px;
+                box-shadow: 1px 1px 1px #cccccc;
+                background: #ddd;
+                margin-right: 0.5rem;
+            }
+
+            .importance.low {
+                background: #dddddd;
+            }
+            
+            .importance.medium {
+                background: #24a0d8;
+            }
+            
+            .importance.high {
+                background: #d85497;
+            }
+              
+            }
+
+
         </style>
     </head>
     <body>
@@ -108,7 +135,7 @@ let header = function header(title) {
  * Footer html
  */
 let footer = function footer(code) {
-    return `
+  return `
                 <p class="small">Page served by: Tamarack</p>
                 <p class="small">For all you techies, yes that means response code ${code} </p>
             </div>
@@ -122,7 +149,7 @@ let footer = function footer(code) {
  * 404 error page
  */
 let error404 = function error404() {
-    return `
+  return `
     ${header("404 - Page not found")}
         <h1>Sorry, we have nothing to show for the web address you entered.</h1>
         <h2>The service may have been moved or deleted.</h2>
@@ -132,12 +159,11 @@ let error404 = function error404() {
     `;
 };
 
-
 /**
  * 502 error page Bad Gateway
  */
 let error5xx = function error5xx(request) {
-    return `
+  return `
     ${header(`501 - Internal Server Error`)}
             
             <script>
@@ -175,7 +201,7 @@ let error5xx = function error5xx(request) {
 
                 <div id="importance-high" class="importance">
                 <h3>Expect <span class="publicName">the service</span> to be back soon</h3>
-                    <span class="publicName">This application</span> is classified as beeing of <strong>high importance</strong>.
+                    <span class="importance high"></span> <span class="publicName">This application</span> is classified as beeing of <strong>high importance</strong>.
                     This means that it is actively monitored by operations personal during office hours.
                     Operations are on call until midnight. Action to bring back the service is
                     normally taken within 15 minutes during office hours, and within one hour during On call hours.
@@ -186,7 +212,7 @@ let error5xx = function error5xx(request) {
 
                 <div id="importance-medium" class="importance">
                     <h3>Expect <span class="publicName">the service</span> to be back within 2 hours</h3>
-                    <span class="publicName">This service</span> is actively monitored by operations
+                    <span class="importance medium"></span> <span class="publicName">This service</span> is actively monitored by operations
                     personal during office hours. Action to bring back the service is normally taken within 2 hours. Outages outside
                     office hours are handled the following morning.
                     <br /><br />
@@ -195,7 +221,7 @@ let error5xx = function error5xx(request) {
 
                 <div id="importance-low" class="importance">
                     <h3><span class="publicName">The service</span> should be back within a day</h3>
-                    Unfortunatelly this service is classified as having a low impact, compared to other services. 
+                    <span class="importance low"></span> Unfortunatelly this service is classified as having a low impact, compared to other services. 
                     There for you can only expect <span class="publicName">the service</span> to work normally within a day.
                     <br><br>
                     Hopefully it will be back sooner :)
@@ -216,7 +242,7 @@ let error5xx = function error5xx(request) {
  * Index page.
  */
 let index = function index() {
-    return `
+  return `
     ${header("KTH Applications")}
     <h1>Applications</h1>
     <p>There is really nothing to see here, got to <a href="https://www.kth.se/">the KTH main site</a> instead. Much more interesting, hopefully ...</p>
@@ -228,14 +254,14 @@ let index = function index() {
  * robots.txt
  */
 let _robotstxt = function robotstxt() {
-    return `User-agent: *\nDisallow: /`;
+  return `User-agent: *\nDisallow: /`;
 };
 
 /**
  * Monitor page
  */
 let _monitor = function _monitor() {
-    return `APPLICATION_STATUS: OK\nCLUSTER: ${
+  return `APPLICATION_STATUS: OK\nCLUSTER: ${
     process.env.PORTILLO_CLUSTER
       ? process.env.PORTILLO_CLUSTER
       : "No env PORTILLO_CLUSTER set."
@@ -246,7 +272,7 @@ let _monitor = function _monitor() {
  * About page
  */
 let _about = function _about() {
-    return `
+  return `
     ${header("KTH Applications")}
             <p><strong>Docker image:</strong> ${about.dockerName}:${
     about.dockerVersion
@@ -263,10 +289,10 @@ let _about = function _about() {
  * Module exports
  */
 module.exports = {
-    index: index,
-    error404: error404,
-    error5xx: error5xx,
-    _monitor: _monitor,
-    _about: _about,
-    robotstxt: _robotstxt
+  index: index,
+  error404: error404,
+  error5xx: error5xx,
+  _monitor: _monitor,
+  _about: _about,
+  robotstxt: _robotstxt
 };
