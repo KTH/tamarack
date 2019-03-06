@@ -76,8 +76,6 @@ let header = function header(title) {
             }
             .alert {
                 opacity: 0;
-                border: 1px solid #faebcc;
-                border-radius: .15rem;
             }
 
             .alert-info {
@@ -85,6 +83,7 @@ let header = function header(title) {
                 font-size: 1.2rem;
                 min-height: 4.4rem;
                 border-radius: .15rem;
+                border: 1px solid #faebcc;
                 position: relative;
                 padding: 1rem;
                 background-color: #fcf8e3;
