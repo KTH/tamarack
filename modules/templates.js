@@ -76,6 +76,8 @@ let header = function header(title) {
             }
             .alert {
                 opacity: 0;
+                border: 1px solid #faebcc;
+                border-radius: .15rem;
             }
 
             .alert-info {
