@@ -19,7 +19,7 @@ const statusCodes = {
  * Default content type is text/html.
  */
 let _ok = function ok(request, response, body, contentType = contentTypes.HTML) {
-    logger.log.info("Using contentType: " + contentType)
+    logger.log.debug("Using contentType: " + contentType)
     _send(request, response, body, statusCodes.OK, contentType);
 };
 
