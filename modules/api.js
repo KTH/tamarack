@@ -70,7 +70,7 @@ let _getApplication = function getApplications(request, response, uriQuery) {
 
         api.on('error', function (e) {
             httpResponse.notFound(request, response, {
-                messsage: "Unable to retrieve data."
+                messsage: "Unable to find any matching deployment for this path."
             }, httpResponse.contentTypes.JSON)
             logger.log.error(`Unable to read application information for query '${uriQuery}' from ${options.hostname}`);
         });
