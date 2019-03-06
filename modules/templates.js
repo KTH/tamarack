@@ -201,7 +201,7 @@ let error5xx = function error5xx(request) {
 
                 <div id="importance-high" class="importance">
                 <h3>Expect <span class="publicName">the service</span> to be back soon</h3>
-                    <span class="importance-marker high" /> <span class="publicName">This application</span> is classified as beeing of <strong>high importance</strong>.
+                    <span class="importance-marker high"></span> <span class="publicName">This application</span> is classified as beeing of <strong>high importance</strong>.
                     This means that it is actively monitored by operations personal during office hours.
                     Operations are on call until midnight. Action to bring back the service is
                     normally taken within 15 minutes during office hours, and within one hour during On call hours.
@@ -212,7 +212,7 @@ let error5xx = function error5xx(request) {
 
                 <div id="importance-medium" class="importance">
                     <h3>Expect <span class="publicName">the service</span> to be back within 2 hours</h3>
-                    <span class="importance-marker medium" /> <span class="publicName">This service</span> is actively monitored by operations
+                    <span class="importance-marker medium"></span> <span class="publicName">This service</span> is actively monitored by operations
                     personal during office hours. Action to bring back the service is normally taken within 2 hours. Outages outside
                     office hours are handled the following morning.
                     <br /><br />
@@ -221,7 +221,7 @@ let error5xx = function error5xx(request) {
 
                 <div id="importance-low" class="importance">
                     <h3><span class="publicName">The service</span> should be back within a day</h3>
-                    <span class="importance-marker low" /> Unfortunatelly this service is classified as having a low impact, compared to other services. 
+                    <span class="importance-marker low"></span> Unfortunatelly this service is classified as having a low impact, compared to other services. 
                     There for you can only expect <span class="publicName">the service</span> to work normally within a day.
                     <br><br>
                     Hopefully it will be back sooner :)
