@@ -41,7 +41,7 @@ let header = function header(title) {
                 -moz-transform: rotate(-5deg);
                 -webkit-transform: rotate(-5deg);
                 padding: 30px 40px 40px;
-                max-width: 550px;
+                max-width: 750px;
                 margin: 30px auto;
             }
             h1 {
