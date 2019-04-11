@@ -42,8 +42,8 @@ logger.init({
  * E.g:  http://localhost:3000/_about - Response Code: 200, Client IP: 127.0.0.1
  */
 
-let _logRequest = function logRequest(request, statusCode = STATUS_CODE_OK, clientIp) {
-    logger.debug(`${request.protocol}://${request.get("Host")}${request.url} - Response Code: ${statusCode}, Client IP: ${clientIp}`);
+let _logRequest = function logRequest(request, statusCode, clientIp) {
+    logger.info(`${request.method} ${request.protocol}://${request.get("Host")}${request.url} - Response: ${statusCode}, Client IP: ${clientIp}`);
 };
 
 /**
