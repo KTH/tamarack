@@ -44,6 +44,7 @@ logger.init({
 
 let _logRequest = function logRequest(request, statusCode = STATUS_CODE_OK, clientIp) {
     logger.debug(`${request.protocol}://${request.get("Host")}${request.url} - Response Code: ${statusCode}, Client IP: ${clientIp}`);
+    logger.debug(JSON.stringify(request.headers));
 };
 
 /**
