@@ -43,7 +43,7 @@ logger.init({
  */
 let _logRequest = function logRequest(request, statusCode, clientIp) {
     logger.info(`${request.method} ${request.protocol}://${request.get("Host")}${request.url} - Response: ${statusCode}, Client IP: ${clientIp}`);
-    logger.debug(JSON.stringify(request.headers));
+    logger.debug(`Request headers: ${JSON.stringify(request.headers)}`);
 };
 
 /**

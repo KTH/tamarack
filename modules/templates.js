@@ -7,7 +7,7 @@ const about = require("./../config/version");
  * Header html
  */
 let header = function header(title) {
-  return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
     <!-- Served by Tamarack -->
     <html lang="en">
     <head>
@@ -135,7 +135,7 @@ let header = function header(title) {
  * Footer html
  */
 let footer = function footer(code) {
-  return `
+    return `
                 <p class="small">Page served by: Tamarack</p>
                 <p class="small">For all you techies, yes that means response code ${code} </p>
             </div>
@@ -149,7 +149,7 @@ let footer = function footer(code) {
  * 404 error page
  */
 let error404 = function error404() {
-  return `
+    return `
     ${header("404 - Page not found")}
         <h1>Sorry, we have nothing to show for the web address you entered.</h1>
         <h2>The service may have been moved or deleted.</h2>
@@ -163,7 +163,7 @@ let error404 = function error404() {
  * 502 error page Bad Gateway
  */
 let error5xx = function error5xx(request) {
-  return `
+    return `
     ${header(`501 - Internal Server Error`)}
             
             <script>
@@ -242,11 +242,10 @@ let error5xx = function error5xx(request) {
  * Index page.
  */
 let index = function index() {
-  return `
+    return `
     ${header("KTH Applications")}
     <h1>Applications</h1>
     <p>There is really nothing to see here, got to <a href="https://www.kth.se/">the KTH main site</a> instead. Much more interesting, hopefully ...</p>
-    ${footer("404 Not Found")}
     `;
 };
 
@@ -254,14 +253,14 @@ let index = function index() {
  * robots.txt
  */
 let _robotstxt = function robotstxt() {
-  return `User-agent: *\nDisallow: /`;
+    return `User-agent: *\nDisallow: /`;
 };
 
 /**
  * Monitor page
  */
 let _monitor = function _monitor() {
-  return `APPLICATION_STATUS: OK\nCLUSTER: ${
+    return `APPLICATION_STATUS: OK\nCLUSTER: ${
     process.env.PORTILLO_CLUSTER
       ? process.env.PORTILLO_CLUSTER
       : "No env PORTILLO_CLUSTER set."
@@ -272,7 +271,7 @@ let _monitor = function _monitor() {
  * About page
  */
 let _about = function _about() {
-  return `
+    return `
     ${header("KTH Applications")}
             <p><strong>Docker image:</strong> ${about.dockerName}:${
     about.dockerVersion
@@ -289,10 +288,10 @@ let _about = function _about() {
  * Module exports
  */
 module.exports = {
-  index: index,
-  error404: error404,
-  error5xx: error5xx,
-  _monitor: _monitor,
-  _about: _about,
-  robotstxt: _robotstxt
+    index: index,
+    error404: error404,
+    error5xx: error5xx,
+    _monitor: _monitor,
+    _about: _about,
+    robotstxt: _robotstxt
 };
