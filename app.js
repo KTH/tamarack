@@ -114,6 +114,18 @@ app.get("/_monitor", function(request, response) {
 });
 
 /**
+ * Cluster IPs (ops)
+ */
+app.get("/_clusters", function(request, response) {
+  httpResponse.ok(
+    request,
+    response,
+    templates._clusters(),
+    httpResponse.contentTypes.JSON
+  )
+});
+
+/**
  * Crawler access definitions.
  */
 app.get("/robots.txt", function(request, response) {
