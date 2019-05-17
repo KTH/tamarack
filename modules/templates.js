@@ -271,16 +271,16 @@ let _monitor = function _monitor() {
  * Cluster IP information (ops)
  */
 let _clusters = function _clusters() {
-    return `{
-        "everest-teal":     "13.80.31.209"
-        "everest-white":    "104.46.44.26"
-        "everest-yellow":   "52.174.92.242"
-        "everest-pink":     "52.232.79.222"
-        "everest-grey":     "52.174.238.136"
-        "everest-red":      "52.166.33.229"
-        "everest-blue":     "13.81.219.131"
-        "everest-black":    "13.95.135.124"
-    }`
+    return JSON.stringify({
+        'everest-teal': '13.80.31.209',
+        'everest-white': '104.46.44.26',
+        'everest-yellow': '52.174.92.242',
+        'everest-pink': '52.232.79.222',
+        'everest-grey': '52.174.238.136',
+        'everest-red': '52.166.33.229',
+        'everest-blue': '13.81.219.131',
+        'everest-black': '13.95.135.124'
+    })
 }
 
 /**
