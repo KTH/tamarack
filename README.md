@@ -15,5 +15,8 @@ Information about a running instance. Version, build date etc.
 ### _monitor - Public monitoring
 Endpoint for public monitoring. Page should always contain `APPLICATION_STATUS: OK`
 
+### 404-pages
+Any request to the service mesh that does not match an application gets served a 404 page.
+
 ### error5xx.html - Custom error pages for service mesh
 Generic error page that also tries to include information about an application if the error page is shown for a missing service (501 Bad gateway). For more information see https://docs.traefik.io/configuration/commons/#custom-error-pages
