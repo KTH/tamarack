@@ -4,12 +4,10 @@ If the reverse proxy in Docker Swarm clusters do not match any applications. Tam
 Tamarack also tells other proxies whats cluster it is via /_monitor
 
 ## Routes handled by Tamarack
-```
 [https://app.kth.se/_about](https://app.kth.se/_about)
 [https://app.kth.se/_monitor]()
 [https://app.kth.se/missing](https://app.kth.se/missing)
 [https://app.kth.se/error5xx.html](https://app.kth.se/error5xx.html)
-```
 
 ### _about - Information page
 Information about a running instance. Version, build date etc.
