@@ -8,5 +8,14 @@ Tamarack also tells other proxies whats cluster it is via /_monitor
 https://app.kth.se/_about
 https://app.kth.se/_monitor
 https://app.kth.se/missing
+https://app.kth.se//error5xx.html
 ```
 
+### _about
+Information about a running instance. Version, build date etc.
+
+### _monitor 
+Endpoint for public monitoring. Page should always contain `APPLICATION_STATUS: OK`
+
+### error5xx.html
+Generic error page that also tries to include information about an application if the error page is shown for a missing service (501 Bad gateway). For more information see https://docs.traefik.io/configuration/commons/#custom-error-pages
