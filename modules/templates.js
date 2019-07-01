@@ -7,7 +7,7 @@ const about = require("./../config/version");
  * Header html
  */
 let header = function header(title) {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
     <!-- Served by Tamarack -->
     <html lang="en">
     <head>
@@ -135,7 +135,7 @@ let header = function header(title) {
  * Footer html
  */
 let footer = function footer(code) {
-    return `
+  return `
                 <p class="small">Page served by: Tamarack</p>
                 <p class="small">For all you techies, yes that means response code ${code} </p>
             </div>
@@ -149,7 +149,7 @@ let footer = function footer(code) {
  * 404 error page
  */
 let error404 = function error404() {
-    return `
+  return `
     ${header("404 - Page not found")}
         <h1>Sorry, we have nothing to show for the web address you entered.</h1>
         <h2>The service may have been moved or deleted.</h2>
@@ -163,7 +163,7 @@ let error404 = function error404() {
  * 502 error page Bad Gateway
  */
 let error5xx = function error5xx(request) {
-    return `
+  return `
     ${header(`Sorry, the service is not working as intended`)}
             
             <script>
@@ -242,7 +242,7 @@ let error5xx = function error5xx(request) {
  * Index page.
  */
 let index = function index() {
-    return `
+  return `
     ${header("KTH Applications")}
     <h1>Applications</h1>
     <p>There is really nothing to see here, got to <a href="https://www.kth.se/">the KTH main site</a> instead. Much more interesting, hopefully ...</p>
@@ -253,47 +253,48 @@ let index = function index() {
  * robots.txt
  */
 let _robotstxt = function robotstxt() {
-    return `User-agent: *\nDisallow: /`;
+  return `User-agent: *\nDisallow: /`;
 };
 
 /**
  * Monitor page
  */
 let _monitor = function _monitor() {
-    return `APPLICATION_STATUS: OK\nCLUSTER: ${
-        process.env.PORTILLO_CLUSTER
-            ? process.env.PORTILLO_CLUSTER
-            : "No env PORTILLO_CLUSTER set."
-        }`;
+  return `APPLICATION_STATUS: OK\nCLUSTER: ${
+    process.env.PORTILLO_CLUSTER
+      ? process.env.PORTILLO_CLUSTER
+      : "No env PORTILLO_CLUSTER set."
+  }`;
 };
 
 /**
  * Cluster IP information (ops)
  */
 let _clusters = function _clusters() {
-    return JSON.stringify({
-        'everest-teal': '13.80.31.209',
-        'everest-white': '104.46.44.26',
-        'everest-yellow': '52.174.92.242',
-        'everest-pink': '52.232.79.222',
-        'everest-grey': '52.174.238.136',
-        'everest-red': '52.166.33.229',
-        'everest-blue': '13.81.219.131',
-        'everest-black': '13.95.135.124'
-    })
-}
+  return JSON.stringify({
+    "everest-teal": "13.80.31.209",
+    "everest-white": "104.46.44.26",
+    "everest-yellow": "52.174.92.242",
+    "everest-pink": "52.232.79.222",
+    "everest-grey": "52.174.238.136",
+    "everest-red": "52.166.33.229",
+    "everest-blue": "13.81.219.131",
+    "everest-black": "13.95.135.124"
+  });
+};
 
 /**
  * About page
  */
 let _about = function _about() {
-    return `
+  return `
     ${header("KTH Applications")}
             <p><strong>Docker image:</strong> ${about.dockerName}:${
-        about.dockerVersion
-        }</p>
+    about.dockerVersion
+  }</p>
             <p><strong>Hostname:</strong> ${os.hostname()}</p>
             <p><strong>Build date:</strong> ${about.jenkinsBuildDate}</p>
+            <p><strong>Started:</strong> ${new Date()}</p>
         </div>
     </body>
     </html>
@@ -304,11 +305,11 @@ let _about = function _about() {
  * Module exports
  */
 module.exports = {
-    index: index,
-    error404: error404,
-    error5xx: error5xx,
-    _monitor: _monitor,
-    _about: _about,
-    robotstxt: _robotstxt,
-    _clusters: _clusters
+  index: index,
+  error404: error404,
+  error5xx: error5xx,
+  _monitor: _monitor,
+  _about: _about,
+  robotstxt: _robotstxt,
+  _clusters: _clusters
 };
