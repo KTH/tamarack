@@ -2,6 +2,7 @@
 
 const os = require("os");
 const about = require("./../config/version");
+const started = new Date();
 
 /**
  * Header html
@@ -294,7 +295,7 @@ let _about = function _about() {
   }</p>
             <p><strong>Hostname:</strong> ${os.hostname()}</p>
             <p><strong>Build date:</strong> ${about.jenkinsBuildDate}</p>
-            <p><strong>Started:</strong> ${new Date()}</p>
+            <p><strong>Started:</strong> ${started}</p>
         </div>
     </body>
     </html>
