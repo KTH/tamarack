@@ -14,9 +14,12 @@
         "kth-node-api-call": "^2.0.3"
     },
     "devDependencies": {
-        "nodemon": "^1.18.9"
+        "nodemon": "^1.18.9",
+        "chai": "^3.5.0",
+        "mocha": "^6.2.0"
     },
     "scripts": {
+        "test": "NODE_ENV=development node_modules/mocha/bin/mocha ./tests/unit-tests/test-*.js",
         "start-dev": "LOG_LEVEL=debug PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se APPLICATIONS_API_KEY=x DOMAIN_OWNERSHIP_VERIFICATION_FILE=verified.txt DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT=verified PORT=3000 nodemon app.js"
     },
     "engines": {
