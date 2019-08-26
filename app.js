@@ -14,7 +14,7 @@ const path = require("path");
  * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE
  * to use as path for ownership verification.
  * Example: /97823o4i723bus6dtg34.txt
- * Defaults to _DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined
+ * Defaults to _DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined.
  */
 app.getOwnershipVerificationPath = function() {
   return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE
