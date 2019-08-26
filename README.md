@@ -26,7 +26,7 @@ Generic error page that also tries to include information about an application i
 
 Using NPM `npm test` or using Docker `ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-unit-tests.yml up --abort-on-container-exit --always-recreate-deps`
 
-```bash
+```text
   Template handling
     ✓ Path '/' should contain a title.
     ✓ Path '/error5xx' should contain a message.
