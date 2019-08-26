@@ -20,3 +20,20 @@ Any request to the service mesh that does not match an application gets served a
 
 ### error5xx.html - Custom error pages for service mesh
 Generic error page that also tries to include information about an application if the error page is shown for a missing service (501 Bad gateway). For more information see https://docs.traefik.io/configuration/commons/#custom-error-pages
+
+
+## Tests
+
+Using NPM `npm test` or using Docker `ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-unit-tests.yml up --abort-on-container-exit --always-recreate-deps`
+
+```bash
+  Template handling
+    ✓ Path '/' should contain a title.
+    ✓ Path '/error5xx' should contain a message.
+    ✓ Path '/error404' should contain a message.
+    ✓ The header should contain env Application Insights key 'APPINSIGHTS_INSTRUMENTATIONKEY' if set.
+    ✓ Path '/_monitor' should contain 'APPLICATION_STATUS: OK'.
+    ✓ Path '/_monitor' should contain cluster name specified in env 'PORTILLO_CLUSTER' if set.
+    ✓ Path '/_monitor' should contain 'No env PORTILLO_CLUSTER set.' when env 'PORTILLO_CLUSTER' is not set.
+    ✓ Path '/_clusters' should return 8 IP-numbers.
+```
