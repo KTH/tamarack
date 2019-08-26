@@ -1,5 +1,6 @@
-# Tamarack
-If the reverse proxy in Docker Swarm clusters do not match any applications. Tamarack is the catch all application that will show the 404 page for a request.
+# Tamarack ![alt text](https://api.travis-ci.org/KTH/tamarack.svg?branch=master)
+
+*If the reverse proxy in Docker Swarm clusters do not match any applications. Tamarack is the catch all application that will show the 404 page for a request.*
 
 Tamarack also tells other proxies whats cluster it is via /_monitor
 
