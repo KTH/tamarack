@@ -11,4 +11,4 @@ RUN npm install --production --loglevel warn && \
 
 EXPOSE 80
 
-CMD ["node", "app.js"]
+CMD ["npm", "start"]

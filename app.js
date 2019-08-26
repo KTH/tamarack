@@ -8,7 +8,6 @@ const logger = require("./modules/logger");
 const httpResponse = require("./modules/httpResponse");
 const os = require("os");
 const packageFile = require("./package.json");
-const path = require("path");
 
 /**
  * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE
@@ -59,9 +58,7 @@ app.initApplicationInsights = function() {
       .setUseDiskRetryCaching(true)
       .start();
     logger.log.info(
-      `Using Application Ingsights: '${
-        process.env.APPINSIGHTS_INSTRUMENTATIONKEY
-      }'.`
+      `Using Application Ingsights: '${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}'.`
     );
   } else {
     logger.log.info(`Application Ingsights not used.`);
@@ -122,7 +119,7 @@ app.get("/_clusters", function(request, response) {
     response,
     templates._clusters(),
     httpResponse.contentTypes.JSON
-  )
+  );
 });
 
 /**

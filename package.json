@@ -19,7 +19,8 @@
         "mocha": "^6.2.0"
     },
     "scripts": {
-        "test": "NODE_ENV=development node_modules/mocha/bin/mocha ./tests/unit-tests/test-*.js",
+        "start": "node app.js"
+,        "test": "NODE_ENV=development node_modules/mocha/bin/mocha ./tests/unit-tests/test-*.js",
         "start-dev": "LOG_LEVEL=debug PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se APPLICATIONS_API_KEY=x DOMAIN_OWNERSHIP_VERIFICATION_FILE=verified.txt DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT=verified PORT=3000 nodemon app.js"
     },
     "engines": {
