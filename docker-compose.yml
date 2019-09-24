@@ -3,8 +3,6 @@ version: '3'
 services:
   web:
     build: .
-    env_file: 
-      - .env
     environment:
       PORT: 3000 # Starts Node on this port, if not set defaults to 80.
       PORTILLO_CLUSTER: "development" # Will show under /_monitor
