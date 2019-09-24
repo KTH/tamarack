@@ -172,6 +172,13 @@ app.get("/error5xx.html", function(request, response) {
 });
 
 /**
+ * Ignore favicons.
+ */
+app.get("/favicon.ico", function(request, response) {
+  httpResponse.noContent(request, response);
+});
+
+/**
  * Default route, if no other route is matched (404 Not Found).
  */
 app.use(function(request, response) {
