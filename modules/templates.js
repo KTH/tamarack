@@ -247,7 +247,7 @@ let index = function index() {
     ${header("KTH Applications")}
     <h1>Applications</h1>
     <p>There is really nothing to see here, got to <a href="https://www.kth.se/">the KTH main site</a> instead. Much more interesting, hopefully ...</p>
-    `;
+    ${footer(`200`)}`;
 };
 
 /**
