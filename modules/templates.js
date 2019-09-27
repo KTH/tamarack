@@ -3,6 +3,7 @@
 const os = require("os");
 const about = require("./../config/version");
 const started = new Date();
+const { statusCodes } = require("./httpResponse");
 
 /**
  * Header html
@@ -135,12 +136,13 @@ let header = function header(title) {
 /**
  * Footer html
  */
-let footer = function footer(code) {
+let footer = function footer(statusCode) {
+  let statusCodeParagraph = `<p class="small">For all you techies, yes that means response code ${statusCode} </p>`;
+  if (statusCode == statusCodes.OK) {
+    statusCodeParagraph = "";
+  }
   return `
-                <p class="small">Page served by: Tamarack</p>
-                <p class="small">For all you techies, yes that means response code ${code} </p>
-            </div>
-
+        <p class="small">Page served by: Tamarack</p>${statusCodeParagraph}</div>
         </body>
     </html>
 `;
