@@ -4,64 +4,76 @@
 // Testing libraries
 const expect = require("chai").expect;
 const templates = require("../../modules/templates");
+const packageJsonName = require("../../package.json").name;
+
+const capitalize = name => {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+};
 
 describe("Template paths handling", function() {
-  it("Path '/' should contain a title.", function() {
-    const result = templates.index();
-    expect(result).to.contain("KTH Applications");
+  it("Path '/' should contain the public application name.", function() {
+    expect(templates.index()).to.contain("KTH Applications");
   });
 
-  it("Path '/error5xx' should contain a message.", function() {
-    const result = templates.error5xx();
-    expect(result).to.contain("Sorry, the service is not working as intended");
+  it("Path 'not found', should contain a the package.json name.", function() {
+    expect(templates.error404()).to.contain(capitalize(packageJsonName));
   });
 
-  it("Path '/error404' should contain a message.", function() {
-    const result = templates.error404();
-    expect(result).to.contain("Page not found");
+  it("Path 'Not working' should contain a the package.json name.", function() {
+    expect(templates.error5xx()).to.contain(capitalize(packageJsonName));
+  });
+
+  it("Path '/error5xx' should contain a 'Not working' message.", function() {
+    expect(templates.error5xx()).to.contain(
+      "Sorry, the service is not working as intended"
+    );
+  });
+
+  it("Path '/error404' should contain a 'Page not found' message.", function() {
+    expect(templates.error404()).to.contain("Page not found");
   });
 
   it("Path '/_monitor' should contain 'APPLICATION_STATUS: OK'.", function() {
-    const result = templates._monitor();
-    expect(result).to.contain("APPLICATION_STATUS: OK");
+    expect(templates._monitor()).to.contain("APPLICATION_STATUS: OK");
   });
 
   it("Path '/_monitor' should contain cluster name specified in env 'PORTILLO_CLUSTER' if set.", function() {
-    process.env.PORTILLO_CLUSTER = "stage";
-    const result = templates._monitor();
-    expect(result).to.contain("stage");
+    const stage = "stage";
+    process.env.PORTILLO_CLUSTER = stage;
+    expect(templates._monitor()).to.contain(stage);
     delete process.env.PORTILLO_CLUSTER;
   });
 
   it("Path '/_monitor' should contain 'No env PORTILLO_CLUSTER set.' when env 'PORTILLO_CLUSTER' is not set.", function() {
-    const result = templates._monitor();
-    expect(result).to.contain("No env PORTILLO_CLUSTER set.");
+    expect(templates._monitor()).to.contain("No env PORTILLO_CLUSTER set.");
+  });
+
+  it("Path '/robots.txt' should disallow all indexing.", function() {
+    expect(templates.robotstxt()).to.equal("User-agent: *\nDisallow: /");
   });
 
   it("Path '/_clusters' should return 8 IP-numbers.", function() {
-    const json = JSON.parse(templates._clusters());
-    expect(Object.keys(json).length).to.equal(8);
+    expect(Object.keys(JSON.parse(templates._clusters())).length).to.equal(8);
   });
 });
 
 describe("ApplicationInsights handling", function() {
-  it("The Application Insights script is only added to the head tag when env 'APPINSIGHTS_INSTRUMENTATIONKEY' is set.", function() {
-    const resultNoAppInsights = templates.index();
-    expect(resultNoAppInsights).to.not.contain("instrumentationKey");
+  it("The Application Insights script is not added then the env 'APPINSIGHTS_INSTRUMENTATIONKEY' is missing.", function() {
+    expect(templates.index()).to.not.contain("instrumentationKey");
+  });
 
-    process.env.APPINSIGHTS_INSTRUMENTATIONKEY = "abcd-1234-efghi";
-    const resultWithAppInsights = templates.index();
-    expect(resultWithAppInsights).to.contain("abcd-1234-efghi");
+  it("The Application Insights script is added to the head tag when env 'APPINSIGHTS_INSTRUMENTATIONKEY' is set.", function() {
+    const key = "abcd-1234-efghi";
+    process.env.APPINSIGHTS_INSTRUMENTATIONKEY = key;
+    expect(templates.index()).to.contain(key);
   });
 
   it("All pages should contain env Application Insights key 'APPINSIGHTS_INSTRUMENTATIONKEY' if set.", function() {
-    process.env.APPINSIGHTS_INSTRUMENTATIONKEY = "abcd-1234-efghi";
-    const result0 = templates.index();
-    expect(result0).to.contain("abcd-1234-efghi");
-    const result1 = templates.error404();
-    expect(result1).to.contain("abcd-1234-efghi");
-    const result2 = templates.error5xx();
-    expect(result2).to.contain("abcd-1234-efghi");
+    const key = "abcd-1234-efghi";
+    process.env.APPINSIGHTS_INSTRUMENTATIONKEY = key;
+    expect(templates.index()).to.contain(key);
+    expect(templates.error404()).to.contain(key);
+    expect(templates.error5xx()).to.contain(key);
     delete process.env.APPINSIGHTS_INSTRUMENTATIONKEY;
   });
 });
