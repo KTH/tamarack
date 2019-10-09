@@ -38,15 +38,19 @@ Run tests inside the :whale: Docker container using `npm run unit-tests-in-docke
 Run test directly `npm install` and then `npm test` in your development setup to run unit tests.
 
 ```text
-  Template handling
+  Template paths handling
     ✓ Path '/' should contain a title.
     ✓ Path '/error5xx' should contain a message.
     ✓ Path '/error404' should contain a message.
-    ✓ The header should contain env Application Insights key 'APPINSIGHTS_INSTRUMENTATIONKEY' if set.
     ✓ Path '/_monitor' should contain 'APPLICATION_STATUS: OK'.
     ✓ Path '/_monitor' should contain cluster name specified in env 'PORTILLO_CLUSTER' if set.
     ✓ Path '/_monitor' should contain 'No env PORTILLO_CLUSTER set.' when env 'PORTILLO_CLUSTER' is not set.
     ✓ Path '/_clusters' should return 8 IP-numbers.
+
+  ApplicationInsights handling
+    ✓ The Application Insights script is only added to the head tag when env 'APPINSIGHTS_INSTRUMENTATIONKEY' is set.
+    ✓ All pages should contain env Application Insights key 'APPINSIGHTS_INSTRUMENTATIONKEY' if set.
+
 ```
 
 ### Integration tests in Docker
