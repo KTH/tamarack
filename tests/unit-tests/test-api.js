@@ -6,13 +6,13 @@ const expect = require("chai").expect;
 const api = require("../../modules/api");
 
 describe("API", function() {
-  it("When env 'PORTILLO_CLUSTER' is set, return its value to for api call to 'api.kth.se/api/pipeline/v1/search/[active|stage|integral]'.", function() {
+  it("When env 'PORTILLO_CLUSTER' is set, return it´s value to for the query  'api.kth.se/api/pipeline/v1/search/[active|stage|integral]'.", function() {
     const stage = "stage";
     process.env.PORTILLO_CLUSTER = stage;
     expect(api._getCluster()).to.equal(stage);
     delete process.env.PORTILLO_CLUSTER;
   });
-  it("When env 'PORTILLO_CLUSTER' is missing, return active as default value for api call to 'api.kth.se/api/pipeline/v1/search/active'.", function() {
+  it("When env 'PORTILLO_CLUSTER' is missing, return 'active' as default value for the api call to 'api.kth.se/api/pipeline/v1/search/active'.", function() {
     expect(api._getCluster()).to.equal("active");
     delete process.env.APPLICATIONS_API_HOST;
   });

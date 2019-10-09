@@ -38,9 +38,8 @@ Run tests inside the :whale: Docker container using `npm run unit-tests-in-docke
 Run test directly `npm install` and then `npm test` in your development setup to run unit tests.
 
 ```text
-
-  API
-    ✓ When env 'PORTILLO_CLUSTER' is set, return its value to for api call to 'api.kth.se/api/pipeline/v1/search/[active|stage|integral]'.
+API
+    ✓ When env 'PORTILLO_CLUSTER' is set, return it´s value to for api call to 'api.kth.se/api/pipeline/v1/search/[active|stage|integral]'.
     ✓ When env 'PORTILLO_CLUSTER' is missing, return active as default value for api call to 'api.kth.se/api/pipeline/v1/search/active'.
     ✓ When env 'APPLICATIONS_API_HOST' is set, return its value
     ✓ When env 'APPLICATIONS_API_HOST' is missing, return 'api.kth.se' as default host
