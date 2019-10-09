@@ -18,7 +18,7 @@ describe("Template handling", function() {
 
   it("Path '/error404' should contain a message.", function() {
     const result = templates.error404();
-    expect(result).to.contain("404 - Page not found");
+    expect(result).to.contain("Page not found");
   });
 
   it("The header should contain env Application Insights key 'APPINSIGHTS_INSTRUMENTATIONKEY' if set.", function() {
