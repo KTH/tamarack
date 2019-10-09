@@ -153,12 +153,12 @@ let footer = function footer(statusCode) {
  */
 let error404 = function error404() {
   return `
-    ${header("404 - Page not found")}
+    ${header(`Page not found`)}
         <h1>Sorry, we have nothing to show for the web address you entered.</h1>
         <h2>The service may have been moved or deleted.</h2>
         <p>Please also check the web address for proper spelling and capitalization, or try
         <a href="https://www.kth.se/search/">searching for it</a>.</p>
-    ${footer("404")}
+    ${footer(statusCodes.NOT_FOUND)}
     `;
 };
 
@@ -237,7 +237,7 @@ let error5xx = function error5xx(request) {
                 For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.
             </div>
 
-        ${footer(`501`)}
+        ${footer(statusCodes.INTERNAL_SERVER_ERROR)}
     `;
 };
 
@@ -249,7 +249,7 @@ let index = function index() {
     ${header("KTH Applications")}
     <h1>Applications</h1>
     <p>There is really nothing to see here, got to <a href="https://www.kth.se/">the KTH main site</a> instead. Much more interesting, hopefully ...</p>
-    ${footer(`200`)}`;
+    ${footer(statusCodes.OK)}`;
 };
 
 /**
