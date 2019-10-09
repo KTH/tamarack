@@ -48,8 +48,9 @@ const getOptions = () => {
 /**
  * Gets information about an application based on the uriQuery passed.
  * Ex:
- * For example.com/my-application/ the uri query '/my-application/' will be sent to the api
- * which returns information about tha application.
+ * For app.kth.se/my-application/admin/page=1 the uri query '/my-application/admin/page=1' will be sent to the api
+ * which returns information about tha application. The information returned will be the  first match
+ * for applications hows path starts with "path": "/my-application/".
  *
  * Example result from API:
  * {
