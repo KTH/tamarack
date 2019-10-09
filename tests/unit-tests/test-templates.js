@@ -4,23 +4,24 @@
 // Testing libraries
 const expect = require("chai").expect;
 const templates = require("../../modules/templates");
-const packageJsonName = require("../../package.json").name;
+const name = require("../../package.json").name;
+const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
 
 const capitalize = name => {
   return name.charAt(0).toUpperCase() + name.slice(1);
 };
 
-describe("Template paths handling", function() {
+describe("Template paths handling\n", function() {
   it("Path '/' should contain the public application name.", function() {
     expect(templates.index()).to.contain("KTH Applications");
   });
 
   it("Path 'not found', should contain a the package.json name.", function() {
-    expect(templates.error404()).to.contain(capitalize(packageJsonName));
+    expect(templates.error404()).to.contain(capitalizedName);
   });
 
   it("Path 'Not working' should contain a the package.json name.", function() {
-    expect(templates.error5xx()).to.contain(capitalize(packageJsonName));
+    expect(templates.error5xx()).to.contain(capitalizedName);
   });
 
   it("Path '/error5xx' should contain a 'Not working' message.", function() {
@@ -57,7 +58,7 @@ describe("Template paths handling", function() {
   });
 });
 
-describe("ApplicationInsights handling", function() {
+describe("ApplicationInsights handling\n", function() {
   it("The Application Insights script is not added then the env 'APPINSIGHTS_INSTRUMENTATIONKEY' is missing.", function() {
     expect(templates.index()).to.not.contain("instrumentationKey");
   });
