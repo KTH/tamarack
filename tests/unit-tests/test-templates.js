@@ -7,10 +7,6 @@ const templates = require("../../modules/templates");
 const name = require("../../package.json").name;
 const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
 
-const capitalize = name => {
-  return name.charAt(0).toUpperCase() + name.slice(1);
-};
-
 describe("Template paths handling\n", function() {
   it("Path '/' should contain the public application name.", function() {
     expect(templates.index()).to.contain("KTH Applications");
