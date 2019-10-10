@@ -33,7 +33,7 @@ https://travis-ci.org/KTH/tamarack
 
 ### In Docker
 
-Run tests inside the :whale: Docker container using `npm run unit-tests-in-docker`. The script build the Docker container according to _Dockerfile_ and then mounts the `/tests` catalog into it, and runs `npm test` inside the container. No dependencies other then Docker needed.
+Run tests inside the :whale: Docker container using `npm run test-unit-in-docker`. The script build the Docker container according to _Dockerfile_ and then mounts the `/tests` catalog into it, and runs `npm test` inside the container. No dependencies other then Docker needed.
 
 Run test directly `npm install` and then `npm test` in your development setup to run unit tests.
 
@@ -65,4 +65,4 @@ API
 
 ### Integration tests in Docker
 
-Run integration tests against the service running as a :whale: Docker container using `npm run integration-tests-in-docker`. The script build the Docker container according to _Dockerfile_ and then starts another image that runs a _curl_-command against the service.
+Run integration tests against the service running as a :whale: Docker container using `npm run test-integration-in-docker`. The script build the Docker container according to _Dockerfile_ and then starts another image that runs a _curl_-command against the service.
