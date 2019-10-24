@@ -45,6 +45,7 @@ let _notFound = function notFound(
 let _noContent = function noContent(request, response) {
   _send(request, response, "", statusCodes.NO_CONTENT, contentTypes.PLAIN_TEXT);
 };
+
 /**
  * Send status internal server error with a body set to the content type.
  * Default content type is text/html.
