@@ -285,7 +285,7 @@ let _monitor = function _monitor() {
  * Cluster IP information (ops)
  */
 let _clusters = function _clusters() {
-  return JSON.stringify({
+  return {
     "everest-teal": "13.80.31.209",
     "everest-white": "104.46.44.26",
     "everest-yellow": "52.174.92.242",
@@ -294,7 +294,7 @@ let _clusters = function _clusters() {
     "everest-red": "52.166.33.229",
     "everest-blue": "13.81.219.131",
     "everest-black": "13.95.135.124"
-  });
+  };
 };
 
 /**

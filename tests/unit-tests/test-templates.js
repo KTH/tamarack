@@ -50,7 +50,7 @@ describe("Template paths handling\n", function() {
   });
 
   it("Path '/_clusters' should return 8 IP-numbers.", function() {
-    expect(Object.keys(JSON.parse(templates._clusters())).length).to.equal(8);
+    expect(Object.keys(templates._clusters()).length).to.equal(8);
   });
 });
 
