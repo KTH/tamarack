@@ -35,7 +35,7 @@ const _getSearchPath = uriQuery => {
 /**
  * Gets the options including headers (api key) to pass to the api called.
  */
-const getOptions = () => {
+const getOptions = uriQuery => {
   return {
     hostname: _applicationsApiHost(),
     path: _getSearchPath(uriQuery),
@@ -70,12 +70,7 @@ const getOptions = () => {
  *
  */
 const _getApplication = (request, response, uriQuery) => {
-  options = getOptions();
-
-  logger.log.debug(`Application information query '${uriQuery}'`);
-  logger.log.debug(`URI: ${options.hostname + options.path}`);
-
-  https.get(options, api => {
+  https.get(getOptions(uriQuery), api => {
     var responseBody = "";
 
     // statuskod 404 ska särbehanlads
@@ -112,7 +107,7 @@ const _getApplication = (request, response, uriQuery) => {
  * Module exports
  */
 module.exports = {
-  applications: _getApplication,
+  getApplication: _getApplication,
   // Exposed for unit testing.
   _getCluster: _getCluster,
   _applicationsApiHost: _applicationsApiHost,

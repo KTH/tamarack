@@ -156,7 +156,7 @@ app.get(`/${app.getOwnershipVerificationPath()}`, function(request, response) {
  * maximum downtime for the missing service.
  */
 app.get("/_application", function(request, response) {
-  api.applications(request, response, request.query.pathname);
+  api.getApplication(request, response, request.query.pathname);
 });
 
 /**
