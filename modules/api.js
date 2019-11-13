@@ -70,10 +70,12 @@ const getOptions = () => {
  *
  */
 const _getApplication = (request, response, uriQuery) => {
+  options = getOptions();
+
   logger.log.debug(`Application information query '${uriQuery}'`);
   logger.log.debug(`URI: ${options.hostname + options.path}`);
 
-  https.get(getOptions(), api => {
+  https.get(options, api => {
     var responseBody = "";
 
     // statuskod 404 ska särbehanlads
