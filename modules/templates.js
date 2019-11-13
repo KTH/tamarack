@@ -228,16 +228,16 @@ let error5xx = function error5xx(request) {
                     <h3>Expect <span class="publicName">the service</span> to be back within 2 hours</h3>
                     <span class="importance-marker medium"></span> <span class="publicName">This service</span> is actively monitored by operations
                     personal during office hours. Action to bring back the service is normally taken within 2 hours. Outages outside
-                    office hours are handled the following morning.
+                    office hours are handled the next business day.
                     <br /><br />
                     We are sorry for the inconvenience this might cause you!
                 </div>
 
                 <div id="importance-low" class="importance">
                     <h3><span class="publicName">The service</span> should be back within a day</h3>
-                    <span class="importance-marker low"></span> Unfortunatelly this service is classified as having a low impact, compared to other services. 
-                    There for you can only expect <span class="publicName">the service</span> to work normally within a day.
-                    <br><br>
+                    <span class="importance-marker low"></span> Unfortunately this service is classified as having a low impact, compared to other services. 
+                    Action to bring back the service is normally taken within 24 hours during business hours.
+                    <br /><br />
                     Hopefully it will be back sooner :)
                 </div>
 
