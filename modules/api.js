@@ -21,7 +21,7 @@ const _applicationsApiHost = () => {
   const result = process.env.APPLICATIONS_API_HOST
     ? process.env.APPLICATIONS_API_HOST
     : "api.kth.se";
-  logger.log.result(`Hostname for searching '${result}'.`);
+  logger.log.info(`Hostname for searching '${result}'.`);
   return result;
 };
 
