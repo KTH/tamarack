@@ -27,9 +27,11 @@ const _applicationsApiHost = () => {
  * Gets the path to the api endpoint we are calling.
  */
 const _getSearchPath = uriQuery => {
-  return `/api/pipeline/v1/search/${_getCluster()}/${encodeURIComponent(
+  const path = `/api/pipeline/v1/search/${_getCluster()}/${encodeURIComponent(
     uriQuery
   )}`;
+  logger.log.info(`Path for searching '${path}'.`);
+  return path;
 };
 
 /**
