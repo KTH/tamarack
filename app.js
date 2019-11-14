@@ -1,6 +1,5 @@
 const appInsights = require("applicationinsights");
 const express = require("express");
-const requestClient = require("request");
 const app = express();
 const templates = require("./modules/templates");
 const api = require("./modules/api");
@@ -157,9 +156,7 @@ app.get(`/${app.getOwnershipVerificationPath()}`, function(request, response) {
  * maximum downtime for the missing service.
  */
 app.get("/_application", function(request, response) {
-  requestClient(
-    "https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F_monitor"
-  ).pipe(response);
+  return api.getApplication(request, response, request.query.pathname);
 });
 
 /**
