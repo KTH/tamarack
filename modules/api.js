@@ -21,8 +21,8 @@ const _applicationsApiHost = () => {
   const result = process.env.APPLICATIONS_API_HOST
     ? process.env.APPLICATIONS_API_HOST
     : "api.kth.se";
-  logger.log.result(`Hostname for searching '${path}'.`);
-  return hostname;
+  logger.log.result(`Hostname for searching '${result}'.`);
+  return result;
 };
 
 /**
@@ -32,7 +32,7 @@ const _getSearchPath = uriQuery => {
   const result = `/api/pipeline/v1/search/${_getCluster()}/${encodeURIComponent(
     uriQuery
   )}`;
-  logger.log.info(`Path for searching '${path}'.`);
+  logger.log.info(`Path for searching '${result}'.`);
   return result;
 };
 
