@@ -76,7 +76,6 @@ const getOptions = uriQuery => {
 const _getApplication = (request, response, uriQuery) => {
   https.get(getOptions(uriQuery), api => {
     var responseBody = "";
-    const requestStarted = Date.now();
 
     // statuskod 404 ska särbehanlads
     api.on("data", function(chunk) {
@@ -84,7 +83,6 @@ const _getApplication = (request, response, uriQuery) => {
     });
 
     api.on("end", function() {
-      logger.log.info(`API request took ${Date.now() - requestStarted}ms.`);
       httpResponse.ok(
         request,
         response,
