@@ -18,9 +18,10 @@ const _getCluster = () => {
  * Defaults to api.kth.se
  */
 const _applicationsApiHost = () => {
-  return process.env.APPLICATIONS_API_HOST
+  const hostname = process.env.APPLICATIONS_API_HOST
     ? process.env.APPLICATIONS_API_HOST
     : "api.kth.se";
+  logger.log.info(`Hostname for searching '${path}'.`);
 };
 
 /**
