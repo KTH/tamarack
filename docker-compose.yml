@@ -8,5 +8,8 @@ services:
       PORTILLO_CLUSTER: "development" # Will show under /_monitor
       APPINSIGHTS_INSTRUMENTATIONKEY: ""
       LOG_LEVEL: "info"
+      APPLICATIONS_API_HOST: "api-r.referens.sys.kth.se"
+      APPLICATIONS_API_KEY: "1234"
+    
     ports:
-      - 3000:3000
+      - 80:3000
