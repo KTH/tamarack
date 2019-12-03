@@ -264,6 +264,8 @@ let _monitor = function _monitor() {
         process.env.PORTILLO_CLUSTER
             ? process.env.PORTILLO_CLUSTER
             : "No env PORTILLO_CLUSTER set."
+        }\nHOSTNAME: ${
+            os.hostname()
         }`;
 };
 
