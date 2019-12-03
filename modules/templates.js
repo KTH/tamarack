@@ -2,27 +2,40 @@
 
 const os = require("os");
 const about = require("./../config/version");
+const started = new Date();
+const { statusCodes } = require("./httpResponse");
+
+/**
+ * If env APPINSIGHTS_INSTRUMENTATIONKEY is set, return ApplicationInsights script.
+ */
+const applicationInsights = () => {
+  if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY == null) {
+    return "";
+  }
+
+  return `
+      <script>
+        var appInsights=window.appInsights||function(a){
+            function b(a){c[a]=function(){var b=arguments;c.queue.push(function(){c[a].apply(c,b)})}}var c={config:a},d=document,e=window;setTimeout(function(){var b=d.createElement("script");b.src=a.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js",d.getElementsByTagName("script")[0].parentNode.appendChild(b)});try{c.cookie=d.cookie}catch(a){}c.queue=[];for(var f=["Event","Exception","Metric","PageView","Trace","Dependency"];f.length;)b("track"+f.pop());if(b("setAuthenticatedUserContext"),b("clearAuthenticatedUserContext"),b("startTrackEvent"),b("stopTrackEvent"),b("startTrackPage"),b("stopTrackPage"),b("flush"),!a.disableExceptionTracking){f="onerror",b("_"+f);var g=e[f];e[f]=function(a,b,d,e,h){var i=g&&g(a,b,d,e,h);return!0!==i&&c["_"+f](a,b,d,e,h),i}}return c
+        }({
+            instrumentationKey: "${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}"
+        });      
+        window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();
+      </script>
+      `;
+};
 
 /**
  * Header html
  */
 let header = function header(title) {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
     <!-- Served by Tamarack -->
     <html lang="en">
     <head>
         <title>${title}</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no">
-        <script>
-        var appInsights=window.appInsights||function(a){
-            function b(a){c[a]=function(){var b=arguments;c.queue.push(function(){c[a].apply(c,b)})}}var c={config:a},d=document,e=window;setTimeout(function(){var b=d.createElement("script");b.src=a.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js",d.getElementsByTagName("script")[0].parentNode.appendChild(b)});try{c.cookie=d.cookie}catch(a){}c.queue=[];for(var f=["Event","Exception","Metric","PageView","Trace","Dependency"];f.length;)b("track"+f.pop());if(b("setAuthenticatedUserContext"),b("clearAuthenticatedUserContext"),b("startTrackEvent"),b("stopTrackEvent"),b("startTrackPage"),b("stopTrackPage"),b("flush"),!a.disableExceptionTracking){f="onerror",b("_"+f);var g=e[f];e[f]=function(a,b,d,e,h){var i=g&&g(a,b,d,e,h);return!0!==i&&c["_"+f](a,b,d,e,h),i}}return c
-        }({
-            instrumentationKey: "${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}"
-        });
-        
-        window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();
-        </script>
-
+        ${applicationInsights()}
         <style>
             body {
                 background-color: #e3e5e3;
@@ -134,12 +147,13 @@ let header = function header(title) {
 /**
  * Footer html
  */
-let footer = function footer(code) {
-    return `
-                <p class="small">Page served by: Tamarack</p>
-                <p class="small">For all you techies, yes that means response code ${code} </p>
-            </div>
-
+let footer = function footer(statusCode) {
+  let statusCodeParagraph = `<p class="small">For all you techies, yes that means response code ${statusCode} </p>`;
+  if (statusCode == statusCodes.OK) {
+    statusCodeParagraph = "";
+  }
+  return `
+        <p class="small">Page served by: Tamarack</p>${statusCodeParagraph}</div>
         </body>
     </html>
 `;
@@ -149,13 +163,13 @@ let footer = function footer(code) {
  * 404 error page
  */
 let error404 = function error404() {
-    return `
-    ${header("404 - Page not found")}
+  return `
+    ${header(`Page not found`)}
         <h1>Sorry, we have nothing to show for the web address you entered.</h1>
         <h2>The service may have been moved or deleted.</h2>
         <p>Please also check the web address for proper spelling and capitalization, or try
         <a href="https://www.kth.se/search/">searching for it</a>.</p>
-    ${footer("404")}
+    ${footer(statusCodes.NOT_FOUND)}
     `;
 };
 
@@ -163,7 +177,7 @@ let error404 = function error404() {
  * 502 error page Bad Gateway
  */
 let error5xx = function error5xx(request) {
-    return `
+  return `
     ${header(`Sorry, the service is not working as intended`)}
             
             <script>
@@ -234,7 +248,7 @@ let error5xx = function error5xx(request) {
                 For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.
             </div>
 
-        ${footer(`501`)}
+        ${footer(statusCodes.INTERNAL_SERVER_ERROR)}
     `;
 };
 
@@ -242,18 +256,18 @@ let error5xx = function error5xx(request) {
  * Index page.
  */
 let index = function index() {
-    return `
+  return `
     ${header("KTH Applications")}
     <h1>Applications</h1>
     <p>There is really nothing to see here, got to <a href="https://www.kth.se/">the KTH main site</a> instead. Much more interesting, hopefully ...</p>
-    `;
+    ${footer(statusCodes.OK)}`;
 };
 
 /**
  * robots.txt
  */
 let _robotstxt = function robotstxt() {
-    return `User-agent: *\nDisallow: /`;
+  return `User-agent: *\nDisallow: /`;
 };
 
 /**
@@ -273,29 +287,30 @@ let _monitor = function _monitor() {
  * Cluster IP information (ops)
  */
 let _clusters = function _clusters() {
-    return JSON.stringify({
-        'everest-teal': '13.80.31.209',
-        'everest-white': '104.46.44.26',
-        'everest-yellow': '52.174.92.242',
-        'everest-pink': '52.232.79.222',
-        'everest-grey': '52.174.238.136',
-        'everest-red': '52.166.33.229',
-        'everest-blue': '13.81.219.131',
-        'everest-black': '13.95.135.124'
-    })
-}
+  return {
+    "everest-teal": "13.80.31.209",
+    "everest-white": "104.46.44.26",
+    "everest-yellow": "52.174.92.242",
+    "everest-pink": "52.232.79.222",
+    "everest-grey": "52.174.238.136",
+    "everest-red": "52.166.33.229",
+    "everest-blue": "13.81.219.131",
+    "everest-black": "13.95.135.124"
+  };
+};
 
 /**
  * About page
  */
 let _about = function _about() {
-    return `
+  return `
     ${header("KTH Applications")}
             <p><strong>Docker image:</strong> ${about.dockerName}:${
-        about.dockerVersion
-        }</p>
+    about.dockerVersion
+  }</p>
             <p><strong>Hostname:</strong> ${os.hostname()}</p>
             <p><strong>Build date:</strong> ${about.jenkinsBuildDate}</p>
+            <p><strong>Started:</strong> ${started}</p>
         </div>
     </body>
     </html>
@@ -306,11 +321,11 @@ let _about = function _about() {
  * Module exports
  */
 module.exports = {
-    index: index,
-    error404: error404,
-    error5xx: error5xx,
-    _monitor: _monitor,
-    _about: _about,
-    robotstxt: _robotstxt,
-    _clusters: _clusters
+  index: index,
+  error404: error404,
+  error5xx: error5xx,
+  _monitor: _monitor,
+  _about: _about,
+  robotstxt: _robotstxt,
+  _clusters: _clusters
 };

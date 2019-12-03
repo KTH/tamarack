@@ -8,13 +8,12 @@ const logger = require("./modules/logger");
 const httpResponse = require("./modules/httpResponse");
 const os = require("os");
 const packageFile = require("./package.json");
-const path = require("path");
 
 /**
  * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE
  * to use as path for ownership verification.
  * Example: /97823o4i723bus6dtg34.txt
- * Defaults to _DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined
+ * Defaults to _DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined.
  */
 app.getOwnershipVerificationPath = function() {
   return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE
@@ -59,9 +58,7 @@ app.initApplicationInsights = function() {
       .setUseDiskRetryCaching(true)
       .start();
     logger.log.info(
-      `Using Application Ingsights: '${
-        process.env.APPINSIGHTS_INSTRUMENTATIONKEY
-      }'.`
+      `Using Application Ingsights: '${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}'.`
     );
   } else {
     logger.log.info(`Application Ingsights not used.`);
@@ -122,7 +119,7 @@ app.get("/_clusters", function(request, response) {
     response,
     templates._clusters(),
     httpResponse.contentTypes.JSON
-  )
+  );
 });
 
 /**
@@ -159,7 +156,7 @@ app.get(`/${app.getOwnershipVerificationPath()}`, function(request, response) {
  * maximum downtime for the missing service.
  */
 app.get("/_application", function(request, response) {
-  api.applications(request, response, request.query.pathname);
+  return api.getApplication(request, response, request.query.pathname);
 });
 
 /**
@@ -172,6 +169,13 @@ app.get("/error5xx.html", function(request, response) {
     response,
     templates.error5xx(request)
   );
+});
+
+/**
+ * Ignore favicons.
+ */
+app.get("/favicon.ico", function(request, response) {
+  httpResponse.noContent(request, response);
 });
 
 /**
