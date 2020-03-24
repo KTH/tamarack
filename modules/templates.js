@@ -274,11 +274,13 @@ let _robotstxt = function robotstxt() {
  * Monitor page
  */
 let _monitor = function _monitor() {
-  return `APPLICATION_STATUS: OK\nCLUSTER: ${
-    process.env.PORTILLO_CLUSTER
-      ? process.env.PORTILLO_CLUSTER
-      : "No env PORTILLO_CLUSTER set."
-  }`;
+    return `APPLICATION_STATUS: OK\nCLUSTER: ${
+        process.env.PORTILLO_CLUSTER
+            ? process.env.PORTILLO_CLUSTER
+            : "No env PORTILLO_CLUSTER set."
+        }\nHOSTNAME: ${
+            os.hostname()
+        }`;
 };
 
 /**
