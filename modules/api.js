@@ -2,7 +2,7 @@
 
 const https = require("https");
 const logger = require("./logger");
-const httpResponse = require("./httpResponse");
+const httpResponse = require("@kth/http-responses");
 
 /**
  * Gets the cluster name to used when building the path for calling
@@ -28,7 +28,7 @@ const _applicationsApiHost = () => {
 /**
  * Gets the path to the api endpoint we are calling.
  */
-const _getSearchPath = uriQuery => {
+const _getSearchPath = (uriQuery) => {
   const result = `/api/pipeline/v1/search/${_getCluster()}/${encodeURIComponent(
     uriQuery
   )}`;
@@ -39,13 +39,13 @@ const _getSearchPath = uriQuery => {
 /**
  * Gets the options including headers (api key) to pass to the api called.
  */
-const getOptions = uriQuery => {
+const getOptions = (uriQuery) => {
   return {
     hostname: _applicationsApiHost(),
     path: _getSearchPath(uriQuery),
     headers: {
-      api_key: process.env.APPLICATIONS_API_KEY
-    }
+      api_key: process.env.APPLICATIONS_API_KEY,
+    },
   };
 };
 
@@ -74,15 +74,15 @@ const getOptions = uriQuery => {
  *
  */
 const _getApplication = (request, response, uriQuery) => {
-  https.get(getOptions(uriQuery), api => {
+  https.get(getOptions(uriQuery), (api) => {
     var responseBody = "";
 
     // statuskod 404 ska särbehanlads
-    api.on("data", function(chunk) {
+    api.on("data", function (chunk) {
       responseBody += chunk;
     });
 
-    api.on("end", function() {
+    api.on("end", function () {
       httpResponse.ok(
         request,
         response,
@@ -91,12 +91,12 @@ const _getApplication = (request, response, uriQuery) => {
       );
     });
 
-    api.on("error", function(e) {
+    api.on("error", function (e) {
       httpResponse.notFound(
         request,
         response,
         {
-          messsage: "Unable to find any matching deployment for this path."
+          messsage: "Unable to find any matching deployment for this path.",
         },
         httpResponse.contentTypes.JSON
       );
@@ -115,5 +115,5 @@ module.exports = {
   // Exposed for unit testing.
   _getCluster: _getCluster,
   _applicationsApiHost: _applicationsApiHost,
-  _getSearchPath: _getSearchPath
+  _getSearchPath: _getSearchPath,
 };

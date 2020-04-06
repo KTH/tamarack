@@ -66,3 +66,19 @@ API
 ### Integration tests in Docker
 
 Run integration tests against the service running as a :whale: Docker container using `npm run test-integration-in-docker`. The script build the Docker container according to _Dockerfile_ and then starts another image that runs a _curl_-command against the service.
+
+### Run end-to-end integration tests locally.
+
+1. Start the service `npm run start-dev`
+2. Run `npm run test-integration`. This will run the same tests as *npm run test-integratoin-in-docker*.
+
+```bash
+   OK: /_monitor contains APPLICATION_STATUS: OK. | Mån  6 Apr 2020 15:17:42 CEST
+   OK: /_application can make a call to api.kth.se/api/pipeline and read kth-azure-app data. | Mån  6 Apr 2020 15:17:43 CEST
+   OK: /_about shows about information. | Mån  6 Apr 2020 15:17:43 CEST
+   OK: / shows index page. | Mån  6 Apr 2020 15:17:43 CEST
+   OK: /missing-page - 404-page works. | Mån  6 Apr 2020 15:17:43 CEST
+   OK: /5xx.html page works. | Mån  6 Apr 2020 15:17:43 CEST
+   OK: /verified.txt contains verified. | Mån  6 Apr 2020 15:17:43 CEST
+```
+

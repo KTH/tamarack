@@ -18,15 +18,20 @@ services:
     
     # Possible configuration for the app.
     environment:
-      PORTILLO_CLUSTER: "development" # Will show under /_monitor
+      PORTILLO_CLUSTER: "active" # Will show under /_monitor
+      DISABLE_REQUEST_LOGGING: "true"
       APPINSIGHTS_INSTRUMENTATIONKEY: ""
-
+      APPLICATIONS_API_HOST: "api.kth.se"
+      APPLICATIONS_API_KEY: 1234
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE: verified.txt
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT: verified
 
     ports:
       - 80
-  #############################################
+
+      #############################################
   # Start the client running tests 
-  # agains http://web:3000/
+  # agains http://web:80/
   #############################################
   integration-tests:
     # Build client image and run tests

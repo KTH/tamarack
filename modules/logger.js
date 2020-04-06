@@ -1,5 +1,5 @@
 const logger = require("kth-node-log");
-const packageFile = require("../package.json");
+const about = require("../config/version");
 
 /**
  * Gets the log level passed as env LOG_LEVEL
@@ -14,17 +14,12 @@ const packageFile = require("../package.json");
  * log.trace('granular logging, rarely used')
  */
 let _getLogLevel = function getLogLevel() {
-
-    result = "info";
-
-    if (process.env.LOG_LEVEL != null) {
-        result = process.env.LOG_LEVEL;
-    }
-
-    console.log(`Loglevel: '${result}'`);
-
-    return result;
-
+  result = "info";
+  if (process.env.LOG_LEVEL != null) {
+    result = process.env.LOG_LEVEL;
+  }
+  console.log(`Loglevel: '${result}'`);
+  return result;
 };
 
 /**
@@ -32,24 +27,28 @@ let _getLogLevel = function getLogLevel() {
  * or use default.
  */
 logger.init({
-    name: packageFile.name,
-    app: packageFile.name,
-    level: _getLogLevel()
-});
-
+  name: about.dockerName,
+  app: about.dockerVersion,
+  level: _getLogLevel()
+})
+;
 /**
  * Log incomming request.
  * E.g:  http://localhost:3000/_about - Response Code: 200, Client IP: 127.0.0.1
  */
 let _logRequest = function logRequest(request, statusCode, clientIp) {
-    logger.info(`${request.method} ${request.protocol}://${request.get("Host")}${request.url} - Response: ${statusCode}, Client IP: ${clientIp}`);
-    logger.debug(`Request headers: ${JSON.stringify(request.headers)}`);
+  logger.info(
+    `${request.method} ${request.protocol}://${request.get("Host")}${
+      request.url
+    } - Response: ${statusCode}, Client IP: ${clientIp}`
+  );
+  logger.debug(`Request headers: ${JSON.stringify(request.headers)}`);
 };
 
 /**
  * Module exports
  */
 module.exports = {
-    log: logger,
-    logRequest: _logRequest
+  log: logger,
+  logRequest: _logRequest
 };

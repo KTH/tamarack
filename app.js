@@ -1,13 +1,15 @@
 const appInsights = require("applicationinsights");
 const express = require("express");
-const app = express();
-const templates = require("./modules/templates");
+const os = require("os");
+const { templates } = require("@kth/basic-html-templates");
+const httpResponse = require("@kth/http-responses");
 const api = require("./modules/api");
 const about = require("./config/version");
 const logger = require("./modules/logger");
-const httpResponse = require("./modules/httpResponse");
-const os = require("os");
-const packageFile = require("./package.json");
+const cluster = require("./modules/cluster");
+const badGateway = require("./modules/badGateway");
+const app = express();
+const started = new Date();
 
 /**
  * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE
@@ -77,7 +79,9 @@ app.getListenPort = function() {
  */
 app.listen(app.getListenPort(), function() {
   logger.log.info(
-    `Started ${packageFile.name} on ${os.hostname()}:${app.getListenPort()}`
+    `Started ${about.dockerName}:${
+      about.dockerVersion
+    } on ${os.hostname()}:${app.getListenPort()}`
   );
   app.initApplicationInsights();
 });
@@ -88,14 +92,14 @@ app.listen(app.getListenPort(), function() {
  * Index page.
  */
 app.get("/", function(request, response) {
-  httpResponse.ok(request, response, templates.index());
+  httpResponse.ok(request, response, templates.index((title = "Applications")));
 });
 
 /**
  * About page. Versions and such.
  */
 app.get("/_about", function(request, response) {
-  httpResponse.ok(request, response, templates._about());
+  httpResponse.ok(request, response, templates._about(about, started));
 });
 
 /**
@@ -105,7 +109,10 @@ app.get("/_monitor", function(request, response) {
   httpResponse.ok(
     request,
     response,
-    templates._monitor(),
+    templates._monitor(
+      (status = "OK"),
+      (extras = cluster.getMonitorClusterName())
+    ),
     httpResponse.contentTypes.PLAIN_TEXT
   );
 });
@@ -117,7 +124,7 @@ app.get("/_clusters", function(request, response) {
   httpResponse.ok(
     request,
     response,
-    templates._clusters(),
+    cluster.getAllClusterIps(),
     httpResponse.contentTypes.JSON
   );
 });
@@ -164,11 +171,7 @@ app.get("/_application", function(request, response) {
  * Includes application information route /_application.
  */
 app.get("/error5xx.html", function(request, response) {
-  httpResponse.internalServerError(
-    request,
-    response,
-    templates.error5xx(request)
-  );
+  httpResponse.internalServerError(request, response, badGateway.error5xx());
 });
 
 /**

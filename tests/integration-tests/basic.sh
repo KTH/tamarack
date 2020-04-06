@@ -1,23 +1,120 @@
 #!/bin/bash
 
-error() { printf "\n \033[0;31mERROR: $@\033[0;0m | $(date) \n"; }
-passed() { printf "\n \033[0;32m   OK: $@\033[0;0m | $(date) \n\n"; }
+info() { printf "\034[0;31m     $@\033[0;0m | $(date)\n"; }
+error() { printf "\033[0;31m    ERROR: $@\033[0;0m | $(date)\n"; }
+passed() { printf "\033[0;32m   OK: $@\033[0;0m | $(date)\n"; }
 
-# /redis will connect to redis and say OK, if it works.
-MONITOR_URL="http://web/_monitor";
-PATTERN="development"
+#
+# Path to the Cisco vpn client.
+#
+if [ -z "$URL_PREFIX" ]; then
+    URL_PREFIX="http://web"
+    sleep 5s
+fi
 
-sleep 5s
 
-RESPONSE=`curl -s -S --max-time 30 $MONITOR_URL`
+FAILED=""
 
-echo $RESPONSE
+# ------------------------
+
+RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_monitor"`
+PATTERN="active" # Set by process.env.PORTILLO_CLUSTER
 
 if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    error "URL '$MONITOR_URL' does not contain '$PATTERN'."
+    info $RESPONSE
+    error "URL '/_monitor' does not contain env PORTILLO_CLUSTER '$PATTERN'."
     exit -1
 fi
 
-passed "Basic test passed for '$MONITOR_URL'."
+passed "/_monitor contains APPLICATION_STATUS: OK."
 
-exit 0
+# ------------------------
+
+# _application will ask https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F for 
+# information about our test app "kth-azure-app".
+# This json is then used by /5xx.html to show importance information.
+RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_application?pathname=/kth-azure-app/"`
+PATTERN="_monitor"
+
+if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
+    info $RESPONSE
+    error "URL '/_application' does not contain information about 'kth-azure-app' (The monitorUrl '$PATTERN')."
+    FAILED="FAILED"
+fi
+passed "/_application can make a call to api.kth.se/api/pipeline and read kth-azure-app data."
+
+# ------------------------
+
+RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_about"`
+PATTERN="Docker image"
+
+if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
+    info $RESPONSE
+    error "URL '/_about' does not contain about information. (Looking for '$PATTERN')"
+    FAILED="FAILED"
+else
+    passed "/_about shows about information."
+fi
+
+# ------------------------
+
+RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/"`
+PATTERN="Applications"
+
+if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
+    info $RESPONSE
+    error "URL '/' does not show index title '$PATTERN'."
+    FAILED="FAILED"
+else
+    passed "/ shows index page."
+fi
+
+# ------------------------
+
+RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/missing-page"`
+PATTERN="Sorry, we have nothing to show"
+
+if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
+    info $RESPONSE
+    error "URL /missing-page - 404-page does not show text '$PATTERN'."
+    FAILED="FAILED"
+else
+    passed "/missing-page - 404-page works."
+fi
+
+# ------------------------
+
+RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/error5xx.html"`
+PATTERN="Sorry, the service is not working as intended"
+
+if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
+    info $RESPONSE
+    error "URL '/5xx.html page does not show text '$PATTERN' to say a service is broken."
+    FAILED="FAILED"
+else
+    passed "/5xx.html page works."
+fi
+
+
+
+# ------------------------
+
+RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/$DOMAIN_OWNERSHIP_VERIFICATION_FILE"`
+PATTERN="$DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT" # Set by process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
+
+if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
+    info $RESPONSE
+    error "URL '/$DOMAIN_OWNERSHIP_VERIFICATION_FILE' does not contain env DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT '$PATTERN'."
+    exit -1
+fi
+
+passed "/$DOMAIN_OWNERSHIP_VERIFICATION_FILE contains $DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT."
+
+
+if [[ "$FAILED" != *"FAILED"* ]]; then
+    exit 0
+fi
+
+
+# TODO: detectify stuff
+exit 1
