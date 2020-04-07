@@ -1,13 +1,5 @@
 const logger = require("./logger");
 
-const LOG_LEVEL = "info";
-const PORT = 80;
-const PORTILLO_CLUSTER = "active";
-const APPLICATIONS_API_HOST = "api.kth.se";
-const DOMAIN_OWNERSHIP_VERIFICATION_FILE = "domain";
-const DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT = "";
-const APPINSIGHTS_INSTRUMENTATIONKEY = "";
-
 /**
  * All process.env:s that if not set already will be used.
  * Example:

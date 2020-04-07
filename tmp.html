@@ -1,25 +1,116 @@
-"use strict";
 
-const { templates } = require("@kth/basic-html-templates");
-const { statusCodes } = require("@kth/http-responses");
-const cluster = require("./cluster");
+    <!DOCTYPE html>
+    <!-- Served by Sorry, the service is not working as intended -->
+    <html lang="en">
+    <head>
+        <title>Sorry, the service is not working as intended</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no">
+        
+        
+      <!-- Default style. -->
+      <!-- Override by setting env to something like CSS_URI='https://example.com/my.css' -->
+      <style>
+        body {
+            background-color: #e3e5e3;
+            margin: 0;
+            font-family: Arial,Helvetica Neue,helvetica,sans-serif;
+            font-weight: 400;
+            line-height: 1.4375;
+            font-size: 1.2rem;
+        }
+        .wrapper {
+            padding: 40px;
+            font-family: arial, helvetica;
+            box-shadow: 0 0 5px 5px #aeb4ae;
+            background-color: #fff;
+            transform: rotate(-5deg);
+            -moz-transform: rotate(-5deg);
+            -webkit-transform: rotate(-5deg);
+            padding: 30px 40px 40px;
+            max-width: 750px;
+            margin: 30px auto;
+        }
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 400;
+            line-height: 1.4375;
+        }
+        h2 {
+            font-size: 2.0rem;
+            font-weight: 400;
+            margin: 0 0 0.5rem 0
+        }
+        h3 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 0 0 0.5rem 0
+        }
+        p {
+            font-size: 1.125rem;
+        } 
 
-/**
- * Gets the host that runs the api we are calling.
- * Defaults to api.kth.se
- */
-const getSearchEndpoint = () => {
-  return `https://${
-    process.env.APPLICATIONS_API_HOST
-  }/api/pipeline/v1/search/${cluster.getClusterName()}/`;
-};
+        p.small {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        a {
+            color: #006cb7;
+            text-decoration: none;
+        }
+        .importance {
+            display: none;
+        }
+        .alert {
+            opacity: 0;
+        }
 
-/**
- * 502 error page Bad Gateway
- */
-const error5xx = function error5xx() {
-  return `
-    ${templates.header(`Sorry, the service is not working as intended`)}
+        .alert-info {
+            color: #000;
+            font-size: 1.2rem;
+            min-height: 4.4rem;
+            border-radius: .15rem;
+            border: 1px solid #faebcc;
+            position: relative;
+            padding: 1rem;
+            background-color: #fcf8e3;
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .team-alerted {
+            padding-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .importance-marker {
+            width: 1rem;
+            height: 1rem;
+            display: inline-block;
+            font-weight: normal;
+            border-radius: 10px;
+            box-shadow: 1px 1px 1px #cccccc;
+            background: #ddd;
+            margin-right: 0.5rem;
+        }
+
+        .importance-marker.low {
+            background: #dddddd;
+        }
+        
+        .importance-marker.medium {
+            background: #24a0d8;
+        }
+        
+        .importance-marker.high {
+            background: #d85497;
+        }
+    </style>
+    </head>
+    <body>
+
+    <div class="wrapper">
+        <a href="https://www.kth.se/"><img width=76 height=76 src="https://www.kth.se/polopoly_fs/1.77257!/KTH_Logotyp_RGB_2013-2.svg" alt="KTH Logotype"></a>
+
             
             <script>
                 /*
@@ -56,15 +147,15 @@ const error5xx = function error5xx() {
                     "publicUserDocumentationUrl":"https://confluence.sys.kth.se/confluence/display/EV/Continuous+Delivery+Pipeline+med+Docker"}
                 */
 
-                var pathFromProxy = encodeURIComponent(document.location.pathname);
-                var url = "${getSearchEndpoint()}" + pathFromProxy;
-                //let url = "https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F"
+                #let pathFromProxy = encodeURIComponent(document.location.pathname);
+                #const url = "https://api.kth.se/api/pipeline/v1/search/active/" + pathFromProxy;
+                let url = "https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F"
 
                 fetch(url).then(
                     function (response) {
                         if (response.status !== 200) {
                             console.log('Could not get application information. Status Code: ' + response.status);
-                            return;
+           §                 return;
                         }
 
                         response.json().then(function (data) {
@@ -86,9 +177,8 @@ const error5xx = function error5xx() {
                 });
             </script>
 
-            <h1><span class="publicName">Houston, we have a problem</span>
-            <h2>This service is temporarily not working ...</h2>
-            <p>The team responsible for the service have been alerted.</p>
+            <h1>🤦‍♂️<span class="publicName">This service</span>, does not work at the moment :(</h1>
+            
             <div aria-live="polite" role="alert" id="importance" class="alert">
 
                 <div id="importance-high" class="importance">
@@ -97,6 +187,9 @@ const error5xx = function error5xx() {
                     This means that it is actively monitored by operations personal during office hours.
                     Operations are on call until midnight. Action to bring back the service is
                     normally taken within 15 minutes during office hours, and within one hour during On call hours.
+                    <br /><br />
+                    We are sorry for the inconvenience this causes you!
+
                 </div>
 
                 <div id="importance-medium" class="importance">
@@ -104,6 +197,8 @@ const error5xx = function error5xx() {
                     <span class="importance-marker medium"></span> <span class="publicName">This service</span> is actively monitored by operations
                     personal during office hours. Action to bring back the service is normally taken within 2 hours. Outages outside
                     office hours are handled the following morning.
+                    <br /><br />
+                    We are sorry for the inconvenience this causes you!
                 </div>
 
                 <div id="importance-low" class="importance">
@@ -113,23 +208,16 @@ const error5xx = function error5xx() {
                     <br><br>
                     Hopefully it will be back sooner :)
                 </div>
+
             </div>
-            <h3 style="margin-top: 2rem;">💔 We are sorry for the inconvenience this causes you!</h3>
+
             <div class="team-alerted">
                 The team responsible for the service have been alerted.
                 For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.
             </div>
 
-        ${templates.footer(statusCodes.INTERNAL_SERVER_ERROR)}
-    `;
-};
+          </div>
+        </body>
+    </html>
 
-/**
- * Module exports
- */
-module.exports = {
-  error5xx: error5xx,
-  privates: {
-    getSearchEndpoint: getSearchEndpoint,
-  },
-};
+    

@@ -8,6 +8,7 @@ const logger = require("./modules/logger");
 const cluster = require("./modules/cluster");
 const badGateway = require("./modules/badGateway");
 const defaultEnvs = require("./modules/defaultEnvs");
+const applicationInsights = require("./modules/applicationInsights");
 const domainVerification = require("./modules/domainVerification");
 const app = express();
 const started = new Date();
@@ -18,29 +19,6 @@ const started = new Date();
 defaultEnvs.set(true);
 
 /**
- * Init a Azure Application Insights if a key is passed as env APPINSIGHTS_INSTRUMENTATIONKEY
- */
-app.initApplicationInsights = function () {
-  if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
-    appInsights
-      .setup()
-      .setAutoDependencyCorrelation(true)
-      .setAutoCollectRequests(true)
-      .setAutoCollectPerformance(true)
-      .setAutoCollectExceptions(true)
-      .setAutoCollectDependencies(true)
-      .setAutoCollectConsole(true)
-      .setUseDiskRetryCaching(true)
-      .start();
-    logger.log.info(
-      `Using Application Ingsights: '${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}'.`
-    );
-  } else {
-    logger.log.info(`Application Ingsights not used.`);
-  }
-};
-
-/**
  * Start the server on configured port.
  */
 app.listen(process.env.PORT, function () {
@@ -49,7 +27,7 @@ app.listen(process.env.PORT, function () {
       process.env.PORT
     }`
   );
-  app.initApplicationInsights();
+  applicationInsights.init();
 });
 
 /********************* routes **************************/

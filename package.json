@@ -4,9 +4,13 @@
   "description": "Default paths and error pages for uri:s.",
   "main": "app.js",
   "private": false,
-  "license": "MIT License",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/KTH/tamarack.git"
+  },
   "dependencies": {
-    "@kth/basic-html-templates": "^1.0.1",
+    "@kth/basic-html-templates": "^1.0.2",
     "@kth/http-responses": "^1.0.1",
     "applicationinsights": "^1.7.3",
     "express": "^4.17.1",
