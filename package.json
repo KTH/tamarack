@@ -6,7 +6,7 @@
   "private": false,
   "license": "MIT License",
   "dependencies": {
-    "@kth/basic-html-templates": "^1.0.0",
+    "@kth/basic-html-templates": "^1.0.1",
     "@kth/http-responses": "^1.0.1",
     "applicationinsights": "^1.7.3",
     "express": "^4.17.1",
