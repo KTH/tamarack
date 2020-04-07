@@ -12,12 +12,14 @@ let error5xx = function error5xx() {
             
             <script>
                 let url = "/_application?pathname=" + encodeURI(document.location.pathname);
+                console.log('URL: ' + url)
                 fetch(url).then(
                     function (response) {
                         if (response.status !== 200) {
                             console.log('Could not get application information. Status Code: ' + response.status);
                             return;
                         }
+                        console.log('Got response: ' + JSON.stringify(response))
 
                         response.json().then(function (data) {
                             let importance = data.importance;
@@ -85,5 +87,5 @@ let error5xx = function error5xx() {
  * Module exports
  */
 module.exports = {
-  error5xx: error5xx
+  error5xx: error5xx,
 };
