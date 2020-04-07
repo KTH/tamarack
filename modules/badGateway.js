@@ -11,11 +11,8 @@ let error5xx = function error5xx() {
     ${templates.header(`Sorry, the service is not working as intended`)}
             
             <script>
-                const pathFromProxy = document.location.pathname;
+                const pathFromProxy = encodeURIComponent(document.location.pathname);
                 const url = "https://api.kth.se/api/pipeline/v1/search/active/" + pathFromProxy;
-
-                console.log('Path from proxy: ' + pathFromProxy)
-                console.log('URL: ' + url)
 
                 fetch(url).then(
                     function (response) {
@@ -23,7 +20,6 @@ let error5xx = function error5xx() {
                             console.log('Could not get application information. Status Code: ' + response.status);
                             return;
                         }
-                        console.log('Got response: ' + JSON.stringify(response))
 
                         response.json().then(function (data) {
                             let importance = data.importance;
