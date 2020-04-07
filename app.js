@@ -156,7 +156,7 @@ app.get(`/${app.getOwnershipVerificationPath()}`, function (request, response) {
 });
 
 /**
- * Unique path to verify ownership of domain.
+ * Unique path to identify the cluster name from PORTILLO_CLUSTER env.
  */
 app.get(`/_${process.env.PORTILLO_CLUSTER}`, function (request, response) {
   httpResponse.ok(
