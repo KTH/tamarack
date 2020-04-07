@@ -30,21 +30,6 @@ passed "/_monitor contains APPLICATION_STATUS: OK."
 
 # ------------------------
 
-# _application will ask https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F for 
-# information about our test app "kth-azure-app".
-# This json is then used by /5xx.html to show importance information.
-RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_application?pathname=/kth-azure-app/"`
-PATTERN="_monitor"
-
-if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    info $RESPONSE
-    error "URL '/_application' does not contain information about 'kth-azure-app' (The monitorUrl '$PATTERN')."
-    FAILED="FAILED"
-fi
-passed "/_application can make a call to api.kth.se/api/pipeline and read kth-azure-app data."
-
-# ------------------------
-
 RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_about"`
 PATTERN="Docker image"
 

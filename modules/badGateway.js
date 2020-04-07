@@ -3,16 +3,56 @@
 const { templates } = require("@kth/basic-html-templates");
 const { statusCodes } = require("@kth/http-responses");
 
+const getHost = () => {
+  return process.env.APPLICATIONS_API_HOST
+    ? process.env.APPLICATIONS_API_HOST
+    : "api.kth.se";
+};
+
 /**
  * 502 error page Bad Gateway
  */
-let error5xx = function error5xx() {
+const error5xx = function error5xx() {
   return `
     ${templates.header(`Sorry, the service is not working as intended`)}
             
             <script>
+                /*
+                Gets information from Flottsbro API (https://app.kth.se/pipeline/) to show if the 
+                underlying service does not respone.
+
+                The proxy will keep the url unchanged so we can look up what service failed by
+                using the path (document.location.pathname). 
+
+                Example:
+                curl https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F
+
+                Will return something like:
+
+                {
+                    "_id":"kth-azure-app",
+                    "created":1584976202.438375,
+                    "applicationName":"kth-azure-app",
+                    "cluster":"active",
+                    "type":"production",
+                    "version":"3.0.471_599381d",
+                    "imageName":"kth-azure-app",
+                    "applicationUrl":"https://app.kth.se/kth-azure-app/",
+                    "applicationPath":"/kth-azure-app/",
+                    "monitorUrl":"https://app.kth.se/kth-azure-app/_monitor",
+                    "monitorPattern":"active",
+                    "importance":"medium",
+                    "publicNameSwedish":"Continuous delivery referens applikation",
+                    "publicNameEnglish":"Continuous Delivery Reference Application",
+                    "descriptionSwedish":"Referens applikation för KTH:s Docker kluster i Azure. Om denna tjänst har diftsörning har hela klustret problem.",
+                    "descriptionEnglish":"Reference application for KTHs Docker clusters.",
+                    "team":"team-pipeline",
+                    "friendlyName":"Continuous Delivery Reference Application",
+                    "publicUserDocumentationUrl":"https://confluence.sys.kth.se/confluence/display/EV/Continuous+Delivery+Pipeline+med+Docker"}
+                */
+
                 const pathFromProxy = encodeURIComponent(document.location.pathname);
-                const url = "https://api.kth.se/api/pipeline/v1/search/active/" + pathFromProxy;
+                const url = https://${getHost()}/api/pipeline/v1/search/active/" + pathFromProxy;
 
                 fetch(url).then(
                     function (response) {

@@ -3,7 +3,6 @@ const express = require("express");
 const os = require("os");
 const { templates } = require("@kth/basic-html-templates");
 const httpResponse = require("@kth/http-responses");
-const api = require("./modules/api");
 const about = require("./config/version");
 const logger = require("./modules/logger");
 const cluster = require("./modules/cluster");
@@ -17,7 +16,7 @@ const started = new Date();
  * Example: /97823o4i723bus6dtg34.txt
  * Defaults to _DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined.
  */
-app.getOwnershipVerificationPath = function() {
+app.getOwnershipVerificationPath = function () {
   return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE
     ? process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE
     : "_DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined";
@@ -28,7 +27,7 @@ app.getOwnershipVerificationPath = function() {
  * to use as body for ownership verification.
  * Defaults to empty string.
  */
-app.getOwnershipVerificationPathBodyContent = function() {
+app.getOwnershipVerificationPathBodyContent = function () {
   return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
     ? process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
     : "";
@@ -38,7 +37,7 @@ app.getOwnershipVerificationPathBodyContent = function() {
  * If env DOMAIN_OWNERSHIP_VERIFICATION_FILE ends with .txt mine type text/plain is used.
  * Defaults to text/html.
  */
-app.getOwnershipVerificationPathMimeType = function() {
+app.getOwnershipVerificationPathMimeType = function () {
   return app.getOwnershipVerificationPath().endsWith(".txt")
     ? httpResponse.contentTypes.PLAIN_TEXT
     : httpResponse.contentTypes.HTML;
@@ -47,7 +46,7 @@ app.getOwnershipVerificationPathMimeType = function() {
 /**
  * Init a Azure Application Insights if a key is passed as env APPINSIGHTS_INSTRUMENTATIONKEY
  */
-app.initApplicationInsights = function() {
+app.initApplicationInsights = function () {
   if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     appInsights
       .setup()
@@ -70,14 +69,14 @@ app.initApplicationInsights = function() {
 /**
  * Start server on port 80, or use port specifed in env PORT.
  */
-app.getListenPort = function() {
+app.getListenPort = function () {
   return process.env.PORT ? process.env.PORT : 80;
 };
 
 /**
  * Start the server on configured port.
  */
-app.listen(app.getListenPort(), function() {
+app.listen(app.getListenPort(), function () {
   logger.log.info(
     `Started ${about.dockerName}:${
       about.dockerVersion
@@ -91,21 +90,21 @@ app.listen(app.getListenPort(), function() {
 /**
  * Index page.
  */
-app.get("/", function(request, response) {
+app.get("/", function (request, response) {
   httpResponse.ok(request, response, templates.index((title = "Applications")));
 });
 
 /**
  * About page. Versions and such.
  */
-app.get("/_about", function(request, response) {
+app.get("/_about", function (request, response) {
   httpResponse.ok(request, response, templates._about(about, started));
 });
 
 /**
  * Health check route.
  */
-app.get("/_monitor", function(request, response) {
+app.get("/_monitor", function (request, response) {
   httpResponse.ok(
     request,
     response,
@@ -120,7 +119,7 @@ app.get("/_monitor", function(request, response) {
 /**
  * Cluster IPs (ops)
  */
-app.get("/_clusters", function(request, response) {
+app.get("/_clusters", function (request, response) {
   httpResponse.ok(
     request,
     response,
@@ -132,7 +131,7 @@ app.get("/_clusters", function(request, response) {
 /**
  * Crawler access definitions.
  */
-app.get("/robots.txt", function(request, response) {
+app.get("/robots.txt", function (request, response) {
   httpResponse.ok(
     request,
     response,
@@ -144,7 +143,7 @@ app.get("/robots.txt", function(request, response) {
 /**
  * Unique path to verify ownership of domain.
  */
-app.get(`/${app.getOwnershipVerificationPath()}`, function(request, response) {
+app.get(`/${app.getOwnershipVerificationPath()}`, function (request, response) {
   logger.log.info(
     `Domain verification response '${app.getOwnershipVerificationPathBodyContent()}'.`
   );
@@ -157,33 +156,23 @@ app.get(`/${app.getOwnershipVerificationPath()}`, function(request, response) {
 });
 
 /**
- * Get information about an application that is suppose to be
- * proxied by not working for a pathname. The information is displayd to the end user.
- * Normally this information contains the application name and a expected
- * maximum downtime for the missing service.
- */
-app.get("/_application", function(request, response) {
-  return api.getApplication(request, response, request.query.pathname);
-});
-
-/**
  * Generic error page for 5xx response codes.
- * Includes application information route /_application.
+ * Includes application information from  /_application.
  */
-app.get("/error5xx.html", function(request, response) {
+app.get("/error5xx.html", function (request, response) {
   httpResponse.internalServerError(request, response, badGateway.error5xx());
 });
 
 /**
  * Ignore favicons.
  */
-app.get("/favicon.ico", function(request, response) {
+app.get("/favicon.ico", function (request, response) {
   httpResponse.noContent(request, response);
 });
 
 /**
  * Default route, if no other route is matched (404 Not Found).
  */
-app.use(function(request, response) {
+app.use(function (request, response) {
   httpResponse.notFound(request, response, templates.error404());
 });

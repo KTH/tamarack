@@ -22,10 +22,8 @@ services:
       DISABLE_REQUEST_LOGGING: "true"
       APPINSIGHTS_INSTRUMENTATIONKEY: ""
       APPLICATIONS_API_HOST: "api.kth.se"
-      APPLICATIONS_API_KEY: 1234
-      DOMAIN_OWNERSHIP_VERIFICATION_FILE: verified.txt
-      DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT: verified
-
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE: alskjdfasd_verify_domain.html
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT: google
     ports:
       - 80
 
@@ -37,5 +35,6 @@ services:
     # Build client image and run tests
     # from inside that.
     build: ./tests/integration-tests
-    depends_on:
-      - web
+    environment:
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE: alskjdfasd_verify_domain.html
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT: google
