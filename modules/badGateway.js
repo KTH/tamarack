@@ -11,7 +11,8 @@ let error5xx = function error5xx() {
     ${templates.header(`Sorry, the service is not working as intended`)}
             
             <script>
-                let url = "/_application?pathname=" + encodeURI(document.location.pathname);
+                //let url = "/_application?pathname=" + encodeURI(document.location.pathname);
+                let url = "https://api.kth.se/api/pipeline/v1/search/active/" + encodeURI(document.location.pathname)
                 console.log('URL: ' + url)
                 fetch(url).then(
                     function (response) {
