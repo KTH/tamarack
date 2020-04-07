@@ -5,7 +5,7 @@ const httpResponse = require("@kth/http-responses");
  * Defaults to text/html.
  */
 const gethMimeType = () => {
-  return process.env.DEFAULT_DOMAIN_OWNERSHIP_VERIFICATION_FILE.endsWith(".txt")
+  return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE.endsWith(".txt")
     ? httpResponse.contentTypes.PLAIN_TEXT
     : httpResponse.contentTypes.HTML;
 };
@@ -16,7 +16,7 @@ const gethMimeType = () => {
  * Example: /97823o4i723bus6dtg34.txt
  */
 const getPath = () => {
-  return process.env.DEFAULT_DOMAIN_OWNERSHIP_VERIFICATION_FILE;
+  return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE;
 };
 
 /**
@@ -25,7 +25,7 @@ const getPath = () => {
  * Defaults to empty string.
  */
 const getContent = () => {
-  return process.env.DEFAULT_DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT;
+  return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT;
 };
 
 /**

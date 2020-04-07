@@ -22,7 +22,7 @@ services:
       DISABLE_REQUEST_LOGGING: "true"
       APPINSIGHTS_INSTRUMENTATIONKEY: ""
       APPLICATIONS_API_HOST: "api.kth.se"
-      DOMAIN_OWNERSHIP_VERIFICATION_FILE: alskjdfasd_verify_domain.html
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE: "alskjdfasd_verify_domain.html"
       DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT: google
     ports:
       - 80
@@ -36,5 +36,5 @@ services:
     # from inside that.
     build: ./tests/integration-tests
     environment:
-      DOMAIN_OWNERSHIP_VERIFICATION_FILE: alskjdfasd_verify_domain.html
-      DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT: google
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE: "alskjdfasd_verify_domain.html"
+      DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT: "google"
