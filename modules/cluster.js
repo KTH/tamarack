@@ -1,11 +1,11 @@
+const logger = require("./logger");
+
 /**
  * Get the cluster name that is set by deployment process Aspen as env PORTILLO_CLUSTER.
  * The string is read by NetScaler.
  */
 const getClusterName = () => {
-  return process.env.PORTILLO_CLUSTER
-    ? process.env.PORTILLO_CLUSTER
-    : "No env PORTILLO_CLUSTER set.";
+  return process.env.PORTILLO_CLUSTER;
 };
 
 /**
@@ -28,7 +28,7 @@ const getAllClusterIps = () => {
     "everest-grey": "52.174.238.136",
     "everest-red": "52.166.33.229",
     "everest-blue": "13.81.219.131",
-    "everest-black": "13.95.135.124"
+    "everest-black": "13.95.135.124",
   };
 };
 
@@ -38,5 +38,5 @@ const getAllClusterIps = () => {
 module.exports = {
   getClusterName: getClusterName,
   getMonitorClusterName: getMonitorClusterName,
-  getAllClusterIps: getAllClusterIps
+  getAllClusterIps: getAllClusterIps,
 };

@@ -7,41 +7,15 @@ const about = require("./config/version");
 const logger = require("./modules/logger");
 const cluster = require("./modules/cluster");
 const badGateway = require("./modules/badGateway");
+const defaultEnvs = require("./modules/defaultEnvs");
+const domainVerification = require("./modules/domainVerification");
 const app = express();
 const started = new Date();
 
 /**
- * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE
- * to use as path for ownership verification.
- * Example: /97823o4i723bus6dtg34.txt
- * Defaults to _DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined.
+ * Set  default process.env:s that are not set on startu up.
  */
-app.getOwnershipVerificationPath = function () {
-  return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE
-    ? process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE
-    : "_DOMAIN_OWNERSHIP_VERIFICATION_FILE_not_defined";
-};
-
-/**
- * Gets the value passed in env DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
- * to use as body for ownership verification.
- * Defaults to empty string.
- */
-app.getOwnershipVerificationPathBodyContent = function () {
-  return process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
-    ? process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
-    : "";
-};
-
-/**
- * If env DOMAIN_OWNERSHIP_VERIFICATION_FILE ends with .txt mine type text/plain is used.
- * Defaults to text/html.
- */
-app.getOwnershipVerificationPathMimeType = function () {
-  return app.getOwnershipVerificationPath().endsWith(".txt")
-    ? httpResponse.contentTypes.PLAIN_TEXT
-    : httpResponse.contentTypes.HTML;
-};
+defaultEnvs.set(true);
 
 /**
  * Init a Azure Application Insights if a key is passed as env APPINSIGHTS_INSTRUMENTATIONKEY
@@ -67,20 +41,13 @@ app.initApplicationInsights = function () {
 };
 
 /**
- * Start server on port 80, or use port specifed in env PORT.
- */
-app.getListenPort = function () {
-  return process.env.PORT ? process.env.PORT : 80;
-};
-
-/**
  * Start the server on configured port.
  */
-app.listen(app.getListenPort(), function () {
+app.listen(process.env.PORT, function () {
   logger.log.info(
-    `Started ${about.dockerName}:${
-      about.dockerVersion
-    } on ${os.hostname()}:${app.getListenPort()}`
+    `Started ${about.dockerName}:${about.dockerVersion} on ${os.hostname()}:${
+      process.env.PORT
+    }`
   );
   app.initApplicationInsights();
 });
@@ -143,26 +110,23 @@ app.get("/robots.txt", function (request, response) {
 /**
  * Unique path to verify ownership of domain.
  */
-app.get(`/${app.getOwnershipVerificationPath()}`, function (request, response) {
-  logger.log.info(
-    `Domain verification response '${app.getOwnershipVerificationPathBodyContent()}'.`
-  );
+app.get(`/${domainVerification.getPath()}`, function (request, response) {
   httpResponse.ok(
     request,
     response,
-    app.getOwnershipVerificationPathBodyContent(),
-    app.getOwnershipVerificationPathMimeType()
+    domainVerification.getContent(),
+    domainVerification.gethMimeType()
   );
 });
 
 /**
  * Unique path to identify the cluster name from PORTILLO_CLUSTER env.
  */
-app.get(`/_${process.env.PORTILLO_CLUSTER}`, function (request, response) {
+app.get(`/_${cluster.getClusterName()}`, function (request, response) {
   httpResponse.ok(
     request,
     response,
-    process.env.PORTILLO_CLUSTER,
+    cluster.getClusterName(),
     httpResponse.contentTypes.PLAIN_TEXT
   );
 });

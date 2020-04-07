@@ -19,9 +19,9 @@
   },
   "scripts": {
     "start": "node app.js",
-    "start-dev": "LOG_LEVEL=debug PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se DOMAIN_OWNERSHIP_VERIFICATION_FILE=verified.txt DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT=verified PORT=3000 nodemon app.js",
+    "start-dev": "nodemon app.js",
     "test": "NODE_ENV=development node_modules/mocha/bin/mocha ./tests/unit-tests/test-*.js",
-    "test-integration": "PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se DOMAIN_OWNERSHIP_VERIFICATION_FILE=verified.txt DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT=verified PORT=3000 URL_PREFIX=http://localhost:3000 ./tests/integration-tests/basic.sh",
+    "test-integration": "PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se DOMAIN_OWNERSHIP_VERIFICATION_FILE=domain DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT= URL_PREFIX=http://localhost ./tests/integration-tests/basic.sh",
     "test-integration-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml up --abort-on-container-exit --always-recreate-deps",
     "test-unit-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-unit-tests.yml up --abort-on-container-exit --always-recreate-deps"
   },

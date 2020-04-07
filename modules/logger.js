@@ -13,13 +13,8 @@ const about = require("../config/version");
  * log.debug({req: request, res: res}, 'log a request and response, basic dev log')
  * log.trace('granular logging, rarely used')
  */
-let _getLogLevel = function getLogLevel() {
-  result = "info";
-  if (process.env.LOG_LEVEL != null) {
-    result = process.env.LOG_LEVEL;
-  }
-  console.log(`Loglevel: '${result}'`);
-  return result;
+let getLogLevel = function getLogLevel() {
+  return process.env.LOG_LEVEL;
 };
 
 /**
@@ -29,14 +24,13 @@ let _getLogLevel = function getLogLevel() {
 logger.init({
   name: about.dockerName,
   app: about.dockerVersion,
-  level: _getLogLevel()
-})
-;
+  level: getLogLevel(),
+});
 /**
  * Log incomming request.
  * E.g:  http://localhost:3000/_about - Response Code: 200, Client IP: 127.0.0.1
  */
-let _logRequest = function logRequest(request, statusCode, clientIp) {
+let logRequest = function logRequest(request, statusCode, clientIp) {
   logger.info(
     `${request.method} ${request.protocol}://${request.get("Host")}${
       request.url
@@ -50,5 +44,5 @@ let _logRequest = function logRequest(request, statusCode, clientIp) {
  */
 module.exports = {
   log: logger,
-  logRequest: _logRequest
+  logRequest: logRequest,
 };
