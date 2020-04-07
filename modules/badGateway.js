@@ -11,8 +11,8 @@ let error5xx = function error5xx() {
     ${templates.header(`Sorry, the service is not working as intended`)}
             
             <script>
-                let pathFromProxy = encodeURI(document.location.pathname);
-                let url = "https://api.kth.se/api/pipeline/v1/search/active/" + pathFromProxy
+                const pathFromProxy = encodeURI(document.location.pathname);
+                const url = "https://api.kth.se/api/pipeline/v1/search/active/" + pathFromProxy;
 
                 console.log('Path from proxy: ' + pathFromProxy)
                 console.log('URL: ' + url)
