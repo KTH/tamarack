@@ -3,10 +3,32 @@
 const { templates } = require("@kth/basic-html-templates");
 const { statusCodes } = require("@kth/http-responses");
 
-const getHost = () => {
-  return process.env.APPLICATIONS_API_HOST
+/**
+ * Gets the cluster name to used when building the path for calling
+ * api.kth.se/api/pipeline/v1/search/[active|stage|integral|saas|on-prem].
+ * Defaults to active.
+ */
+const getCluster = () => {
+  return process.env.PORTILLO_CLUSTER ? process.env.PORTILLO_CLUSTER : "active";
+};
+
+/**
+ * Gets the host that runs the api we are calling.
+ * Defaults to api.kth.se
+ */
+const getApiHost = () => {
+  const result = process.env.APPLICATIONS_API_HOST
     ? process.env.APPLICATIONS_API_HOST
     : "api.kth.se";
+  return result;
+};
+
+/**
+ * Gets the host that runs the api we are calling.
+ * Defaults to api.kth.se
+ */
+const getSearchEndpoint = () => {
+  return `https://${getApiHost()}/api/pipeline/v1/search/${getCluster()}/`;
 };
 
 /**
@@ -52,7 +74,7 @@ const error5xx = function error5xx() {
                 */
 
                 const pathFromProxy = encodeURIComponent(document.location.pathname);
-                const url = https://${getHost()}/api/pipeline/v1/search/active/" + pathFromProxy;
+                const url = "${getSearchEndpoint()}" + pathFromProxy;
 
                 fetch(url).then(
                     function (response) {
@@ -128,4 +150,10 @@ const error5xx = function error5xx() {
  */
 module.exports = {
   error5xx: error5xx,
+  privates: {
+    getCluster: getCluster,
+    getApiHost: getApiHost,
+    getSearchEndpoint,
+    getSearchEndpoint,
+  },
 };

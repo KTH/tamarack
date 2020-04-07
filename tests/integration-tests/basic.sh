@@ -30,6 +30,19 @@ passed "/_monitor contains APPLICATION_STATUS: OK."
 
 # ------------------------
 
+RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_$PORTILLO_CLUSTER"`
+PATTERN="$PORTILLO_CLUSTER" # Set by process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
+
+if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
+    info $RESPONSE
+    error "URL '/_$PORTILLO_CLUSTER' does not contain env PORTILLO_CLUSTER '$PATTERN'."
+    exit -1
+fi
+
+passed "/_$PORTILLO_CLUSTER contains $PORTILLO_CLUSTER."
+
+# ------------------------
+
 RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_about"`
 PATTERN="Docker image"
 

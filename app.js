@@ -156,6 +156,18 @@ app.get(`/${app.getOwnershipVerificationPath()}`, function (request, response) {
 });
 
 /**
+ * Unique path to verify ownership of domain.
+ */
+app.get(`/_${process.env.PORTILLO_CLUSTER}`, function (request, response) {
+  httpResponse.ok(
+    request,
+    response,
+    process.env.PORTILLO_CLUSTER,
+    httpResponse.contentTypes.PLAIN_TEXT
+  );
+});
+
+/**
  * Generic error page for 5xx response codes.
  * Includes application information from  /_application.
  */
