@@ -116,7 +116,6 @@ const error5xx = function error5xx() {
             </div>
             <h3 style="margin-top: 2rem;">💔 We are sorry for the inconvenience this causes you!</h3>
             <div class="team-alerted">
-                The team responsible for the service have been alerted.
                 For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.
             </div>
 
