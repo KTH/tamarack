@@ -58,6 +58,7 @@ const error5xx = function error5xx() {
 
                 var pathFromProxy = encodeURIComponent(document.location.pathname);
                 var url = "${getSearchEndpoint()}" + pathFromProxy;
+                console.log("URL: " + url)
                 //let url = "https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F"
 
                 fetch(url).then(
