@@ -83,7 +83,7 @@ fi
 # ------------------------
 
 RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/error5xx.html"`
-PATTERN="Sorry, the service is not working as intended"
+PATTERN="Bad Gateway - Tamarack"
 
 if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
     info $RESPONSE
@@ -106,7 +106,7 @@ if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
     exit -1
 fi
 
-passed "/$DOMAIN_OWNERSHIP_VERIFICATION_FILE contains $DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT."
+passed "/$DOMAIN_OWNERSHIP_VERIFICATION_FILE contains '$DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT'."
 
 
 if [[ "$FAILED" != *"FAILED"* ]]; then

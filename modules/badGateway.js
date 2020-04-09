@@ -2,16 +2,12 @@
 
 const { templates } = require("@kth/basic-html-templates");
 const { statusCodes } = require("@kth/http-responses");
-const cluster = require("./cluster");
 
 /**
  * Gets the host that runs the api we are calling.
- * Defaults to api.kth.se
  */
 const getSearchEndpoint = () => {
-  return `https://${
-    process.env.APPLICATIONS_API_HOST
-  }/api/pipeline/v1/search/${cluster.getClusterName()}/`;
+  return `https://${process.env.APPLICATIONS_API_HOST}/api/pipeline/v1/search/${process.env.APPLICATIONS_API_RUNNING_IN}/`;
 };
 
 /**
@@ -19,15 +15,17 @@ const getSearchEndpoint = () => {
  */
 const error5xx = function error5xx() {
   return `
-    ${templates.header(`Sorry, the service is not working as intended`)}
+    ${templates.header(`Bad Gateway - Tamarack`)}
             
             <script>
                 /*
                 Gets information from Flottsbro API (https://app.kth.se/pipeline/) to show if the 
-                underlying service does not respone.
+                underlying service does not respone (502 Bad Gateway).
 
                 The proxy will keep the url unchanged so we can look up what service failed by
-                using the path (document.location.pathname). 
+                using the path (document.location.pathname).
+
+                Try this page using: https://app.kth.se/kth-azure-app/502
 
                 Example:
                 curl https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F
