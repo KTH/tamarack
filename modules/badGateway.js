@@ -105,6 +105,8 @@ const error5xx = function error5xx() {
                     <span class="importance-marker medium"></span> <span class="publicName">This service</span> is actively monitored by operations
                     personal during office hours. Action to bring back the service is normally taken within 2 hours. Outages outside
                     office hours are handled the following morning.
+                    <br><br>
+                    Hopefully it will be back sooner :)
                 </div>
 
                 <div id="importance-low" class="importance">
