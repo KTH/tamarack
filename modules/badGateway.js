@@ -55,9 +55,11 @@ const error5xx = function error5xx() {
                 */
 
                 var pathFromProxy = encodeURIComponent(document.location.pathname);
+                
+                //
+                // let url = "https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F"
+                //
                 var url = "${getSearchEndpoint()}" + pathFromProxy;
-                console.log("URL: " + url)
-                //let url = "https://api.kth.se/api/pipeline/v1/search/active/%2Fkth-azure-app%2F"
 
                 fetch(url).then(
                     function (response) {
@@ -85,7 +87,7 @@ const error5xx = function error5xx() {
                 });
             </script>
 
-            <h1><span class="publicName">Houston, we have a problem</span>
+            <h1><span class="publicName">Houston, we have a problem</span></h1>
             <h2>This service is temporarily not working ...</h2>
             <p>The team responsible for the service have been alerted.</p>
             <div aria-live="polite" role="alert" id="importance" class="alert">
