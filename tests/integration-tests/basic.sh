@@ -24,7 +24,7 @@ expectPathToContain() {
     
     ENDPOINT="$1"
     PATTERN="$2"
-    FAILURE_INFO="$3"
+    TEST_DESCRIPTION="$3"
     
     TEST_URL="$URL_PREFIX$ENDPOINT"
 
@@ -32,15 +32,15 @@ expectPathToContain() {
     RESULT=$(cat .curl.log)
     
     if [[ "$RESULT" == *"$PATTERN"* ]]; then
-        if [ ! -z "$FAILURE_INFO" ]; then
-            passed "$FAILURE_INFO."
+        if [ ! -z "$TEST_DESCRIPTION" ]; then
+            passed "$TEST_DESCRIPTION."
         else 
             passed "$TEST_URL contains $PATTERN"
         fi
  
     else
-        if [ ! -z "$FAILURE_INFO" ]; then
-            error "$FAILURE_INFO"
+        if [ ! -z "$TEST_DESCRIPTION" ]; then
+            error "$TEST_DESCRIPTION"
         fi
         info "'$TEST_URL' does not contain pattern '$PATTERN'."
         
