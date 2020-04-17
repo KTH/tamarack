@@ -1,17 +1,11 @@
 version: '3'
 
-#
-# Run this integration test by running:
-# ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml up --abort-on-container-exit --always-recreate-deps
-#
 services:
 
   #############################################
-  # Start http://web:3000/
+  # Start http://web:80/
   #############################################
   web:
-    # build from local Dockerfile
-    build: .
     # if not --build and kth-azure-app already exists in
     # your local computers registry 'image' is used.
     image: $LOCAL_IMAGE_ID

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-info() { printf "\034[0;31m     $@\033[0;0m | $(date)\n"; }
-error() { printf "\033[0;31m    ERROR: $@\033[0;0m | $(date)\n"; }
-passed() { printf "\033[0;32m   OK: $@\033[0;0m | $(date)\n"; }
+info() { printf "\033[1;31m\n   %s\033[0;0m$@\n\n";  }
+error() { printf "\033[0;31m\n • $@\033[0;0m"; }
+passed() { printf "\033[0;32m • $@\033[0;0m\n"; }
 
 #
 # Path to the Cisco vpn client.
@@ -12,107 +12,64 @@ if [ -z "$URL_PREFIX" ]; then
     sleep 5s
 fi
 
-
 FAILED=""
 
-# ------------------------
+#
+# Curls a url and tests if the response contains a string.
+# If it fails sets FAILED to true.
+#
+# Usage: expectPathToContain "/_monitor" "active"
+#
+expectPathToContain() {
+    
+    ENDPOINT="$1"
+    PATTERN="$2"
+    FAILURE_INFO="$3"
+    
+    TEST_URL="$URL_PREFIX$ENDPOINT"
 
-RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_monitor"`
-PATTERN="active" # Set by process.env.PORTILLO_CLUSTER
+    curl -k -S --max-time 3 $TEST_URL > .curl.log 2>&1
+    RESULT=$(cat .curl.log)
+    
+    if [[ "$RESULT" == *"$PATTERN"* ]]; then
+        if [ ! -z "$FAILURE_INFO" ]; then
+            passed "$FAILURE_INFO."
+        else 
+            passed "$TEST_URL contains $PATTERN"
+        fi
+ 
+    else
+        if [ ! -z "$FAILURE_INFO" ]; then
+            error "$FAILURE_INFO"
+        fi
+        info "'$TEST_URL' does not contain pattern '$PATTERN'."
+        
+        FAILED="true"
+    fi
 
-if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    info $RESPONSE
-    error "URL '/_monitor' does not contain env PORTILLO_CLUSTER '$PATTERN'."
-    exit -1
-fi
+}
 
-passed "/_monitor contains APPLICATION_STATUS: OK."
+# ---------------- Tests ----------------
 
-# ------------------------
+expectPathToContain "/_monitor" "active" "The monitor page should includ the cluster name from env PORTILLIO_CLUSTER"
+expectPathToContain "/_monitor" "APPLICATION_STATUS: OK" "Default check APPLICATION_STATUS: OK"
+expectPathToContain "/_active" "active" "The cluster name should be an endpoint" 
+expectPathToContain "/_about" "Docker image" "The about page should show Docker images information"
+expectPathToContain "/" "Application" "The index pages should include a title"
+expectPathToContain "/missing-page" "Sorry, we have nothing to show" "The 404 pages should show a title"
+expectPathToContain "/error5xx.html" "Bad Gateway - Tamarack" "There should be a route for handling 502 Bad Gateway from proxied"
+expectPathToContain "/error5xx.html" "var url = \"https://api.kth.se/api/pipeline/v1/search/active/\"" "This is the url used to look up info on applications from external API on 502 Bad Gateway"
 
-RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_$PORTILLO_CLUSTER"`
-PATTERN="$PORTILLO_CLUSTER" 
-
-if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    info $RESPONSE
-    error "URL '/_$PORTILLO_CLUSTER' does not contain or respone with cluster name env PORTILLO_CLUSTER '$PATTERN'."
-    exit -1
-fi
-
-passed "/_$PORTILLO_CLUSTER contains $PORTILLO_CLUSTER."
-
-# ------------------------
-
-RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/_about"`
-PATTERN="Docker image"
-
-if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    info $RESPONSE
-    error "URL '/_about' does not contain about information. (Looking for '$PATTERN')"
-    FAILED="FAILED"
-else
-    passed "/_about shows about information."
-fi
-
-# ------------------------
-
-RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/"`
-PATTERN="Applications"
-
-if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    info $RESPONSE
-    error "URL '/' does not show index title '$PATTERN'."
-    FAILED="FAILED"
-else
-    passed "/ shows index page."
-fi
-
-# ------------------------
-
-RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/missing-page"`
-PATTERN="Sorry, we have nothing to show"
-
-if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    info $RESPONSE
-    error "URL /missing-page - 404-page does not show text '$PATTERN'."
-    FAILED="FAILED"
-else
-    passed "/missing-page - 404-page works."
-fi
-
-# ------------------------
-
-RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/error5xx.html"`
-PATTERN="Bad Gateway - Tamarack"
-
-if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    info $RESPONSE
-    error "URL '/5xx.html page does not show text '$PATTERN' to say a service is broken."
-    FAILED="FAILED"
-else
-    passed "/5xx.html page works."
-fi
+expectPathToContain "/$DOMAIN_OWNERSHIP_VERIFICATION_FILE" "$DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT"
 
 
-
-# ------------------------
-
-RESPONSE=`curl --silent --show-error --max-time 5 "$URL_PREFIX/$DOMAIN_OWNERSHIP_VERIFICATION_FILE"`
-PATTERN="$DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT" # Set by process.env.DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT
-
-if [[ "$RESPONSE" != *"$PATTERN"* ]]; then
-    info $RESPONSE
-    error "URL '/$DOMAIN_OWNERSHIP_VERIFICATION_FILE' does not contain env DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT '$PATTERN'."
-    exit -1
-fi
-
-passed "/$DOMAIN_OWNERSHIP_VERIFICATION_FILE contains '$DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT'."
-
-
-if [[ "$FAILED" != *"FAILED"* ]]; then
+# Result
+if [[ "$FAILED" != *"true"* ]]; then
+    info "All end-to-end tests passed."
     exit 0
+else
+    echo ""
+    exit 1
 fi
 
 
-# TODO: detectify stuff
-exit 1
