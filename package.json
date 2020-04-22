@@ -10,16 +10,16 @@
     "url": "git://github.com/KTH/tamarack.git"
   },
   "dependencies": {
-    "@kth/basic-html-templates": "^1.0.2",
-    "@kth/http-responses": "^1.0.1",
-    "applicationinsights": "^1.7.3",
+    "@kth/basic-html-templates": "^1.0.4",
+    "@kth/http-responses": "^1.0.2",
+    "applicationinsights": "^1.7.4",
     "express": "^4.17.1",
     "kth-node-log": "^3.0.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.1.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.3"
   },
   "scripts": {
     "start": "node app.js",
