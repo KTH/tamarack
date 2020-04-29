@@ -104,7 +104,7 @@ const error5xx = function error5xx() {
                     <h3>Expect <span class="publicName">the service</span> to be back within 2 hours</h3>
                     <span class="importance-marker medium"></span> <span class="publicName">This service</span> is actively monitored by operations
                     personal during office hours. Action to bring back the service is normally taken within 2 hours. Outages outside
-                    office hours are handled the following morning.
+                    office hours are handled the next business day.
                     <br><br>
                     Hopefully it will be back sooner :)
                 </div>
