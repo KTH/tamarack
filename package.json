@@ -14,11 +14,11 @@
     "@kth/http-responses": "^1.0.2",
     "applicationinsights": "^1.7.4",
     "express": "^4.17.1",
-    "kth-node-log": "^3.0.2"
+    "kth-node-log": "^3.1.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^7.1.1",
+    "mocha": "^7.1.2",
     "nodemon": "^2.0.3"
   },
   "scripts": {
