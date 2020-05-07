@@ -38,7 +38,8 @@ Run tests inside the :whale: Docker container using `npm run test-unit-in-docker
 Run test directly `npm install` and then `npm test` in your development setup to run unit tests.
 
 ```text
-  Bad Gatway
+
+Bad Gatway
 
     ✓ Path '/error5xx.html' should contain a error message.
     ✓ When env 'APPLICATIONS_API_HOST' is missing, return 'api.kth.se' as default host
@@ -46,7 +47,7 @@ https://api.kth.se/api/pipeline/v1/search/active/
     ✓ When env 'APPLICATIONS_RUNNING_IN' is missing, return 'active' as part of the search endpoint
     ✓ The defined APPLICATIONS_RUNNING_IN is part of the search endpoint.
 
-  Cluster specifics
+Cluster specifics
 
     ✓ Path '/_monitor' should contain cluster name specified in env 'PORTILLO_CLUSTER' if set.
     ✓ Path '/_monitor' should contain 'No env PORTILLO_CLUSTER set.' when env 'PORTILLO_CLUSTER' is not set.
@@ -55,7 +56,9 @@ https://api.kth.se/api/pipeline/v1/search/active/
     ✓ Path '/_clusters' should return 8 IP-numbers.
 
 
-  9 passing (7ms)```
+  9 passing (7ms)
+
+```
 
 ### Integration tests in Docker
 
