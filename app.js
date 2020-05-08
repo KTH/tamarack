@@ -23,9 +23,9 @@ defaultEnvs.set(true);
  */
 app.listen(process.env.PORT, function () {
   logger.log.info(
-    `Started ${about.dockerName}:${about.dockerVersion} on ${os.hostname()}:${
-      process.env.PORT
-    }`
+    `Started '${about.dockerName}:${
+      about.dockerVersion
+    }' on '${os.hostname()}:${process.env.PORT}'`
   );
   applicationInsights.init();
 });
