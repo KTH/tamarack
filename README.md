@@ -38,29 +38,26 @@ Run tests inside the :whale: Docker container using `npm run test-unit-in-docker
 Run test directly `npm install` and then `npm test` in your development setup to run unit tests.
 
 ```text
-API
-    ✓ When env 'PORTILLO_CLUSTER' is set, return it´s value to for api call to 'api.kth.se/api/pipeline/v1/search/[active|stage|integral]'.
-    ✓ When env 'PORTILLO_CLUSTER' is missing, return active as default value for api call to 'api.kth.se/api/pipeline/v1/search/active'.
-    ✓ When env 'APPLICATIONS_API_HOST' is set, return its value
-    ✓ When env 'APPLICATIONS_API_HOST' is missing, return 'api.kth.se' as default host
-    ✓ When a url (not url encoded) is passed as an argument, it will be url encoded and appended to the path.
 
-  Template paths handling
-    ✓ Path '/' should contain the public application name.
-    ✓ Path 'not found', should contain a the package.json name.
-    ✓ Path 'Not working' should contain a the package.json name.
-    ✓ Path '/error5xx' should contain a 'Not working' message.
-    ✓ Path '/error404' should contain a 'Page not found' message.
-    ✓ Path '/_monitor' should contain 'APPLICATION_STATUS: OK'.
+Bad Gatway
+
+    ✓ Path '/error5xx.html' should contain a error message.
+    ✓ When env 'APPLICATIONS_API_HOST' is missing, return 'api.kth.se' as default host
+https://api.kth.se/api/pipeline/v1/search/active/
+    ✓ When env 'APPLICATIONS_RUNNING_IN' is missing, return 'active' as part of the search endpoint
+    ✓ The defined APPLICATIONS_RUNNING_IN is part of the search endpoint.
+
+Cluster specifics
+
     ✓ Path '/_monitor' should contain cluster name specified in env 'PORTILLO_CLUSTER' if set.
     ✓ Path '/_monitor' should contain 'No env PORTILLO_CLUSTER set.' when env 'PORTILLO_CLUSTER' is not set.
-    ✓ Path '/robots.txt' should disallow all indexing.
+    ✓ When env 'PORTILLO_CLUSTER' is set, use it as cluster name.
+    ✓ When env 'PORTILLO_CLUSTER' is missing, return 'active' as default value.
     ✓ Path '/_clusters' should return 8 IP-numbers.
 
-  ApplicationInsights handling
-    ✓ The Application Insights script is not added then the env 'APPINSIGHTS_INSTRUMENTATIONKEY' is missing.
-    ✓ The Application Insights script is added to the head tag when env 'APPINSIGHTS_INSTRUMENTATIONKEY' is set.
-    ✓ All pages should contain env Application Insights key 'APPINSIGHTS_INSTRUMENTATIONKEY' if set.
+
+  9 passing (7ms)
+
 ```
 
 ### Integration tests in Docker
@@ -73,12 +70,14 @@ Run integration tests against the service running as a :whale: Docker container 
 2. Run `npm run test-integration`. This will run the same tests as *npm run test-integratoin-in-docker*.
 
 ```bash
-   OK: /_monitor contains APPLICATION_STATUS: OK. | Mån  6 Apr 2020 15:17:42 CEST
-   OK: /_application can make a call to api.kth.se/api/pipeline and read kth-azure-app data. | Mån  6 Apr 2020 15:17:43 CEST
-   OK: /_about shows about information. | Mån  6 Apr 2020 15:17:43 CEST
-   OK: / shows index page. | Mån  6 Apr 2020 15:17:43 CEST
-   OK: /missing-page - 404-page works. | Mån  6 Apr 2020 15:17:43 CEST
-   OK: /5xx.html page works. | Mån  6 Apr 2020 15:17:43 CEST
-   OK: /verified.txt contains verified. | Mån  6 Apr 2020 15:17:43 CEST
+ • The monitor page should includ the cluster name from env PORTILLIO_CLUSTER.
+ • Default check APPLICATION_STATUS: OK.
+ • The cluster name should be an endpoint.
+ • The about page should show Docker images information.
+ • The index pages should include a title.
+ • The 404 pages should show a title.
+ • There should be a route for handling 502 Bad Gateway from proxied.
+ • This is the url used to look up info on applications from external API on 502 Bad Gateway.
+ • A dynamic path that can be used to verify domains for used SaaS .
 ```
 
