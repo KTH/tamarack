@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-    jenkinsBuildDate: 'Not set by CI.',
-    dockerName: 'Not set by CI.',
-    dockerVersion: 'Not set by CI.'
-}
+  jenkinsBuildDate: "Not set by CI.",
+  dockerName: "tamarack.",
+  dockerVersion: "0.0.0_abcdef",
+};
