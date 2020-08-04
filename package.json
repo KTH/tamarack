@@ -10,7 +10,7 @@
     "url": "git://github.com/KTH/tamarack.git"
   },
   "dependencies": {
-    "@kth/basic-html-templates": "^1.0.11",
+    "@kth/basic-html-templates": "^1.0.12",
     "@kth/http-responses": "^1.0.8",
     "applicationinsights": "^1.8.4",
     "express": "^4.17.1",
