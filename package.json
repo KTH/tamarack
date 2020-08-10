@@ -27,7 +27,8 @@
     "test": "NODE_ENV=development node_modules/mocha/bin/mocha ./tests/unit-tests/test-*.js",
     "test-integration": "PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se DOMAIN_OWNERSHIP_VERIFICATION_FILE=domain DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT= URL_PREFIX=http://localhost ./tests/integration-tests/basic.sh",
     "test-integration-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml build && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml up --force-recreate --abort-on-container-exit --always-recreate-deps",
-    "test-unit-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-unit-tests.yml up --abort-on-container-exit --always-recreate-deps"
+    "test-unit-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-unit-tests.yml up --abort-on-container-exit --always-recreate-deps",
+    "clean": "rm -r ./node_modules && rm package-lock.json"
   },
   "engines": {
     "node": "^12.14.0"
