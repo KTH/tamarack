@@ -14,7 +14,17 @@ const app = express();
 const started = new Date();
 
 /**
- * Set  default process.env:s that are not set on startu up.
+ * Let the package @kth/http-responses use the Tamarack log.
+ */
+httpResponse.setLogger(logger.log);
+
+/**
+ * Process env:s that are not configured on start up, but accessed
+ * as envs in the application are added with there default values.
+ *
+ * They are also logged.
+ *
+ * This way you will always have a value for process.env.X
  */
 defaultEnvs.set(true);
 

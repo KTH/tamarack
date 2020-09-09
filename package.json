@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@kth/basic-html-templates": "^1.0.18",
-    "@kth/http-responses": "^1.0.18",
+    "@kth/http-responses": "^1.0.20",
     "applicationinsights": "^1.8.6",
     "express": "^4.17.1",
     "kth-node-log": "^3.1.0"
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "start-dev": "nodemon app.js",
+    "start-dev": "LOG_LEVEL=debug nodemon app.js",
     "test": "NODE_ENV=development node_modules/mocha/bin/mocha ./tests/unit-tests/test-*.js",
     "test-integration": "PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se DOMAIN_OWNERSHIP_VERIFICATION_FILE=domain DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT= URL_PREFIX=http://localhost ./tests/integration-tests/basic.sh",
     "test-integration-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml build && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml up --force-recreate --abort-on-container-exit --always-recreate-deps",

@@ -4,6 +4,6 @@
 
 module.exports = {
   jenkinsBuildDate: "Not set by CI.",
-  dockerName: "tamarack.",
+  dockerName: "tamarack",
   dockerVersion: "0.0.0_abcdef",
 };

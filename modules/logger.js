@@ -26,23 +26,10 @@ logger.init({
   app: about.dockerVersion,
   level: getLogLevel(),
 });
-/**
- * Log incomming request.
- * E.g:  http://localhost:3000/_about - Response Code: 200, Client IP: 127.0.0.1
- */
-let logRequest = function logRequest(request, statusCode, clientIp) {
-  logger.info(
-    `${request.method} ${request.protocol}://${request.get("Host")}${
-      request.url
-    } - Response: ${statusCode}, Client IP: ${clientIp}`
-  );
-  logger.debug(`Request headers: ${JSON.stringify(request.headers)}`);
-};
 
 /**
  * Module exports
  */
 module.exports = {
   log: logger,
-  logRequest: logRequest,
 };
