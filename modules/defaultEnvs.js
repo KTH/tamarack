@@ -1,4 +1,4 @@
-const logger = require("./logger");
+const { log } = require("./logger");
 
 /**
  * All process.env:s that if not set already will be used.
@@ -24,10 +24,10 @@ const DEFAULTS = {
  *
  * @param {*} log Pass true to get information logged for missing envs that get a default value.
  */
-const set = (log = false) => {
+const set = (logDefaul = false) => {
   Object.keys(DEFAULTS).forEach(function (key) {
     if (!process.env[key]) {
-      if (log) {
+      if (logDefaul) {
         logUsingDefault(key, DEFAULTS[key]);
       }
       process.env[key] = DEFAULTS[key];
@@ -50,7 +50,7 @@ const unset = () => {
  * @param {*} defaultValue 
  */
 const logUsingDefault = (env, defaultValue) => {
-  logger.log.info(` - '${env}' is not set, defaulting to '${defaultValue}'.`);
+  log.info(` - '${env}' is not set, defaulting to '${defaultValue}'.`);
 };
 
 /**
