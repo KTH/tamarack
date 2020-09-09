@@ -4,7 +4,7 @@ const os = require("os");
 const { templates } = require("@kth/basic-html-templates");
 const httpResponse = require("@kth/http-responses");
 const about = require("./config/version");
-const logger = require("./modules/logger");
+const { log } = require("./modules/logger");
 const cluster = require("./modules/cluster");
 const badGateway = require("./modules/badGateway");
 const defaultEnvs = require("./modules/defaultEnvs");
@@ -16,7 +16,7 @@ const started = new Date();
 /**
  * Let the package @kth/http-responses use the Tamarack log.
  */
-httpResponse.setLogger(logger.log);
+httpResponse.setLogger(log);
 
 /**
  * Process env:s that are not configured on start up, but accessed
@@ -32,7 +32,7 @@ defaultEnvs.set(true);
  * Start the server on configured port.
  */
 app.listen(process.env.PORT, function () {
-  logger.log.info(
+  log.info(
     `Started '${about.dockerName}:${
       about.dockerVersion
     }' on '${os.hostname()}:${process.env.PORT}'`
