@@ -4,7 +4,8 @@
 // Testing libraries
 const expect = require("chai").expect;
 const cluster = require("../../modules/cluster");
-const defaultEnvs = require("../../modules/defaultEnvs");
+const defaultEnvs = require("@kth/default-envs");
+const DEFAULTS = require("../../app");
 
 describe("Cluster specifics\n", function () {
   it("Path '/_monitor' should contain cluster name specified in env 'PORTILLO_CLUSTER' if set.", function () {
@@ -17,9 +18,9 @@ describe("Cluster specifics\n", function () {
   });
 
   it("Path '/_monitor' should contain 'No env PORTILLO_CLUSTER set.' when env 'PORTILLO_CLUSTER' is not set.", function () {
-    defaultEnvs.set();
+    defaultEnvs.set(DEFAULTS);
     expect(cluster.getMonitorClusterName()).to.equal(
-      `\nCLUSTER: ${defaultEnvs.DEFAULTS.PORTILLO_CLUSTER}`
+      `\nCLUSTER: ${DEFAULTS.PORTILLO_CLUSTER}`
     );
     defaultEnvs.unset();
   });
@@ -32,10 +33,8 @@ describe("Cluster specifics\n", function () {
   });
 
   it("When env 'PORTILLO_CLUSTER' is missing, return 'active' as default value.", function () {
-    defaultEnvs.set();
-    expect(cluster.getClusterName()).to.equal(
-      defaultEnvs.DEFAULTS.PORTILLO_CLUSTER
-    );
+    defaultEnvs.set(DEFAULTS);
+    expect(cluster.getClusterName()).to.equal(DEFAULTS.PORTILLO_CLUSTER);
     defaultEnvs.unset();
   });
 
