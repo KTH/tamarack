@@ -26,17 +26,7 @@ httpResponse.setLogger(log);
  *
  * This way you will always have a value for process.env.X
  */
-const DEFAULTS = {
-  LOG_LEVEL: "info",
-  PORT: 80,
-  PORTILLO_CLUSTER: "active",
-  APPLICATIONS_API_HOST: "api.kth.se",
-  APPLICATIONS_API_RUNNING_IN: "active",
-  DOMAIN_OWNERSHIP_VERIFICATION_FILE: "domain",
-  DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT: "",
-  APPINSIGHTS_INSTRUMENTATIONKEY: "",
-};
-defaultEnvs.set(DEFAULTS, log);
+defaultEnvs.set(require("./config/defaults"), log);
 
 /**
  * Start the server on configured port.
@@ -150,10 +140,3 @@ app.get("/favicon.ico", function (request, response) {
 app.use(function (request, response) {
   httpResponse.notFound(request, response, templates.error404());
 });
-
-/**
- * Module exports
- */
-module.exports = {
-  DEFAULTS: DEFAULTS,
-};
