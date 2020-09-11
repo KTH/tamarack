@@ -69,7 +69,7 @@ Run integration tests against the service running as a :whale: Docker container 
 1. Start the service `npm run start-dev`
 2. Run `npm run test-integration`. This will run the same tests as *npm run test-integratoin-in-docker*.
 
-```bash
+```
  • The monitor page should includ the cluster name from env PORTILLIO_CLUSTER.
  • Default check APPLICATION_STATUS: OK.
  • The cluster name should be an endpoint.
