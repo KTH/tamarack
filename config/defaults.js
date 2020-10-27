@@ -3,6 +3,7 @@
  */
 
 module.exports = {
+  APPLICATION_NAME: "Tamarack",
   LOG_LEVEL: "info",
   PORT: 80,
   PORTILLO_CLUSTER: "active",
