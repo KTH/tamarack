@@ -15,6 +15,7 @@ services:
 
     # build: . 
     image: $LOCAL_IMAGE_ID
+    tty: true
 
     # LOCAL_IMAGE_ID, IMAGE_NAME and IMAGE_VERSION
 
