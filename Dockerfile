@@ -4,8 +4,8 @@ COPY ["package.json", "package.json"]
 COPY ["package-lock.json", "package-lock.json"]
 
 RUN npm audit fix && \
-    npm install --production && \ 
-    npm prune    
+    npm install --production && \
+    npm prune --production
 
 COPY ["config", "config"]
 COPY ["modules", "modules"]
