@@ -1,9 +1,8 @@
 #!/bin/bash
 
-info() { printf "\033[1;31m\n   %s\033[0;0m$@\n\n";  }
-error() { printf "\033[0;31m\n • $@\033[0;0m"; }
+info() { printf "\033[1;31m\n   %s\033[0;33m$@\n\n";  }
+error() { printf "\033[1;31m • $@\033[0;0m\n"; }
 passed() { printf "\033[0;32m • $@\033[0;0m\n"; }
-
 #
 # Path to the Cisco vpn client.
 #
@@ -60,8 +59,8 @@ expectPathToContain "/missing-page" "Sorry, we have nothing to show" "The 404 pa
 expectPathToContain "/error5xx.html" "Bad Gateway - Tamarack" "There should be a route for handling 502 Bad Gateway from proxied"
 expectPathToContain "/error5xx.html" "var url = \"https://api.kth.se/api/pipeline/v1/search/active/\"" "This is the url used to look up info on applications from external API on 502 Bad Gateway"
 expectPathToContain "/$DOMAIN_OWNERSHIP_VERIFICATION_FILE" "$DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT" "A dynamic path that can be used to verify domains for used SaaS "
-expectPathToContain "/error/500" "Bad Gateway - Tamarack" "Should contain a 5xx title "
-expectPathToContain "/error/404" "Sorry, we have nothing to show for the web address you entered." "A status with 404 should show a 404 page"
+expectPathToContain "/error/503" "Houston, we have a problem" "When the status is 500-599. Show an internal server error title"
+expectPathToContain "/error/404" "Sorry, we have nothing to show for the web address you entered." "When the status is 404, show the not found page"
 
 # Result
 if [[ "$FAILED" != *"true"* ]]; then
