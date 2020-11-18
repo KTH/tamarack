@@ -128,6 +128,23 @@ app.get("/error5xx.html", function (request, response) {
 });
 
 /**
+ * New cool function that does cool stuffz
+ * Handles both 5xx and 4xx
+ */
+app.get("/error/:status", function (request, response) {
+  var statusInt = parseInt(request.params.status); 
+  if (!Number.isNaN(statusInt)) {
+    if (statusInt >= 500) {
+      httpResponse.internalServerError(request, response, badGateway.error5xx());
+    }
+    else if (statusInt >= 400) {
+      httpResponse.notFound(request, response, templates.error404());
+    }
+  }
+  httpResponse.notFound(request, response, templates.error404());
+});
+
+/**
  * Ignore favicons.
  */
 app.get("/favicon.ico", function (request, response) {
