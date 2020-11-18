@@ -60,8 +60,8 @@ expectPathToContain "/missing-page" "Sorry, we have nothing to show" "The 404 pa
 expectPathToContain "/error5xx.html" "Bad Gateway - Tamarack" "There should be a route for handling 502 Bad Gateway from proxied"
 expectPathToContain "/error5xx.html" "var url = \"https://api.kth.se/api/pipeline/v1/search/active/\"" "This is the url used to look up info on applications from external API on 502 Bad Gateway"
 expectPathToContain "/$DOMAIN_OWNERSHIP_VERIFICATION_FILE" "$DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT" "A dynamic path that can be used to verify domains for used SaaS "
-expectPathToContain "/error/500" "Bad Gateway - Tamarack" "There should be a route for handling 502 Bad Gateway from proxied"
-expectPathToContain "/error/404" "Bad Gateway - Tamarack" "There should be a route for handling 502 Bad Gateway from proxied"
+expectPathToContain "/error/500" "Bad Gateway - Tamarack" "Should contain a 5xx title "
+expectPathToContain "/error/404" "Sorry, we have nothing to show for the web address you entered." "A status with 404 should show a 404 page"
 
 # Result
 if [[ "$FAILED" != *"true"* ]]; then
