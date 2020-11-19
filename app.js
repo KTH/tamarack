@@ -130,6 +130,13 @@ app.get("/error5xx.html", function (request, response) {
 /**
  * Dynamic error handling to match Traefik:s error handling middleware.
  * Handles 5xx, and serves 404 for anything else that matches get path.
+ *
+ * We treat all 500+ errors as internal server errors. The look the
+ * same to the end user.
+ *
+ * Also there are no defined status codes above 600, so just treate
+ * them also as internal server errors. If someone for some unknown
+ * reason would sends such status.
  */
 app.get("/error/:statusCode", function (request, response) {
   const statusCode = parseInt(request.params.statusCode);
