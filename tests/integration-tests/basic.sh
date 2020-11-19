@@ -60,6 +60,7 @@ expectPathToContain "/error5xx.html" "502 - It is our fault, sorry" "There shoul
 expectPathToContain "/error5xx.html" "var url = \"https://api.kth.se/api/pipeline/v1/search/active/\"" "This is the url used to look up info on applications from external API on 502 Bad Gateway"
 expectPathToContain "/$DOMAIN_OWNERSHIP_VERIFICATION_FILE" "$DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT" "A dynamic path that can be used to verify domains for used SaaS "
 expectPathToContain "/error/503" "Houston, we have a problem" "When the status is 500-599. Show an internal server error title"
+expectPathToContain "/error/466" "Sorry, we have nothing to show for the web address you entered." "When the status is something other, than 5xx, show the not found page"
 expectPathToContain "/error/404" "Sorry, we have nothing to show for the web address you entered." "When the status is 404, show the not found page"
 
 # Result
