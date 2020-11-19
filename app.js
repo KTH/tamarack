@@ -134,7 +134,7 @@ app.get("/error5xx.html", function (request, response) {
  * We treat all 500+ errors as internal server errors. They look the
  * same to the end user.
  *
- * Also there are no defined status codes above 600, so just treate
+ * Also there are no defined status codes above 600, so just treat
  * them also as internal server errors. If someone for some unknown
  * reason would sends such status.
  */
