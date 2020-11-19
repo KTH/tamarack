@@ -124,7 +124,11 @@ app.get(`/_${cluster.getClusterName()}`, function (request, response) {
  * Includes application information from  /_application.
  */
 app.get("/error5xx.html", function (request, response) {
-  httpResponse.internalServerError(request, response, badGateway.error5xx());
+  httpResponse.internalServerError(
+    request,
+    response,
+    badGateway.error5xx(httpResponse.statusCodes.BAD_GATEWAY)
+  );
 });
 
 /**
