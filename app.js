@@ -128,21 +128,18 @@ app.get("/error5xx.html", function (request, response) {
 });
 
 /**
- * New cool function that does cool stuffz
- * Handles both 5xx and 4xx
+ * Dynamic error handling to match Traefik:s error handling middleware.
+ * Handles 5xx, and serves 404 for anything else that matches get path.
  */
-app.get("/error/:status", function (request, response) {
-  var statusInt = parseInt(request.params.status);
-  if (!Number.isNaN(statusInt)) {
-    if (statusInt >= 500) {
-      httpResponse.internalServerError(
-        request,
-        response,
-        badGateway.error5xx()
-      );
-    } else if (statusInt >= 400) {
-      httpResponse.notFound(request, response, templates.error404());
-    }
+app.get("/error/:statusCode", function (request, response) {
+  const statusCode = parseInt(request.params.statusCode);
+
+  if (statusCode >= httpResponse.statusCodes.INTERNAL_SERVER_ERROR) {
+    httpResponse.internalServerError(
+      request,
+      response,
+      badGateway.error5xx(statusCode)
+    );
   } else {
     httpResponse.notFound(request, response, templates.error404());
   }

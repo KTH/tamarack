@@ -13,9 +13,9 @@ const getSearchEndpoint = () => {
 /**
  * 502 error page Bad Gateway
  */
-const error5xx = function error5xx() {
+const error5xx = function error5xx(status) {
   return `
-    ${templates.header(`Bad Gateway - Tamarack`)}
+    ${templates.header(`${status} - It is our fault, sorry ...`)}
             
             <script>
                 /*
@@ -122,7 +122,7 @@ const error5xx = function error5xx() {
                 For current application status, please see our <a href="https://www.kthstatus.se/">status page</a>.
             </div>
 
-        ${templates.footer(statusCodes.INTERNAL_SERVER_ERROR)}
+        ${templates.footer(status)}
     `;
 };
 

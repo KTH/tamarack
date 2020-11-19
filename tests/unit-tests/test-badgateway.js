@@ -6,13 +6,14 @@ const expect = require("chai").expect;
 const badGateway = require("../../modules/badGateway");
 const defaultEnvs = require("@kth/default-envs");
 const defaults = require("../../config/defaults");
+const { assert } = require("chai");
 
 describe("Bad Gatway\n", function () {
   it("Path '/error5xx.html' should contain a error message.", function () {
     process.env.APPLICATIONS_API_HOST = defaults.APPLICATIONS_API_HOST;
     process.env.APPLICATIONS_RUNNING_IN = defaults.APPLICATIONS_RUNNING_IN;
 
-    expect(badGateway.error5xx()).to.contain("Bad Gateway - Tamarack");
+    expect(badGateway.error5xx()).to.contain("It is our fault");
 
     delete process.env.APPLICATIONS_API_HOST;
     delete process.env.APPLICATIONS_RUNNING_IN;
@@ -29,7 +30,6 @@ describe("Bad Gatway\n", function () {
 
   it(`When env 'APPLICATIONS_RUNNING_IN' is missing, return '${defaults.APPLICATIONS_API_RUNNING_IN}' as part of the search endpoint`, function () {
     defaultEnvs.set(defaults);
-    console.error(badGateway.privates.getSearchEndpoint());
     expect(badGateway.privates.getSearchEndpoint()).to.contain(
       defaults.APPLICATIONS_API_RUNNING_IN
     );
