@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@kth/basic-html-templates": "^1.0.32",
-    "@kth/default-envs": "^0.0.10",
+    "@kth/default-envs": "^0.0.12",
     "@kth/http-responses": "^1.0.29",
     "applicationinsights": "^1.8.8",
     "express": "^4.17.1",
@@ -29,7 +29,8 @@
     "test-integration": "PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se DOMAIN_OWNERSHIP_VERIFICATION_FILE=domain DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT= URL_PREFIX=http://localhost ./tests/integration-tests/basic.sh",
     "test-integration-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml build && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml up --force-recreate --abort-on-container-exit --always-recreate-deps",
     "test-unit-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-unit-tests.yml up --abort-on-container-exit --always-recreate-deps",
-    "clean": "rm -r ./node_modules && rm package-lock.json"
+    "clean": "rm -r ./node_modules && rm package-lock.json",
+    "package-update": "git pull && npm run clean & ncu -u && npm install && npm test"
   },
   "engines": {
     "node": "^12.14.0"
