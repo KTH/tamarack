@@ -1,7 +1,6 @@
 "use strict";
 
 const { templates } = require("@kth/basic-html-templates");
-const { statusCodes } = require("@kth/http-responses");
 
 /**
  * Gets the host that runs the api we are calling.

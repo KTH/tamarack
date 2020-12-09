@@ -6,7 +6,7 @@ const httpResponse = require("@kth/http-responses");
 const about = require("./config/version");
 const { log } = require("./modules/logger");
 const cluster = require("./modules/cluster");
-const badGateway = require("./modules/badGateway");
+const error = require("./modules/error");
 const defaultEnvs = require("@kth/default-envs");
 const applicationInsights = require("./modules/applicationInsights");
 const domainVerification = require("./modules/domainVerification");
@@ -127,7 +127,7 @@ app.get("/error5xx.html", function (request, response) {
   httpResponse.internalServerError(
     request,
     response,
-    badGateway.error5xx(httpResponse.statusCodes.BAD_GATEWAY)
+    error.error5xx(httpResponse.statusCodes.BAD_GATEWAY)
   );
 });
 
@@ -149,7 +149,7 @@ app.get("/error/:statusCode", function (request, response) {
     httpResponse.internalServerError(
       request,
       response,
-      badGateway.error5xx(statusCode)
+      error.error5xx(statusCode)
     );
   } else {
     httpResponse.notFound(request, response, templates.error404());
