@@ -12,7 +12,7 @@
   "dependencies": {
     "@kth/basic-html-templates": "^1.0.32",
     "@kth/default-envs": "^0.0.13",
-    "@kth/http-responses": "^1.0.31",
+    "@kth/http-responses": "^1.0.32",
     "applicationinsights": "^1.8.8",
     "express": "^4.17.1",
     "kth-node-log": "^3.1.3"
