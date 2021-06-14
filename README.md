@@ -1,21 +1,21 @@
-# Tamarack ![alt text](https://api.travis-ci.org/KTH/tamarack.svg?branch=master)
+# Tamarack ![alt text](https://api.travis-ci.org/KTH/tamarack.svg?branch=master) ![Continous Integration](https://github.com/KTH/tamarack/actions/workflows/main.yml/badge.svg)
 
 _If the reverse proxy in Docker Swarm clusters do not match any applications. Tamarack is the catch all application that will show the 404 page for a request._
 
 Tamarack also tells other proxies whats cluster it is via /\_monitor
 
-## Routes handled by Tamarack
+## Example routes handled by Tamarack
 
 - [https://app.kth.se/\_about](https://app.kth.se/_about)
-- [https://app.kth.se/\_monitor]()
+- [https://app.kth.se/\_monitor](https://app.kth.se/_monitor)
 - [https://app.kth.se/missing](https://app.kth.se/missing)
 - [https://app.kth.se/error5xx.html](https://app.kth.se/error5xx.html)
 
-### \_about - Information page
+### /_about - Information page
 
 Information about a running instance. Version, build date etc.
 
-### \_monitor - Public monitoring
+### /_monitor - Public monitoring
 
 Endpoint for public monitoring. Page should always contain `APPLICATION_STATUS: OK`
 
@@ -67,7 +67,7 @@ Run integration tests against the service running as a :whale: Docker container 
 ### Run end-to-end integration tests locally.
 
 1. Start the service `npm run start-dev`
-2. Run `npm run test-integration`. This will run the same tests as *npm run test-integratoin-in-docker*.
+2. Run `npm run test-integration`. This will run the same tests as _npm run test-integratoin-in-docker_.
 
 ```
  • The monitor page should includ the cluster name from env PORTILLIO_CLUSTER.
@@ -80,4 +80,3 @@ Run integration tests against the service running as a :whale: Docker container 
  • This is the url used to look up info on applications from external API on 502 Bad Gateway.
  • A dynamic path that can be used to verify domains for used SaaS .
 ```
-
