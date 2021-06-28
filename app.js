@@ -151,6 +151,8 @@ app.get("/error/:statusCode", function (request, response) {
       response,
       error.error5xx(statusCode)
     );
+  } else if (statusCode == httpResponse.statusCodes.FORBIDDEN) {
+    httpResponse.forbidden(request, response, templates.forbidden());
   } else {
     httpResponse.notFound(request, response, templates.error404());
   }
