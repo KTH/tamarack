@@ -20,17 +20,17 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "mocha": "^9.0.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.8"
   },
   "scripts": {
     "start": "node app.js",
     "start-dev": "LOG_LEVEL=debug nodemon app.js",
     "test": "NODE_ENV=development node_modules/mocha/bin/mocha ./tests/unit-tests/test-*.js",
     "test-integration": "PORTILLO_CLUSTER=active APPLICATIONS_API_HOST=api.kth.se DOMAIN_OWNERSHIP_VERIFICATION_FILE=domain DOMAIN_OWNERSHIP_VERIFICATION_FILE_CONTENT= URL_PREFIX=http://localhost ./tests/integration-tests/basic.sh",
-    "test-integration-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml build && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml up --force-recreate --abort-on-container-exit --always-recreate-deps",
-    "test-unit-in-docker": "ID=$(docker build -q .) && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-unit-tests.yml up --abort-on-container-exit --always-recreate-deps",
+    "test-integration-in-docker": "ID=$(docker build -q .) && WORKSPACE=$(pwd) LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml build && LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-integration-tests.yml up --force-recreate --abort-on-container-exit --always-recreate-deps",
+    "test-unit-in-docker": "ID=$(docker build -q .) && WORKSPACE=$(pwd) LOCAL_IMAGE_ID=$ID docker-compose -f docker-compose-unit-tests.yml up --abort-on-container-exit --always-recreate-deps",
     "clean": "rm -rf ./node_modules && rm -f package-lock.json",
-    "package-update": "git pull && npm run clean & ncu -u && npm install && npm audit fix && npm test"
+    "package-update": "git pull && npm run clean & ncu -u && npm install && npm audit fix && npm run test-unit-in-docker && npm run test-integration-in-docker"
   },
   "engines": {
     "node": "^12.14.0"
