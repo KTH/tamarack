@@ -132,6 +132,13 @@ app.get("/error5xx.html", function (request, response) {
 });
 
 /**
+ * Show a page with 403 Forbidden imformation.
+ */
+app.get("/forbidden.html", function (request, response) {
+  httpResponse.forbidden(request, response, templates.forbidden());
+});
+
+/**
  * Dynamic error handling to match Traefik:s error handling middleware.
  * Handles 5xx, and serves 404 for anything else that matches get path.
  *
@@ -151,8 +158,6 @@ app.get("/error/:statusCode", function (request, response) {
       response,
       error.error5xx(statusCode)
     );
-  } else if (statusCode == httpResponse.statusCodes.FORBIDDEN) {
-    httpResponse.forbidden(request, response, templates.forbidden());
   } else {
     httpResponse.notFound(request, response, templates.error404());
   }
